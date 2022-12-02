@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:16:40 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/01 16:20:19 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:02:39 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ char	*ft_strcat(char *str, char *src)
 	int		i;
 	int		j;
 	char	*temp;
-	int		len;
 
 	i = 0;
-	len = ft_strlen(str) + ft_strlen(src) + 2;
-	temp = malloc(sizeof(char) * len);
+	if (!src[0])
+		return (str);
+	temp = malloc(sizeof(char) * ft_strlen(str) + ft_strlen(src) + 1);
 	if (!temp)
-		return (ft_clean(&src));
+		return (ft_clean(&temp));
 	while (str[i])
 	{
 		temp[i] = str[i];
@@ -71,6 +71,5 @@ char	*ft_strcat(char *str, char *src)
 	while (src[j])
 		temp[i++] = src[j++];
 	temp[i] = 0;
-	ft_clean(&src);
 	return (temp);
 }
