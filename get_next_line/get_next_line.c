@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:15:19 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/02 13:02:35 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:37:05 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static char	*buffer_read(int fd, char *rest)
 
 	charcount = 1;
 	if (!rest)
-		rest = ft_calloc(1, 1);
+		rest = calloc(1, 1);
 	while (!ft_strchr(rest, '\n') && charcount > 0)
 	{
 		buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
