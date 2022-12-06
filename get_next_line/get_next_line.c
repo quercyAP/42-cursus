@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:15:19 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/02 13:37:05 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:10:39 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ static char	*save_rest(int *ptr, char *rest)
 	i = 0;
 	start = *ptr;
 	tmp = NULL;
-	if (!rest[i])
-	{
-		ft_clean(&rest);
-		return (0);
-	}
 	if (ft_strchr(rest, '\n'))
 	{
 		tmp = ft_calloc(sizeof(char), (ft_strlen(rest) - start) + 1);
@@ -51,6 +46,7 @@ static char	*save_rest(int *ptr, char *rest)
 			tmp[i++] = rest[start++];
 	}
 	free(rest);
+	rest = NULL;
 	return (tmp);
 }
 
@@ -87,20 +83,20 @@ static char	*buffer_read(int fd, char *rest)
 
 	charcount = 1;
 	if (!rest)
-		rest = calloc(1, 1);
+		rest = ft_calloc(1, 1);
+	if (!rest)
+		return (ft_clean(&rest));
 	while (!ft_strchr(rest, '\n') && charcount > 0)
 	{
 		buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 		if (!buffer)
 		{
 			free(buffer);
-			return (ft_clean(&rest));
+			return (NULL);
 		}
 		charcount = read(fd, buffer, BUFFER_SIZE);
 		rest = ft_strcat(rest, buffer);
 		ft_clean(&buffer);
-		if (!rest)
-			return (ft_clean(&rest));
 	}
 	return (rest);
 }
@@ -120,11 +116,6 @@ char	*get_next_line(int fd)
 	if (!rest)
 		return (NULL);
 	ligne = extract_line(rest, ptr);
-	if (!ligne)
-	{
-		free(ligne);
-		return (ft_clean(&rest));
-	}
 	rest = save_rest(ptr, rest);
 	if (!ligne[0])
 	{
