@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:16:40 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/06 14:10:41 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/08 09:32:21 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,14 @@ int	ft_strlen(char *str)
 
 void	*ft_clean(char **rest)
 {
-	if (*rest)
-		free(*rest);
+	free(*rest);
 	*rest = NULL;
 	return (NULL);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+char	*ft_calloc(size_t nmemb, size_t size)
 {
-	void	*array;
+	char	*array;
 	size_t	i;
 
 	i = 0;
@@ -43,7 +42,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	while (i < size)
 	{
-		*((char *)(array + i)) = 0;
+		array[i] = 0;
 		i++;
 	}
 	return (array);
@@ -60,7 +59,7 @@ char	*ft_strcat(char *str, char *src)
 		return (str);
 	temp = malloc(sizeof(char) * ft_strlen(str) + ft_strlen(src) + 1);
 	if (!temp)
-		return (NULL);
+		return (ft_clean(&str));
 	while (str[i])
 	{
 		temp[i] = str[i];
@@ -72,4 +71,16 @@ char	*ft_strcat(char *str, char *src)
 		temp[i++] = src[j++];
 	temp[i] = 0;
 	return (temp);
+}
+
+char	*ft_strdup(char *src)
+{
+	int		i;
+
+	i = 0;
+	src = malloc(1);
+	if (!src)
+		return (NULL);
+	src[i] = '\0';
+	return (src);
 }

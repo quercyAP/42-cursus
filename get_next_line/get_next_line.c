@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:15:19 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/06 14:10:39 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/08 09:40:42 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*save_rest(int *ptr, char *rest)
 	{
 		tmp = ft_calloc(sizeof(char), (ft_strlen(rest) - start) + 1);
 		if (!tmp)
-			return (NULL);
+			return (ft_clean(&rest));
 		while (rest[start])
 			tmp[i++] = rest[start++];
 	}
@@ -59,7 +59,7 @@ static char	*extract_line(char *read_str, int *ptr)
 	j = 0;
 	i = 0;
 	if (!read_str)
-		return (NULL);
+		return (ft_clean(&read_str));
 	while (read_str[i] && read_str[i] != '\n')
 		i++;
 	if (read_str[i] == '\n')
@@ -92,10 +92,13 @@ static char	*buffer_read(int fd, char *rest)
 		if (!buffer)
 		{
 			free(buffer);
+			ft_clean(&rest);
 			return (NULL);
 		}
 		charcount = read(fd, buffer, BUFFER_SIZE);
 		rest = ft_strcat(rest, buffer);
+		if (!rest)
+			return (ft_clean(&buffer));
 		ft_clean(&buffer);
 	}
 	return (rest);
@@ -114,8 +117,10 @@ char	*get_next_line(int fd)
 	ptr = &i;
 	rest = buffer_read(fd, rest);
 	if (!rest)
-		return (NULL);
+		return (ft_clean(&rest));
 	ligne = extract_line(rest, ptr);
+	if (!ligne)
+		return (ft_clean(&rest));
 	rest = save_rest(ptr, rest);
 	if (!ligne[0])
 	{
