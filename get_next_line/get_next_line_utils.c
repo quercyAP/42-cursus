@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:16:40 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/08 09:32:21 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/08 09:53:59 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,4 @@ char	*ft_strcat(char *str, char *src)
 		temp[i++] = src[j++];
 	temp[i] = 0;
 	return (temp);
-}
-
-char	*ft_strdup(char *src)
-{
-	int		i;
-
-	i = 0;
-	src = malloc(1);
-	if (!src)
-		return (NULL);
-	src[i] = '\0';
-	return (src);
 }
