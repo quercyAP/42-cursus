@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 16:05:47 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/13 12:54:24 by glamazer         ###   ########.fr       */
+/*   Created: 2022/12/13 14:55:21 by glamazer          #+#    #+#             */
+/*   Updated: 2022/12/13 16:03:32 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/so_long.h"
+#include "../includes/get_next_line.h"
+#include "../includes/libft.h"
 
-size_t	ft_strlen(const char *str)
-{
-	int	len;
-
-	len = 0;
-	if (!str)
-		return (0);
-	while (str[len] != '\0')
-	{
-		len++;
-	}
-	return (len);
-}

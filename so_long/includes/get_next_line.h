@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 16:05:47 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/13 12:54:24 by glamazer         ###   ########.fr       */
+/*   Created: 2022/11/17 14:24:43 by glamazer          #+#    #+#             */
+/*   Updated: 2022/12/13 10:12:08 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-size_t	ft_strlen(const char *str)
-{
-	int	len;
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-	len = 0;
-	if (!str)
-		return (0);
-	while (str[len] != '\0')
-	{
-		len++;
-	}
-	return (len);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
+
+char	*get_next_line(int fd);
+void	*ft_clean(char **rest);
+char	*ft_strcat(char *str, char *src);
+
+#endif

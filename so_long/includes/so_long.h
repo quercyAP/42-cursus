@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 16:05:47 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/13 12:54:24 by glamazer         ###   ########.fr       */
+/*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
+/*   Updated: 2022/12/13 11:09:50 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-size_t	ft_strlen(const char *str)
-{
-	int	len;
+# include <fcntl.h>
 
-	len = 0;
-	if (!str)
-		return (0);
-	while (str[len] != '\0')
-	{
-		len++;
-	}
-	return (len);
-}
+char	**parsing(int fd);
+
+#endif
