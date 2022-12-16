@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:50:42 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/16 14:51:36 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:11:47 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,17 @@ void	elem_init(t_elem *elem, char **map_array)
 {
 	t_point	*axe;
 
+	axe = malloc(sizeof(t_point));
 	axe_init(axe);
 	elem->empty = '0';
 	elem->wall = '1';
 	elem->exit = 'E';
 	elem->p_exit = find_elem(map_array, 'E', axe);
+	axe_init(axe);
 	elem->item = 'C';
+	elem->lst_item = count_elem(map_array, 'C');
 	elem->spawn = 'P';
-	elem->p_spwan = find_elem(map_array, 'P', axe);
+	elem->p_spawn = find_elem(map_array, 'P', axe);
 }
 
 int	map_len(char **map_array)
@@ -78,12 +81,14 @@ t_list	*count_elem(char **map_array, char c)
 
 	lst_elem = malloc(sizeof(t_list));
 	lst_elem = NULL;
+	axe = malloc(sizeof(t_point));
 	axe_init(axe);
 	while (map_array[axe->y][0])
 	{
 		axe = find_elem(map_array, c, axe);
 		new_node = ft_lstnew(axe);
 		ft_lstadd_front(&lst_elem, new_node);
+		axe->y++;
 	}
 	return (lst_elem);
 }

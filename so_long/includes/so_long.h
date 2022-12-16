@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/16 14:47:40 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:59:24 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_elem
 	char	exit;
 	t_point	*p_exit;
 	char	spawn;
-	t_point	*p_spwan;
+	t_point	*p_spawn;
 }		t_elem;
 
 char	**parsing(int fd);

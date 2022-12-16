@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:10:06 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/16 14:49:59 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:05:13 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	char	**test_map;
 	int		fd;
 	int		i;
-	t_elem	elem;
+	t_elem	*elem;
 
 	fd = open(argv[1], O_RDONLY);
 	test_map = parsing(fd);
@@ -39,7 +39,8 @@ int	main(int argc, char **argv)
 		printf("%s\n", test_map[i]);
 		i++;
 	}
-	elem_init(&elem, test_map);
-	printf("sortie est en x:%i y:%i", elem.p_exit->x, elem.p_exit->y);
+	elem = malloc(sizeof(t_elem));
+	elem_init(elem, test_map);
+	printf("spawn est en x:%i y:%i", elem->p_exit->x, elem->p_exit->y);
 	close(fd);
 }
