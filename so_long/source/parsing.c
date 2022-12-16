@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:02:47 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/13 16:24:27 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/16 10:10:55 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,26 @@ static int	lst_ligne(t_list **list, int fd)
 	return (0);
 }
 
+static char	*ft_strdup_no_nl(char *src)
+{
+	int		i;
+	char	*dup;
+
+	i = 0;
+	if (src[ft_strlen(src) - 1] == '\n')
+		src[ft_strlen(src) - 1] = 0;
+	dup = malloc(sizeof(char) * ft_strlen(src) + 1);
+	if (!dup)
+		return (NULL);
+	while (src[i])
+	{
+		dup[i] = src[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
+}
+
 static char	**create_map_array(t_list *list)
 {
 	char	**map_array;
@@ -51,7 +71,7 @@ static char	**create_map_array(t_list *list)
 		return (NULL);
 	while (list)
 	{
-		map_array[i] = ft_strdup(list->content);
+		map_array[i] = ft_strdup_no_nl(list->content);
 		list = list->next;
 		i++;
 	}
@@ -74,7 +94,6 @@ char	**parsing(int fd)
 		return (NULL);
 	}
 	map_array = create_map_array(list);
-	if (!map_array)
-		ft_lstclear(&list, free);
+	ft_lstclear(&list, free);
 	return (map_array);
 }
