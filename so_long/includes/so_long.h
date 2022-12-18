@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/16 14:59:24 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/17 19:46:55 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,22 @@ typedef struct s_elem
 	char	item;
 	t_list	*lst_item;
 	char	exit;
-	t_point	*p_exit;
+	t_list	*lst_exit;
 	char	spawn;
-	t_point	*p_spawn;
+	t_list	*lst_spawn;
 }		t_elem;
 
 char	**parsing(int fd);
-int		is_rect(char **map_array);
-int		is_close(char **map_array);
-void	flood_fill(char **tab, t_point size, t_point cur, t_elem elem);
+void	flood_fill(char **tab, t_point size, int x, int y);
 int		map_len(char **map_array);
 t_list	*count_elem(char **map_array, char c);
 t_point	*find_elem(char **map_array, char c, t_point *axe);
 void	elem_init(t_elem *elem, char **map_array);
+int		check_error(char **map_array);
+int		check_path(char **map_array);
+int		list_point_cmp(t_list *list, char **map_array);
+void	free_map(char **map_array);
+void	lst_clear(t_list **lst);
+void	elem_clear(t_elem *elem);
 
 #endif

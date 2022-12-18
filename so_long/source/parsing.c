@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:02:47 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/16 10:10:55 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/17 16:29:12 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,10 @@ char	**parsing(int fd)
 	list = NULL;
 	if (lst_ligne(&list, fd) < 0)
 	{
-		ft_lstclear(&list, free);
+		lst_clear(&list);
 		return (NULL);
 	}
 	map_array = create_map_array(list);
-	ft_lstclear(&list, free);
+	lst_clear(&list);
 	return (map_array);
 }
