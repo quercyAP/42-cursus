@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:10:06 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/20 14:51:52 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:38:20 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int32_t	main(int argc, char **argv)
 {
 	char	**test_map;
 	int		fd;
-	int		i;
+	void	*mlx;
 
 	(void)argc;
 	fd = open(argv[1], O_RDONLY);
@@ -27,12 +27,6 @@ int32_t	main(int argc, char **argv)
 	{
 		free_map(test_map);
 		return (0);
-	}
-	i = 0;
-	while (test_map[i][0])
-	{
-		printf("%s\n", test_map[i]);
-		i++;
 	}
 	free_map(test_map);
 	close(fd);

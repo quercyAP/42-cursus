@@ -20,17 +20,17 @@ WINCFLAGS	= -Wall -Wextra -Werror -ldl -lglfw -pthread -lm
 
 MACCFLAGS	= -Wall -Wextra -Werror
 # Windows set
-.c.o:
-			${CC} ${SRCS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
+# .c.o:
+# 			${CC} ${SRCS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
 
-${NAME}:	.c.o
+# ${NAME}:	.c.o
 
 # MAC set
-# .c.o:
-# 			${CC} ${MACCFLAGS} -c $< -o ${<:.c=.o}
+.c.o:
+			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
 
-# ${NAME}:	${OBJS}
-# 			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
+${NAME}:	${OBJS}
+			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
 
 run:		
 			./${NAME} ${MAP}
