@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:50:42 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/18 08:30:21 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/18 09:51:40 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_list	*count_elem(char **map_array, char c)
 	index->x = 0;
 	while (index->y < map_len(map_array))
 	{
-		while (index->x < ft_strlen(map_array[index->y]))
+		while (index->x < (int)ft_strlen(map_array[index->y]))
 		{
 			point = find_elem(map_array, c, index);
 			if (point)

@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:10:06 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/18 07:43:29 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/18 09:51:01 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 	int		fd;
 	int		i;
 
+	(void)argc;
 	fd = open(argv[1], O_RDONLY);
 	test_map = parsing(fd);
 	if (!check_error(test_map))

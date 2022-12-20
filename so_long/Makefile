@@ -1,44 +1,33 @@
-SRCS	= ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
-		ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c \
-		ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
-		ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c
+SRCS	= source/check_error_utils.c source/check_error.c source/free.c \
+		source/get_next_line.c source/get_next_line_utils.c source/parsing.c \
+		source/so_long.c source/utils.c
 
-BONUS	= ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstclear_bonus.c ft_lstdelone_bonus.c ft_lstiter_bonus.c \
-		ft_lstlast_bonus.c ft_lstmap_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c
+LIBS	= lib/libft.a lib/libmlx42.a
 
-OBJS	= ${SRCS:.c=.o}
+MAP		= map/test.ber
 
-OBONUS	= ${BONUS:.c=.o}
-
-RL		= ranlib
-
-NAME	= libft.a
+NAME	= so_long
 
 CC		= gcc
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -ldl -lglfw -pthread -lm
 
 .c.o:
-			${CC} ${CFLAGS} -c ${SRCS}
+			${CC} ${SRCS} ${LIBS} ${CFLAGS} -o ${NAME}
 
-${NAME}:	${OBJS}
-			ar -rc ${NAME} ${OBJS}
-			${RL} ${NAME}
+${NAME}:	.c.o
 
-all:		${NAME}
-			
+run:		
+			./${NAME} ${MAP}
 
-bonus:		
-			${CC} ${CFLAGS} -c ${BONUS}
-			ar -q ${NAME} ${OBONUS} 
-			${RL} ${NAME}
+all:		${NAME} run
 
-clean:			
-			rm -f ${OBJS} ${OBONUS}	
+memcheck:		
+			valgrind --leak-check=full ./${NAME} ${MAP}
 
-fclean:		clean
-			rm -f ${NAME} 
+re:			all
 
-re:			fclean all
+clean:		
+			rm -rf a.out a.out.dSYM ${NAME}
 
-.PHONY:		all clean fclean re	bonus 
+.PHONY:		all re clean re debug

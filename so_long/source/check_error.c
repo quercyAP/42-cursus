@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:21 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/17 19:58:37 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/18 09:50:31 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 static int	is_rect(char **map_array)
 {
 	int	i;
-	int	len;
 
 	i = 1;
 	if (map_len(map_array) < 3 || ft_strlen(map_array[0]) < 3)
@@ -123,4 +122,5 @@ int	check_error(char **map_array)
 		ft_putstr_fd("Map Error\nno valid path\n", 1);
 		return (0);
 	}
+	return (1);
 }
