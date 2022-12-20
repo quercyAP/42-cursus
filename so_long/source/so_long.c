@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:10:06 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/20 12:25:31 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:49:57 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/libft.h"
 #include "../includes/so_long.h"
 
-int	main(int argc, char **argv)
+int32_t	main(int argc, char **argv)
 {
 	return (0);
 	char	**test_map;
