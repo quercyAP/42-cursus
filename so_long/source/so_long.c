@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:10:06 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/20 14:49:57 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:51:52 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 int32_t	main(int argc, char **argv)
 {
-	return (0);
 	char	**test_map;
 	int		fd;
 	int		i;

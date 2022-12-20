@@ -6,8 +6,7 @@ OBJS	= ${SRCS:.c=.o}
 
 WINLIBS	= lib/win_libft.a lib/win_libmlx42.a
 
-MACLIBS	= lib/mac_libft.a lib/mac_libmlx42.a -lglfw -L "/Users/glamazer/.brew/Cellar/glfw/3.3.8/lib/"
-
+MACLIBS	= lib/mac_libft.a lib/mac_libmlx42.a lib/libglfw3.a -framework Cocoa -framework OpenGL -framework IOKit
 HEADER	= -I includes -I /Users/glamazer/goinfre/MLX42/include -I /Users/glamazer/.brew/Cellar/glfw/3.3.8/include/GLFW
 
 MAP		= map/test.ber
@@ -24,7 +23,7 @@ MACCFLAGS	= -Wall -Wextra -Werror
 # 			${CC} ${SRCS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
 # MAC set
 .c.o:
-			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
+			${CC} ${MACCFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
 			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
@@ -45,4 +44,4 @@ clean:
 fclean:		clean
 			rm -rf so_long
 
-.PHONY:		all re clean re debug
+.PHONY:		all re clean re
