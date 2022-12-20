@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:02:47 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/17 16:29:12 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/20 10:25:14 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,6 @@ char	**parsing(int fd)
 	t_list	*list;
 	char	**map_array;
 
-	list = malloc(sizeof(t_list));
-	if (!list)
-		return (NULL);
 	list = NULL;
 	if (lst_ligne(&list, fd) < 0)
 	{

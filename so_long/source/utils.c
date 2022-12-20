@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:50:42 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/18 09:51:40 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/20 10:42:54 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ t_point	*find_elem(char **map_array, char c, t_point *axe)
 	t_point	*ret;
 	int		len;
 
-	ret = malloc(sizeof(t_point));
 	len = map_len(map_array);
 	while (axe->y < len)
 	{
+		ret = malloc(sizeof(t_point));
 		while (map_array[axe->y][axe->x] != c && map_array[axe->y][axe->x])
 			axe->x++;
 		if (map_array[axe->y][axe->x] == c)
@@ -54,6 +54,8 @@ t_point	*find_elem(char **map_array, char c, t_point *axe)
 			axe->x++;
 			return (ret);
 		}
+		else
+			free(ret);
 		axe->y++;
 		axe->x = 0;
 	}
@@ -67,7 +69,6 @@ t_list	*count_elem(char **map_array, char c)
 	t_point	*index;
 	t_point	*point;
 
-	lst_elem = malloc(sizeof(t_list));
 	lst_elem = NULL;
 	index = malloc(sizeof(t_point));
 	index->y = 0;
