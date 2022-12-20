@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/20 13:23:30 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/20 17:01:01 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SO_LONG_H
 
 # include <fcntl.h>
+# include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_point
 {
