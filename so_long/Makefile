@@ -4,7 +4,7 @@ SRCS	= source/check_error_utils.c source/check_error.c source/free.c \
 
 WINLIBS	= lib/win_libft.a lib/win_libmlx42.a
 
-MACLIBS	= lib/mac_libft.a lib/mac_libmlx42.a -lglfw -L "/Users/glamazer/.brew/opt/glfw/lib/"
+MACLIBS	= lib/mac_libft.a lib/mac_libmlx42.a -lglfw -L "/Users/glamazer/.brew/Cellar/glfw/3.3.8/lib"
 
 MAP		= map/test.ber
 
@@ -29,7 +29,7 @@ run:
 
 all:		${NAME} run
 
-memcheck:		
+memcheck:	re	
 			valgrind --leak-check=full ./${NAME} ${MAP}
 
 re:			all
