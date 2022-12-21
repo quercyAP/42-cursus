@@ -1,6 +1,6 @@
-SRCS	= source/check_error_utils.c source/check_error.c source/free.c \
-		source/get_next_line.c source/get_next_line_utils.c source/parsing.c \
-		source/so_long.c source/utils.c
+SRCS	= source/check/check_error_utils.c source/check/check_error.c source/utils/free.c \
+		source/utils/get_next_line.c source/utils/get_next_line_utils.c source/utils/parsing.c \
+		source/so_long.c source/utils/utils.c
 
 OBJS	= ${SRCS:.c=.o}
 

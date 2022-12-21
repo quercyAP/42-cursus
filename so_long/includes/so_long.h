@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/20 17:01:01 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/21 14:53:43 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,16 @@ typedef struct s_elem
 	t_list	*lst_exit;
 	char	spawn;
 	t_list	*lst_spawn;
-}		t_elem;
+}			t_elem;
+
+typedef struct s_game
+{
+	mlx_t	*mlx;
+	int		win_w;
+	int		win_h;
+	int		fd;
+	char	**map;
+}			t_game;
 
 char	**parsing(int fd);
 void	flood_fill(char **tab, t_point size, int x, int y);
