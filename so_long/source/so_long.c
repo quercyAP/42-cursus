@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:10:06 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/24 15:20:04 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/03 15:06:19 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int32_t	main(int argc, char **argv)
 	so_long = malloc(sizeof(t_game));
 	game_init(so_long, map);
 	draw_map(so_long);
+	draw_img(so_long);
+	mlx_loop_hook(so_long->mlx, &player_idle, so_long);
+	mlx_loop_hook(so_long->mlx, &key_hook, so_long);
 	mlx_loop(so_long->mlx);
 	t_game_clear(so_long);
 	close(fd);

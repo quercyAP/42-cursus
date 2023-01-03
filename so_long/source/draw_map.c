@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:36:35 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/24 15:30:19 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/03 12:13:59 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,4 @@ void	draw_map(t_game *so_long)
 	browse_map(so_long, so_long->elem->empty, so_long->void_i, 0);
 	browse_map(so_long, so_long->elem->wall, so_long->wall_i, 0);
 	browse_map(so_long, so_long->elem->exit, so_long->gate_i, 64);
-	browse_map(so_long, so_long->elem->spawn, so_long->player_idle_i[0], 0);
 }

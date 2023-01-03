@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/24 11:12:31 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/03 14:54:42 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ t_game *so_long)
 	int		i;
 	char	*path;
 
-	i = 1;
-	while (i <= nb_sprite)
+	i = 0;
+	while (i < nb_sprite)
 	{
 		path = found_path(sprite_name, type, i);
-		set_texture_to_img(i - 1, path, type, so_long);
+		set_texture_to_img(i, path, type, so_long);
 		free(path);
 		i++;
 	}
