@@ -6,12 +6,11 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:16:40 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/13 11:28:39 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/22 15:30:56 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include "../includes/libft.h"
+#include "../../includes/so_long.h"
 
 void	*ft_clean(char **rest)
 {

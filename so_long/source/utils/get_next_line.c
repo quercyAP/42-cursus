@@ -6,12 +6,11 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:15:19 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/16 10:08:05 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/22 15:30:37 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include "../includes/libft.h"
+#include "../../includes/so_long.h"
 
 static char	*save_rest(int *ptr, char *rest)
 {

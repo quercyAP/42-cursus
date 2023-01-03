@@ -1,6 +1,19 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
+#    Updated: 2022/12/24 10:24:17 by glamazer         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCS	= source/check/check_error_utils.c source/check/check_error.c source/utils/free.c \
 		source/utils/get_next_line.c source/utils/get_next_line_utils.c source/utils/parsing.c \
-		source/so_long.c source/utils/utils.c
+		source/so_long.c source/utils/init.c source/draw_map.c source/utils/count_elem.c \
+		source/utils/load_sprite.c
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -20,17 +33,18 @@ WINCFLAGS	= -Wall -Wextra -Werror -ldl -lglfw -pthread -lm
 
 MACCFLAGS	= -Wall -Wextra -Werror
 # Windows set
-# .c.o:
-# 			${CC} ${SRCS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
-
-# ${NAME}:	.c.o
-
-# MAC set
 .c.o:
-			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
+			${CC} ${WINCFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
-			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
+			${CC} ${OBJS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
+
+# MAC set
+# .c.o:
+# 			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
+
+# ${NAME}:	${OBJS}
+# 			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
 
 run:		
 			./${NAME} ${MAP}

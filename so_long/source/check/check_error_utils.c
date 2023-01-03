@@ -6,13 +6,11 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:50:09 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/17 19:50:35 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/22 15:31:14 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include "../includes/libft.h"
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
 void	flood_fill(char **tab, t_point size, int x, int y)
 {

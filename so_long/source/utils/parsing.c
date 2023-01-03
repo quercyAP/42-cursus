@@ -6,13 +6,11 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:02:47 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/20 10:25:14 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/22 15:30:40 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include "../includes/libft.h"
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
 static int	lst_ligne(t_list **list, int fd)
 {

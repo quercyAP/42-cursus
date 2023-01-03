@@ -6,13 +6,11 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:21 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/18 09:50:31 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/22 15:31:10 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include "../includes/libft.h"
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
 static int	is_rect(char **map_array)
 {

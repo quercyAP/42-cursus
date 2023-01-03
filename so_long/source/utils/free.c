@@ -6,13 +6,12 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:26:22 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/18 08:21:36 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/24 10:22:50 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include "../includes/libft.h"
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
+
 
 void	free_map(char **map_array)
 {
@@ -50,4 +49,12 @@ void	elem_clear(t_elem *elem)
 	lst_clear(&elem->lst_spawn);
 	lst_clear(&elem->lst_item);
 	free(elem);
+}
+
+void	t_game_clear(t_game *so_long)
+{
+	elem_clear(so_long->elem);
+	free_map(so_long->map);
+	mlx_terminate(so_long->mlx);
+	free(so_long);
 }

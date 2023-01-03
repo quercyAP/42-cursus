@@ -6,25 +6,11 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:50:42 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/20 13:48:15 by glamazer         ###   ########.fr       */
+/*   Updated: 2022/12/22 15:44:09 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include "../includes/libft.h"
-#include "../includes/so_long.h"
-
-void	elem_init(t_elem *elem, char **map_array)
-{
-	elem->empty = '0';
-	elem->wall = '1';
-	elem->exit = 'E';
-	elem->lst_exit = count_elem(map_array, 'E');
-	elem->item = 'C';
-	elem->lst_item = count_elem(map_array, 'C');
-	elem->spawn = 'P';
-	elem->lst_spawn = count_elem(map_array, 'P');
-}
+#include "../../includes/so_long.h"
 
 int	map_len(char **map_array)
 {
