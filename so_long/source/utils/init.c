@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 15:44:32 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/03 14:22:46 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/04 11:36:32 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	game_init(t_game *so_long, char **map)
 	so_long->win_w = ft_strlen(map[0]) * 64;
 	so_long->mlx = mlx_init(so_long->win_w, so_long->win_h, "so_long", true);
 	so_long->map = map;
+	so_long->ip = 0;
+	so_long->jump_state = false;
 	so_long->elem = elem;
 	so_long->void_t = mlx_load_png("asset/Environment/Void.png");
 	so_long->wall_t = mlx_load_png("asset/Environment/Wall1.png");
