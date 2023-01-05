@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/04 15:32:48 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:56:37 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_game
 	int				win_h;
 	char			**map;
 	int				ip;
+	int				h_max;
 	bool			jump_state;
 	t_elem			*elem;
 	mlx_texture_t	*void_t;

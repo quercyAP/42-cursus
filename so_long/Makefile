@@ -6,7 +6,7 @@
 #    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/03 12:17:53 by glamazer         ###   ########.fr        #
+#    Updated: 2023/01/05 08:52:44 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ memcheck:	re
 re:			all
 
 clean:		
-			rm -rf a.out a.out.dSYM ${OBJS}
+			rm -rf a.out so_long.dSYM ${OBJS}
 
 fclean:		clean
 			rm -rf so_long
