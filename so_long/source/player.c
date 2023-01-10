@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:03:45 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/05 14:06:49 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:04:01 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ static void	player_jump(void *so_long)
 	t_game	*so;
 
 	so = so_long;
-	if (so->h_max <= 130)
-	{
+	if (player_ucoll(so_long))
 		player_move(so, -10, 'y');
-		so->h_max += 10;
-	}
 }
 
 static void	gravity(void *so_long)
@@ -44,11 +41,8 @@ static void	gravity(void *so_long)
 	t_game	*so;
 
 	so = so_long;
-	if (so->h_max > 0)
-	{
+	if (player_dcoll(so))
 		player_move(so, 5, 'y');
-		so->h_max -= 5;
-	}
 }
 
 void	key_hook(void *param)
@@ -62,9 +56,15 @@ void	key_hook(void *param)
 	if (mlx_is_key_down(so->mlx, MLX_KEY_SPACE))
 		player_jump(so);
 	if (mlx_is_key_down(so->mlx, MLX_KEY_LEFT))
-		player_move(so, -5, 'x');
+	{
+		if (player_lcoll(so))
+			player_move(so, -5, 'x');
+	}
 	if (mlx_is_key_down(so->mlx, MLX_KEY_RIGHT))
-		player_move(so, 5, 'x');
+	{
+		if (player_rcoll(so))
+			player_move(so, 5, 'x');
+	}
 }
 
 void	draw_img(t_game *so)

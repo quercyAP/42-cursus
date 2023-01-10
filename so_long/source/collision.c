@@ -6,29 +6,85 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:43:02 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/05 15:20:06 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:26:04 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	player_coll(t_game *so_long)
+int	player_dcoll(t_game *so_long)
 {
 	t_point	p_axe;
-	t_point	w_axe;
+	int		of;
 	int		i;
 
-	p_axe.x = so_long->player_idle_i[0]->instances->x;
-	p_axe.y = so_long->player_idle_i[0]->instances->y;
-	i = 0;
-	if (p_axe.y == 64 || p_axe.y + 64 == (map_len(so_long->map) * 64) - 64
-		|| p_axe.x == 64 || p_axe.x + 64 == (ft_strlen(so_long->map[0]) * 64) - 64)
-		return (0);
-	while (so_long->wall_i->instances[i])
+	of = 64;
+	p_axe.y = (so_long->player_idle_i[0]->instances->y + of) / of;
+	i = of;
+	if (mlx_is_key_down(so_long.mlx, ))
+	while (i > 0)
 	{
-		w_axe.y = so_long->wall_i->instances[i].y;
-		w_axe.x = so_long->wall_i->instances[i].x;
-		if (w_axe.x == 0 || w_axe.x == )
+		p_axe.x = (so_long->player_idle_i[0]->instances->x + i) / of;
+		printf("char = %c\n", so_long->map[p_axe.y][p_axe.x]);
+		if (so_long->map[p_axe.y][p_axe.x] == '1')
+			return (0);
+		i--;
+	}
+	return (1);
+}
+
+int	player_lcoll(t_game *so_long)
+{
+	t_point	p_axe;
+	int		of;
+	int		i;
+
+	of = 64;
+	p_axe.x = so_long->player_idle_i[0]->instances->x / of;
+	i = 0;
+	while (i < of - 1)
+	{
+		p_axe.y = (so_long->player_idle_i[0]->instances->y + i) / of;
+		if (so_long->map[p_axe.y][p_axe.x] == '1')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	player_rcoll(t_game *so_long)
+{
+	t_point	p_axe;
+	int		of;
+	int		i;
+
+	of = 64;
+	p_axe.x = (so_long->player_idle_i[0]->instances->x + of) / of;
+	i = 0;
+	while (i < of - 1)
+	{
+		p_axe.y = (so_long->player_idle_i[0]->instances->y + i) / of;
+		if (so_long->map[p_axe.y][p_axe.x] == '1')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	player_ucoll(t_game *so_long)
+{
+	t_point	p_axe;
+	int		of;
+	int		i;
+
+	of = 64;
+	p_axe.y = so_long->player_idle_i[0]->instances->y / of;
+	i = 0;
+	while (i < of)
+	{
+		p_axe.x = (so_long->player_idle_i[0]->instances->x + i) / of;
+		if (so_long->map[p_axe.y][p_axe.x] == '1')
+			return (0);
 		i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/05 11:56:37 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:50:06 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "get_next_line.h"
 # include "libft.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
 // # include "/home/guigui/MLX42/include/MLX42/MLX42.h"
 
@@ -45,7 +46,6 @@ typedef struct s_game
 	int				win_h;
 	char			**map;
 	int				ip;
-	int				h_max;
 	bool			jump_state;
 	t_elem			*elem;
 	mlx_texture_t	*void_t;
@@ -80,9 +80,13 @@ char				**map_dup(char **map_array);
 t_list				*count_elem(char **map_array, char c);
 t_point				*find_elem(char **map_array, char c, t_point *axe);
 void				draw_map(t_game *so_long);
+// collision
+int					player_dcoll(t_game *so_long);
+int					player_lcoll(t_game *so_long);
+int					player_rcoll(t_game *so_long);
+int					player_ucoll(t_game *so_long);
 
 void				player_idle(void *so_long);
 void				draw_img(t_game *so);
 void				key_hook(void *param);
-
 #endif

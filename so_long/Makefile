@@ -6,14 +6,14 @@
 #    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/05 08:52:44 by glamazer         ###   ########.fr        #
+#    Updated: 2023/01/10 08:39:51 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	= source/check/check_error_utils.c source/check/check_error.c source/utils/free.c \
 		source/utils/get_next_line.c source/utils/get_next_line_utils.c source/utils/parsing.c \
 		source/so_long.c source/utils/init.c source/draw_map.c source/utils/count_elem.c \
-		source/utils/load_sprite.c source/player.c
+		source/utils/load_sprite.c source/player.c source/collision.c
 
 OBJS	= ${SRCS:.c=.o}
 
