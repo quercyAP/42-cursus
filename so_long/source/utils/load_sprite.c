@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/03 14:54:42 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/11 09:40:30 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,19 @@ static char	*found_path(char *sprite_name, char *type, int nb)
 	return (str1);
 }
 
-static void	set_texture_to_img(int i, char *path, char *type, t_game *so_long)
+static void	set_texture_to_img(int i, char *path, t_game *so_long, char *name)
 {
-	if (!ft_strncmp("Player", type, 6))
+	if (!ft_strncmp("Player-idle", name, 11))
 	{
 		so_long->player_idle_t[i] = mlx_load_png(path);
 		so_long->player_idle_i[i] = mlx_texture_to_image(so_long->mlx, \
 		so_long->player_idle_t[i]);
+	}
+	else if (!ft_strncmp("Player-jet", name, 10))
+	{
+		so_long->player_jet_t[i] = mlx_load_png(path);
+		so_long->player_jet_i[i] = mlx_texture_to_image(so_long->mlx, \
+		so_long->player_jet_t[i]);
 	}
 }
 
@@ -56,7 +62,7 @@ t_game *so_long)
 	while (i < nb_sprite)
 	{
 		path = found_path(sprite_name, type, i);
-		set_texture_to_img(i, path, type, so_long);
+		set_texture_to_img(i, path, so_long, sprite_name);
 		free(path);
 		i++;
 	}

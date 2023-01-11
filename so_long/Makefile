@@ -6,7 +6,7 @@
 #    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/10 08:39:51 by glamazer         ###   ########.fr        #
+#    Updated: 2023/01/11 07:24:48 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,18 +33,18 @@ WINCFLAGS	= -Wall -Wextra -Werror -ldl -lglfw -pthread -lm
 
 MACCFLAGS	= -Wall -Wextra -Werror
 # Windows set
-# .c.o:
-# 			${CC} ${WINCFLAGS} -c $< -o ${<:.c=.o}
-
-# ${NAME}:	${OBJS}
-# 			${CC} ${OBJS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
-
-# MAC set
 .c.o:
-			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
+			${CC} ${WINCFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
-			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
+			${CC} ${OBJS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
+
+# MAC set
+# .c.o:
+# 			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
+
+# ${NAME}:	${OBJS}
+# 			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
 
 run:		
 			./${NAME} ${MAP}

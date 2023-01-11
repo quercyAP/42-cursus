@@ -6,20 +6,20 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/10 14:50:06 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/11 10:22:34 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
+// # include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
 # include "get_next_line.h"
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
-// # include "/home/guigui/MLX42/include/MLX42/MLX42.h"
+# include "/home/guigui/MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_point
 {
@@ -46,15 +46,19 @@ typedef struct s_game
 	int				win_h;
 	char			**map;
 	int				ip;
+	int				jp;
 	bool			jump_state;
+	t_point			drw_of;
 	t_elem			*elem;
 	mlx_texture_t	*void_t;
 	mlx_texture_t	*wall_t;
 	mlx_texture_t	*player_idle_t[6];
+	mlx_texture_t	*player_jet_t[4];
 	mlx_texture_t	*gate_t;
 	mlx_image_t		*void_i;
 	mlx_image_t		*wall_i;
 	mlx_image_t		*player_idle_i[6];
+	mlx_image_t		*player_jet_i[4];
 	mlx_image_t		*gate_i;
 }					t_game;
 
@@ -81,12 +85,13 @@ t_list				*count_elem(char **map_array, char c);
 t_point				*find_elem(char **map_array, char c, t_point *axe);
 void				draw_map(t_game *so_long);
 // collision
-int					player_dcoll(t_game *so_long);
+int					player_dcoll(t_game *so_long, int vof);
 int					player_lcoll(t_game *so_long);
 int					player_rcoll(t_game *so_long);
 int					player_ucoll(t_game *so_long);
 
 void				player_idle(void *so_long);
-void				draw_img(t_game *so);
+void				player_jet(void *so_long);
+void				draw_img(t_game *so, t_point of, mlx_image_t **img, int len);
 void				key_hook(void *param);
 #endif
