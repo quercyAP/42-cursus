@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:03:45 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/04 16:43:03 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:04:01 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,42 @@ static void	player_move(t_game *so, int nb, char axe)
 
 static void	player_jump(void *so_long)
 {
-	int		i;
-	int		curr;
-	int		y;
-	int		max;
 	t_game	*so;
 
 	so = so_long;
-	i = 0;
-	curr = so->player_idle_i[i]->instances[0].y;
-	max = curr - 128;
-	y = curr;
-	while (y > max)
-	{
-		so->jump_state = true;
-		player_move(so, -1, 'y');
-		y -= 1;
-	}
+	if (player_ucoll(so_long))
+		player_move(so, -10, 'y');
+}
+
+static void	gravity(void *so_long)
+{
+	t_game	*so;
+
+	so = so_long;
+	if (player_dcoll(so))
+		player_move(so, 5, 'y');
 }
 
 void	key_hook(void *param)
 {
 	t_game	*so;
-	int		i;
 
 	so = param;
-	i = so->ip;
+	gravity(so);
 	if (mlx_is_key_down(so->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(so->mlx);
-	if (mlx_is_key_down(so->mlx, MLX_KEY_SPACE) && !so->jump_state)
+	if (mlx_is_key_down(so->mlx, MLX_KEY_SPACE))
 		player_jump(so);
 	if (mlx_is_key_down(so->mlx, MLX_KEY_LEFT))
-		player_move(so, -5, 'x');
+	{
+		if (player_lcoll(so))
+			player_move(so, -5, 'x');
+	}
 	if (mlx_is_key_down(so->mlx, MLX_KEY_RIGHT))
-		player_move(so, 5, 'x');
+	{
+		if (player_rcoll(so))
+			player_move(so, 5, 'x');
+	}
 }
 
 void	draw_img(t_game *so)
@@ -75,18 +77,18 @@ void	draw_img(t_game *so)
 	while (i < 6)
 	{
 		so->player_idle_i[i]->enabled = false;
-		mlx_image_to_window(so->mlx, so->player_idle_i[i], \
-			axe->x * 64, axe->y * 64);
+		mlx_image_to_window(so->mlx, so->player_idle_i[i], axe->x * 64, axe->y
+			* 64);
 		i++;
 	}
 }
 
 void	player_idle(void *so_long)
 {
-	float				current;
-	static float		start;
-	static float		delay;
-	t_game				*t;
+	float			current;
+	static float	start;
+	float			delay;
+	t_game			*t;
 
 	delay = 0.15f;
 	t = so_long;

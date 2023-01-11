@@ -6,12 +6,11 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:10:06 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/04 16:42:57 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:56:28 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-#include "so_long.h"
 
 int32_t	main(int argc, char **argv)
 {
