@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/11 09:40:30 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:03:42 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,24 @@ static void	set_texture_to_img(int i, char *path, t_game *so_long, char *name)
 		so_long->player_jet_t[i] = mlx_load_png(path);
 		so_long->player_jet_i[i] = mlx_texture_to_image(so_long->mlx, \
 		so_long->player_jet_t[i]);
+	}
+	else if (!ft_strncmp("LPlayer-idle", name, 12))
+	{
+		so_long->lplayer_idle_t[i] = mlx_load_png(path);
+		so_long->lplayer_idle_i[i] = mlx_texture_to_image(so_long->mlx, \
+		so_long->lplayer_idle_t[i]);
+	}
+	if (!ft_strncmp("LPlayer-run", name, 12))
+	{
+		so_long->lplayer_run_t[i] = mlx_load_png(path);
+		so_long->lplayer_run_i[i] = mlx_texture_to_image(so_long->mlx, \
+		so_long->lplayer_run_t[i]);
+	}
+	else if (!ft_strncmp("Player-run", name, 11))
+	{
+		so_long->player_run_t[i] = mlx_load_png(path);
+		so_long->player_run_i[i] = mlx_texture_to_image(so_long->mlx, \
+		so_long->player_run_t[i]);
 	}
 }
 
