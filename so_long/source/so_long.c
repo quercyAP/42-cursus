@@ -29,11 +29,7 @@ int32_t	main(int argc, char **argv)
 	so = malloc(sizeof(t_game));
 	game_init(so, map);
 	draw_map(so);
-	draw_img(so, (t_point){15, 32}, so->player_jet_i, so->j_len);
-	draw_img(so, (t_point){0, 0}, so->player_idle_i, so->p_len);
-	draw_img(so, (t_point){0, 0}, so->player_run_i, so->p_len);
-	draw_img(so, (t_point){0, 0}, so->lplayer_run_i, so->p_len);
-	draw_img(so, (t_point){0, 0}, so->lplayer_idle_i, so->p_len);
+	player_draw(so);
 	mlx_loop_hook(so->mlx, &player_anim, so);
 	mlx_loop_hook(so->mlx, &move_hook, so);
 	mlx_loop(so->mlx);

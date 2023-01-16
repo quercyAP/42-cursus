@@ -6,17 +6,38 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:56:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/12 15:09:28 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:39:27 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static void	set_anim(t_game *so, void (*anim)(t_game *))
+void	del_img(mlx_image_t **img)
 {
-	if (so->lplayer_idle_i[1] == so->lplayer_idle_i[2])
-		printf("ok\n");
-	anim(so);
+	int	i;
+	int	len;
+
+	len = sprite_len(img);
+	i = 0;
+	while (i < len)
+	{
+		img[i]->enabled = false;
+		i++;
+	}
+}
+
+void	set_anim(t_player *player, void (*anim)(t_player *),
+mlx_image_t ***img)
+{
+	int	i;
+
+	i = 0;
+	while (i < player->sprite_len)
+	{
+		del_img(img[i]);
+		i++;
+	}
+	anim(player);
 }
 
 void	player_anim(void *param)
@@ -24,39 +45,18 @@ void	player_anim(void *param)
 	t_game	*so;
 
 	so = param;
-	if (so->dir == 0 && so->move_state == 0)
-	{
-		del_img(so->lplayer_run_i, so->p_len);
-		del_img(so->player_run_i, so->p_len);
-		del_img(so->player_idle_i, so->p_len);
-		// lplayer_idle(so);
-		set_anim(so, &lplayer_idle);
-	}
-	else if (so->dir == 1 && so->move_state == 0)
-	{
-		del_img(so->lplayer_run_i, so->p_len);
-		del_img(so->player_run_i, so->p_len);
-		del_img(so->lplayer_idle_i, so->p_len);
-		player_idle(so);
-	}
-	if (so->dir == 0 && so->jump_state == 0 && so->move_state == 1)
-	{
-		del_img(so->lplayer_idle_i, so->p_len);
-		del_img(so->player_idle_i, so->p_len);
-		del_img(so->player_run_i, so->p_len);
-		lplayer_run(so);
-	}
-	else if (so->dir == 1 && so->jump_state == 0 && so->move_state == 1)
-	{
-		del_img(so->lplayer_idle_i, so->p_len);
-		del_img(so->player_idle_i, so->p_len);
-		del_img(so->lplayer_run_i, so->p_len);
-		player_run(so);
-	}
-	if (so->jump_state == 1)
-		player_jet(so);
-	else
-		del_img(so->player_jet_i, so->j_len);
+	if (!so->player->dir && !so->player->move_state)
+		set_anim(so->player, &lplayer_idle, so->player->sprite);
+	else if (so->player->dir && !so->player->move_state)
+		set_anim(so->player, &player_idle, so->player->sprite);
+	if (!so->player->dir && so->player->move_state)
+		set_anim(so->player, &lplayer_run, so->player->sprite);
+	else if (so->player->dir && so->player->move_state)
+		set_anim(so->player, &player_run, so->player->sprite);
+	if (so->player->jump_state)
+		player_jet(so->player);
+	else if (so->player->jump_state && !mlx_is_key_down(so->mlx, MLX_KEY_SPACE))
+		player_jet1(so->player);
 }
 
 void	move_hook(void *param)
@@ -69,21 +69,21 @@ void	move_hook(void *param)
 		mlx_close_window(so->mlx);
 	if (mlx_is_key_down(so->mlx, MLX_KEY_SPACE))
 	{
-		so->jump_state = 1;
 		player_jump(so);
+		so->player->jump_state = 1;
 	}
 	if (mlx_is_key_down(so->mlx, MLX_KEY_LEFT) && player_lcoll(so))
 	{
-		so->move_state = 1;
-		so->dir = 0;
-		player_move(so, -5, 'x');
+		so->player->move_state = 1;
+		so->player->dir = 0;
+		player_move(so->player, -5, 'x');
 	}
 	else if (mlx_is_key_down(so->mlx, MLX_KEY_RIGHT) && player_rcoll(so))
 	{
-		so->move_state = 1;
-		so->dir = 1;
-		player_move(so, 5, 'x');
+		so->player->move_state = 1;
+		so->player->dir = 1;
+		player_move(so->player, 5, 'x');
 	}
 	else
-		so->move_state = 0;
+		so->player->move_state = 0;
 }

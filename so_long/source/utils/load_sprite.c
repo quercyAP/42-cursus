@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/12 14:03:42 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:10:53 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,52 +36,32 @@ static char	*found_path(char *sprite_name, char *type, int nb)
 	return (str1);
 }
 
-static void	set_texture_to_img(int i, char *path, t_game *so_long, char *name)
+void	set_player_sprite(char *sprite_name, int nb_sprite, mlx_image_t **img,
+t_game *so)
 {
-	if (!ft_strncmp("Player-idle", name, 11))
-	{
-		so_long->player_idle_t[i] = mlx_load_png(path);
-		so_long->player_idle_i[i] = mlx_texture_to_image(so_long->mlx, \
-		so_long->player_idle_t[i]);
-	}
-	else if (!ft_strncmp("Player-jet", name, 10))
-	{
-		so_long->player_jet_t[i] = mlx_load_png(path);
-		so_long->player_jet_i[i] = mlx_texture_to_image(so_long->mlx, \
-		so_long->player_jet_t[i]);
-	}
-	else if (!ft_strncmp("LPlayer-idle", name, 12))
-	{
-		so_long->lplayer_idle_t[i] = mlx_load_png(path);
-		so_long->lplayer_idle_i[i] = mlx_texture_to_image(so_long->mlx, \
-		so_long->lplayer_idle_t[i]);
-	}
-	if (!ft_strncmp("LPlayer-run", name, 12))
-	{
-		so_long->lplayer_run_t[i] = mlx_load_png(path);
-		so_long->lplayer_run_i[i] = mlx_texture_to_image(so_long->mlx, \
-		so_long->lplayer_run_t[i]);
-	}
-	else if (!ft_strncmp("Player-run", name, 11))
-	{
-		so_long->player_run_t[i] = mlx_load_png(path);
-		so_long->player_run_i[i] = mlx_texture_to_image(so_long->mlx, \
-		so_long->player_run_t[i]);
-	}
-}
-
-void	set_sprite(char *sprite_name, int nb_sprite, char *type, \
-t_game *so_long)
-{
-	int		i;
-	char	*path;
+	int			i;
+	char		*path;
+	static int	j;
 
 	i = 0;
 	while (i < nb_sprite)
 	{
-		path = found_path(sprite_name, type, i);
-		set_texture_to_img(i, path, so_long, sprite_name);
+		path = found_path(sprite_name, so->player->type, i);
+		img[i] = mlx_texture_to_image(so->mlx, mlx_load_png(path));
 		free(path);
 		i++;
 	}
+	img[i] = NULL;
+	so->player->sprite[j++] = img;
+	so->player->sprite_len = j;
+}
+
+int	sprite_len(mlx_image_t **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
 }

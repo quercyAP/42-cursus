@@ -6,136 +6,124 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:49:46 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/12 14:38:34 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:43:41 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	del_img(mlx_image_t **img, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		img[i]->enabled = false;
-		i++;
-	}
-}
-
-void	player_idle(t_game *so_long)
+void	player_idle(t_player *player)
 {
 	float			current;
 	static float	start;
 	float			delay;
-	t_game			*t;
+	int				i;
 
 	delay = 0.15f;
-	t = so_long;
+	current = mlx_get_time();
+	i = player->ip;
+	if (current - start >= delay)
+	{
+		start = current;
+		i = (i + 1) % player->p_len;
+	}
+	player->idle[i]->enabled = true;
+	player->ip = i;
+}
+
+void	lplayer_idle(t_player *player)
+{
+	float			current;
+	static float	start;
+	float			delay;
+	int				i;
+
+	delay = 0.15f;
+	current = mlx_get_time();
+	i = player->lip;
+	if (current - start >= delay)
+	{
+		start = current;
+		i = (i + 1) % player->p_len;
+	}
+	player->lidle[i]->enabled = true;
+	player->lip = i;
+}
+
+void	player_jet(t_player *player)
+{
+	float			current;
+	static float	start;
+	float			delay;
+	int				i;
+
+	delay = 0.05f;
+	current = mlx_get_time();
+	i = player->jp;
+	if (current - start >= delay)
+	{
+		start = current;
+		i = (i + 1) % 4;
+	}
+	del_img(player->explo);
+	player->explo[i]->enabled = true;
+	player->jp = i;
+}
+
+void	player_run(t_player *player)
+{
+	float			current;
+	static float	start;
+	float			delay;
+	int				i;
+
+	delay = 0.10f;
+	i = player->rip;
 	current = mlx_get_time();
 	if (current - start >= delay)
 	{
 		start = current;
-		t->player_idle_i[t->ip]->enabled = true;
-		t->ip = (t->ip + 1) % t->p_len;
+		i = (i + 1) % player->p_len;
 	}
-	else
-	{
-		del_img(t->player_idle_i, t->p_len);
-		t->player_idle_i[t->ip]->enabled = true;
-	}
+	player->run[i]->enabled = true;
+	player->rip = i;
 }
 
-void	lplayer_idle(t_game *so_long)
+void	lplayer_run(t_player *player)
 {
 	float			current;
-	static float	lstart;
+	static float	start;
 	float			delay;
-	t_game			*t;
+	int				i;
 
-	delay = 0.15f;
-	t = so_long;
+	delay = 0.10f;
 	current = mlx_get_time();
-	if (current - lstart >= delay)
+	i = player->rlip;
+	if (current - start >= delay)
 	{
-		lstart = current;
-		t->lplayer_idle_i[t->lip]->enabled = true;
-		t->lip = (t->lip + 1) % t->p_len;
+		start = current;
+		i = (i + 1) % player->p_len;
 	}
-	else
-	{
-		del_img(t->lplayer_idle_i, t->p_len);
-		t->lplayer_idle_i[t->lip]->enabled = true;
-	}
+	player->lrun[i]->enabled = true;
+	player->rlip = i;
 }
 
-void	player_jet(t_game *so_long)
+void	player_jet1(t_player *player)
 {
 	float			current;
-	static float	jet_start;
+	static float	start;
 	float			delay;
-	t_game			*t;
+	int				i;
 
 	delay = 0.02f;
-	t = so_long;
 	current = mlx_get_time();
-	if (current - jet_start >= delay && mlx_is_key_down(t->mlx, MLX_KEY_SPACE))
+	i = player->jp;
+	if (current - start >= delay)
 	{
-		jet_start = current;
-		t->player_jet_i[t->jp]->enabled = true;
-		t->jp = (t->jp + 1) % t->j_len;
+		start = current;
+		i = (i + 1) % player->e_len;
 	}
-	else
-	{
-		t->jump_state = 0;
-		del_img(t->player_jet_i, t->j_len);
-		t->player_jet_i[t->jp]->enabled = true;
-	}
-}
-
-void	player_run(t_game *so_long)
-{
-	float			current;
-	static float	rstart;
-	float			delay;
-	t_game			*t;
-
-	delay = 0.10f;
-	t = so_long;
-	current = mlx_get_time();
-	if (current - rstart >= delay)
-	{
-		rstart = current;
-		t->player_run_i[t->rip]->enabled = true;
-		t->rip = (t->rip + 1) % t->p_len;
-	}
-	else
-	{
-		del_img(t->player_run_i, t->p_len);
-		t->player_run_i[t->rip]->enabled = true;
-	}
-}
-
-void	lplayer_run(t_game *so_long)
-{
-	float			current;
-	static float	rlstart;
-	float			delay;
-	t_game			*t;
-
-	delay = 0.10f;
-	t = so_long;
-	current = mlx_get_time();
-	if (current - rlstart >= delay)
-	{
-		rlstart = current;
-		t->lplayer_run_i[t->rlip]->enabled = true;
-		t->rlip = (t->rlip + 1) % t->p_len;
-	}
-	else
-	{
-		del_img(t->lplayer_run_i, t->p_len);
-		t->lplayer_run_i[t->rlip]->enabled = true;
-	}
+	del_img(player->explo);
+	player->explo[i]->enabled = true;
+	player->jp = i;
 }
