@@ -6,16 +6,19 @@
 #    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/12 12:09:01 by glamazer         ###   ########.fr        #
+#    Updated: 2023/01/17 12:45:52 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	= source/check/check_error_utils.c source/check/check_error.c source/utils/free.c \
-		source/utils/get_next_line.c source/utils/get_next_line_utils.c source/utils/parsing.c \
-		source/so_long.c source/utils/init.c source/draw.c source/utils/count_elem.c \
-		source/utils/load_sprite.c source/player_movement.c source/collision.c source/player_anim.c \
-		source/hook.c
-
+		source/utils/init.c source/utils/draw.c source/utils/count_elem.c \
+		source/utils/load_sprite.c source/utils/set_anim.c source/utils/get_next_line.c \
+		source/utils/get_next_line_utils.c source/utils/parsing.c \
+		source/player/player_movement.c source/player/player_collision.c source/player/player_hook.c \
+		source/player/player_anim1.c source/player/player_draw.c source/player/player_anim.c \
+		source/player/player_shoot.c \
+		source/so_long.c \
+		
 OBJS	= ${SRCS:.c=.o}
 
 WINLIBS	= lib/win_libft.a lib/win_libmlx42.a

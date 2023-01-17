@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/16 16:30:06 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:50:38 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,18 @@ typedef struct s_elem
 
 typedef struct s_player
 {
-	int				ip;
-	int				lip;
-	int				rip;
-	int				rlip;
 	int				jp;
-	int				dir;
+	int				sp;
+	int				curr_bull;
+	int				ammo;
 	int				p_len;
-	int				j_len;
+	int				b_len;
 	int				e_len;
+	int				s_len;
+	int				dir;
 	int				move_state;
 	int				jump_state;
+	int				shoot_state;
 	int				sprite_len;
 	char			*type;
 	mlx_image_t		**sprite[6];
@@ -59,8 +60,9 @@ typedef struct s_player
 	mlx_image_t		*lidle[7];
 	mlx_image_t		*run[7];
 	mlx_image_t		*lrun[7];
-	mlx_image_t		*jet[7];
-	mlx_image_t		*explo[9];
+	mlx_image_t		*explo[10];
+	mlx_image_t		*shoot[5];
+	mlx_image_t		*bullet[5];
 }					t_player;
 
 typedef struct s_game
@@ -105,24 +107,27 @@ void				draw_img(t_game *so, t_point of,
 						mlx_image_t **img, int len);
 void				player_draw(t_game *so);
 int					sprite_len(mlx_image_t **array);
+void				del_img(mlx_image_t **img);
+void				set_anim(t_player *player, void (*anim)(t_player *),
+						mlx_image_t ***img, int len);
 // collision
 int					player_dcoll(t_game *so_long, int vof);
 int					player_lcoll(t_game *so_long);
 int					player_rcoll(t_game *so_long);
 int					player_ucoll(t_game *so_long);
-// animator
+// player anim
 void				player_idle(t_player *player);
 void				lplayer_idle(t_player *player);
 void				player_jet(t_player *player);
 void				lplayer_run(t_player *player);
 void				player_run(t_player *player);
 void				player_jet1(t_player *player);
-void				del_img(mlx_image_t **img);
-void				set_anim(t_player *player, void (*anim)(t_player *),
-						mlx_image_t ***img);
+void				player_shoot(t_player *player);
+void				bullet_anim(t_player *player);
+void				bullet_shoot(mlx_key_data_t data, void *param);
+void				bullet_routine(void *para);
 // hook
-void				move_hook(void *param);
-void				player_anim(void *so);
+void				player_hook(void *param);
 // player movement
 void				player_move(t_player *player, float nb, char axe);
 void				player_jump(t_game *so_long);

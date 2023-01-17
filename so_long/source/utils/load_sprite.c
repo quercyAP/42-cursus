@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/16 15:10:53 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:50:36 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_game *so)
 {
 	int			i;
 	char		*path;
-	static int	j;
 
 	i = 0;
 	while (i < nb_sprite)
@@ -52,8 +51,8 @@ t_game *so)
 		i++;
 	}
 	img[i] = NULL;
-	so->player->sprite[j++] = img;
-	so->player->sprite_len = j;
+	if (so->player->sprite_len < 6)
+		so->player->sprite[so->player->sprite_len++] = img;
 }
 
 int	sprite_len(mlx_image_t **array)
@@ -61,7 +60,7 @@ int	sprite_len(mlx_image_t **array)
 	int	i;
 
 	i = 0;
-	while (array[i])
+	while (array[i] != NULL)
 		i++;
 	return (i);
 }

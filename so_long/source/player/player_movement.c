@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:03:45 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/16 16:46:36 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:46:16 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ void	player_move(t_player *player, float nb, char axe)
 	j = 0;
 	while (i < player->sprite_len)
 	{
-		printf("i = %i\n", i);
 		jlen = sprite_len(player->sprite[i]);
 		j = 0;
 		while (j < jlen)
 		{
-			printf("j = %i\n", j);
 			if (axe == 'x')
 				player->sprite[i][j]->instances[0].x += nb;
 			else
@@ -36,6 +34,7 @@ void	player_move(t_player *player, float nb, char axe)
 		}
 		i++;
 	}
+	player->move_state = 1;
 }
 
 void	player_jump(t_game *so_long)

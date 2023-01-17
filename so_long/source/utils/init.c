@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 15:44:32 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/16 16:30:02 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:21:30 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,30 @@ void	elem_init(t_elem *elem, char **map_array)
 
 static void	init_sprite(t_game *so)
 {
+	set_player_sprite("explosion", so->player->e_len, so->player->explo, so);
+	set_player_sprite("Player-shoot", so->player->s_len, so->player->shoot, so);
 	set_player_sprite("Player-idle", so->player->p_len, so->player->idle, so);
 	set_player_sprite("LPlayer-idle", so->player->p_len, so->player->lidle, so);
 	set_player_sprite("LPlayer-run", so->player->p_len, so->player->lrun, so);
 	set_player_sprite("Player-run", so->player->p_len, so->player->run, so);
-	// set_player_sprite("Player-jet", so->player->j_len, so->player->jet, so);
-	set_player_sprite("explosion", so->player->e_len, so->player->explo, so);
+	set_player_sprite("Bullet", so->player->b_len, so->player->bullet, so);
 }
 
 static void	player_init(t_player *player)
 {
-	player->ip = 0;
-	player->lip = 0;
-	player->rip = 0;
 	player->dir = 1;
-	player->rlip = 0;
 	player->jp = 0;
+	player->sp = 0;
+	player->curr_bull = 0;
+	player->ammo = 11;
 	player->p_len = 6;
-	player->j_len = 4;
+	player->s_len = 4;
 	player->e_len = 9;
+	player->b_len = 4;
+	player->sprite_len = 0;
 	player->move_state = 0;
 	player->jump_state = 0;
+	player->shoot_state = 0;
 	player->type = "Player";
 }
 
