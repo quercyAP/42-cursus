@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:56:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/17 15:45:22 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:11:16 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,19 @@ static void	player_anim(t_game *so)
 
 	len = so->player->sprite_len;
 	if (!so->player->dir && !so->player->move_state)
-		set_anim(so->player, &lplayer_idle, so->player->sprite, len);
+		set_anim(so->player, lplayer_idle, so->player->sprite, len);
 	else if (so->player->dir && !so->player->move_state)
-		set_anim(so->player, &player_idle, so->player->sprite, len);
+		set_anim(so->player, player_idle, so->player->sprite, len);
 	if (!so->player->dir && so->player->move_state)
-		set_anim(so->player, &lplayer_run, so->player->sprite, len);
+		set_anim(so->player, lplayer_run, so->player->sprite, len);
 	else if (so->player->dir && so->player->move_state)
-		set_anim(so->player, &player_run, so->player->sprite, len);
+		set_anim(so->player, player_run, so->player->sprite, len);
 	if (so->player->jump_state)
 		player_jet(so->player);
 	else if (!so->player->jump_state && player_dcoll(so, 5))
 		player_jet1(so->player);
 	if (so->player->shoot_state)
-	{
-		set_anim(so->player, &player_shoot, so->player->sprite, len);
-		bullet_anim(so->player);
-	}
+		set_anim(so->player, player_shoot, so->player->sprite, len);
 }
 
 static void	move_hook(t_game *so)
@@ -64,5 +61,7 @@ void	player_hook(void *param)
 	so = param;
 	move_hook(so);
 	player_anim(so);
+	del_img(so->player->bullet);
 	bullet_anim(so->player);
+	bullet_routine(so);
 }

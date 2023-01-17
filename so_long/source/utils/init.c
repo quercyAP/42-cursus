@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 15:44:32 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/17 15:21:30 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:28:20 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	init_sprite(t_game *so)
 	set_player_sprite("LPlayer-run", so->player->p_len, so->player->lrun, so);
 	set_player_sprite("Player-run", so->player->p_len, so->player->run, so);
 	set_player_sprite("Bullet", so->player->b_len, so->player->bullet, so);
+	set_player_sprite("LBullet", so->player->b_len, so->player->lbullet, so);
 }
 
 static void	player_init(t_player *player)
@@ -40,10 +41,9 @@ static void	player_init(t_player *player)
 	player->dir = 1;
 	player->jp = 0;
 	player->sp = 0;
-	player->curr_bull = 0;
 	player->ammo = 11;
 	player->p_len = 6;
-	player->s_len = 4;
+	player->s_len = 3;
 	player->e_len = 9;
 	player->b_len = 4;
 	player->sprite_len = 0;
@@ -63,7 +63,7 @@ void	game_init(t_game *so, char **map)
 	elem_init(elem, map);
 	so->win_h = map_len(map) * 64;
 	so->win_w = ft_strlen(map[0]) * 64;
-	so->mlx = mlx_init(so->win_w, so->win_h, "so", true);
+	so->mlx = mlx_init(so->win_w, so->win_h, "so", false);
 	so->map = map;
 	so->elem = elem;
 	so->player = player;

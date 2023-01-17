@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 09:45:21 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/17 15:30:30 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:15:33 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	player_shoot(t_player *player)
 	delay = 0.05f;
 	current = mlx_get_time();
 	i = player->sp;
-	if (current - start >= delay && i < player->s_len - 1)
+	if (current - start >= delay && i < player->s_len)
 	{
 		start = current;
 		i++;
 	}
-	if (i == player->s_len - 1)
+	if (i == player->s_len)
 		i--;
 	player->shoot[i]->enabled = true;
 	player->sp = i;

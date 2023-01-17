@@ -30,9 +30,8 @@ int32_t	main(int argc, char **argv)
 	game_init(so, map);
 	draw_map(so);
 	player_draw(so);
-	mlx_loop_hook(so->mlx, &player_hook, so);
-	mlx_loop_hook(so->mlx, &bullet_routine, so);
-	mlx_key_hook(so->mlx, &bullet_shoot, so);
+	mlx_loop_hook(so->mlx, player_hook, so);
+	mlx_key_hook(so->mlx, bullet_shoot, so);
 	mlx_loop(so->mlx);
 	t_game_clear(so);
 	close(fd);
