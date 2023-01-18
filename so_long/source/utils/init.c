@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 15:44:32 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/17 21:28:20 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:41:21 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,29 @@ void	elem_init(t_elem *elem, char **map_array)
 	elem->lst_spawn = count_elem(map_array, 'P');
 }
 
-static void	init_sprite(t_game *so)
+static void	init_sprite(t_game *so, t_player *player, t_item *item)
 {
-	set_player_sprite("explosion", so->player->e_len, so->player->explo, so);
-	set_player_sprite("Player-shoot", so->player->s_len, so->player->shoot, so);
-	set_player_sprite("Player-idle", so->player->p_len, so->player->idle, so);
-	set_player_sprite("LPlayer-idle", so->player->p_len, so->player->lidle, so);
-	set_player_sprite("LPlayer-run", so->player->p_len, so->player->lrun, so);
-	set_player_sprite("Player-run", so->player->p_len, so->player->run, so);
-	set_player_sprite("Bullet", so->player->b_len, so->player->bullet, so);
-	set_player_sprite("LBullet", so->player->b_len, so->player->lbullet, so);
+	set_player_sprite("explosion", player->e_len, player->explo, so);
+	set_player_sprite("Player-shoot", player->s_len, player->shoot, so);
+	set_player_sprite("LPlayer-shoot", player->s_len, player->lshoot, so);
+	set_player_sprite("Player-idle", player->p_len, player->idle, so);
+	set_player_sprite("LPlayer-idle", player->p_len, player->lidle, so);
+	set_player_sprite("LPlayer-run", player->p_len, player->lrun, so);
+	set_player_sprite("Player-run", player->p_len, player->run, so);
+	set_player_sprite("Bullet", player->b_len, player->bullet, so);
+	set_player_sprite("LBullet", player->b_len, player->lbullet, so);
+	set_item_sprite("Item-energy", item->i_len, item->img, so);
+	set_item_sprite("Force-field", item->i_len, so->gate_anim->img, so);
 }
 
 static void	player_init(t_player *player)
 {
 	player->dir = 1;
+	player->s_dir = 1;
 	player->jp = 0;
-	player->sp = 0;
+	player->bp = 0;
+	player->lbp = 0;
+	player->var = 0;
 	player->ammo = 11;
 	player->p_len = 6;
 	player->s_len = 3;
@@ -51,28 +57,36 @@ static void	player_init(t_player *player)
 	player->jump_state = 0;
 	player->shoot_state = 0;
 	player->type = "Player";
+	player->coll_pos = malloc(sizeof(t_point) * 4);
+}
+
+static void	item_init(t_item *item, int len)
+{
+	item->type = "Item";
+	item->i_len = len;
 }
 
 void	game_init(t_game *so, char **map)
 {
-	t_elem		*elem;
-	t_player	*player;
-
-	elem = malloc(sizeof(t_elem));
-	player = malloc(sizeof(t_player));
-	elem_init(elem, map);
+	so->elem = malloc(sizeof(t_elem));
+	so->player = malloc(sizeof(t_player));
+	so->energy = malloc(sizeof(t_item));
+	so->gate_anim = malloc(sizeof(t_item));
+	elem_init(so->elem, map);
 	so->win_h = map_len(map) * 64;
 	so->win_w = ft_strlen(map[0]) * 64;
 	so->mlx = mlx_init(so->win_w, so->win_h, "so", false);
 	so->map = map;
-	so->elem = elem;
-	so->player = player;
+	so->nb_pick = 0;
 	so->void_t = mlx_load_png("asset/Environment/Void.png");
 	so->wall_t = mlx_load_png("asset/Environment/Wall1.png");
 	so->gate_t = mlx_load_png("asset/Props/Gate.png");
 	so->void_i = mlx_texture_to_image(so->mlx, so->void_t);
 	so->wall_i = mlx_texture_to_image(so->mlx, so->wall_t);
 	so->gate_i = mlx_texture_to_image(so->mlx, so->gate_t);
+	so->gate_i->enabled = false;
 	player_init(so->player);
-	init_sprite(so);
+	item_init(so->energy, 5);
+	item_init(so->gate_anim, 5);
+	init_sprite(so, so ->player, so->energy);
 }

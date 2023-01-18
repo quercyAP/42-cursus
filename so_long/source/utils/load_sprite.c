@@ -6,13 +6,13 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/17 18:39:35 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:30:14 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
 
-static char	*found_path(char *sprite_name, char *type, int nb)
+char	*found_path(char *sprite_name, char *type, int nb)
 {
 	char	*nbr;
 	char	*str1;
@@ -51,8 +51,25 @@ t_game *so)
 		i++;
 	}
 	img[i] = NULL;
-	if (so->player->sprite_len < 6)
+	if (so->player->sprite_len < 7)
 		so->player->sprite[so->player->sprite_len++] = img;
+}
+
+void	set_item_sprite(char *sprite_name, int nb_sprite, mlx_image_t **img,
+t_game *so)
+{
+	int			i;
+	char		*path;
+
+	i = 0;
+	while (i < nb_sprite)
+	{
+		path = found_path(sprite_name, so->energy->type, i);
+		img[i] = mlx_texture_to_image(so->mlx, mlx_load_png(path));
+		free(path);
+		i++;
+	}
+	img[i] = NULL;
 }
 
 int	sprite_len(mlx_image_t **array)

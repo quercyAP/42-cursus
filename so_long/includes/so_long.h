@@ -6,20 +6,20 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/17 21:28:47 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:33:33 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-// # include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
+# include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
 # include "get_next_line.h"
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
-# include "/home/guigui/MLX42/include/MLX42/MLX42.h"
+// # include "/home/guigui/MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_point
 {
@@ -39,29 +39,42 @@ typedef struct s_elem
 	t_list			*lst_spawn;
 }					t_elem;
 
+typedef struct s_item
+{
+	int				i_len;
+	char			*type;
+	mlx_image_t		*img[5];
+}					t_item;
+
 typedef struct s_player
 {
 	int				jp;
-	int				sp;
+	int				bp;
+	int				lbp;
+	float			var;
 	int				ammo;
 	int				b_spawn[11];
+	int				lb_spawn[11];
 	int				p_len;
 	int				b_len;
 	int				e_len;
 	int				s_len;
 	int				dir;
+	int				s_dir;
 	int				move_state;
 	int				jump_state;
 	int				shoot_state;
 	int				sprite_len;
 	char			*type;
-	mlx_image_t		**sprite[6];
+	t_point			**coll_pos;
+	mlx_image_t		**sprite[7];
 	mlx_image_t		*idle[7];
 	mlx_image_t		*lidle[7];
 	mlx_image_t		*run[7];
 	mlx_image_t		*lrun[7];
 	mlx_image_t		*explo[10];
 	mlx_image_t		*shoot[4];
+	mlx_image_t		*lshoot[4];
 	mlx_image_t		*bullet[5];
 	mlx_image_t		*lbullet[5];
 }					t_player;
@@ -72,6 +85,8 @@ typedef struct s_game
 	int				win_w;
 	int				win_h;
 	char			**map;
+	bool			finish;
+	int				nb_pick;
 	t_elem			*elem;
 	mlx_texture_t	*void_t;
 	mlx_texture_t	*wall_t;
@@ -80,6 +95,8 @@ typedef struct s_game
 	mlx_image_t		*wall_i;
 	mlx_image_t		*gate_i;
 	t_player		*player;
+	t_item			*energy;
+	t_item			*gate_anim;
 }					t_game;
 
 // check map
@@ -98,11 +115,14 @@ void				elem_init(t_elem *elem, char **map_array);
 void				game_init(t_game *so_long, char **map);
 void				set_player_sprite(char *sprite_name, int nb_sprite,
 						mlx_image_t **img, t_game *so_long);
+void				set_item_sprite(char *sprite_name, int nb_sprite,
+						mlx_image_t **img, t_game *so);
 // utils
 int					map_len(char **map_array);
 char				**map_dup(char **map_array);
 t_list				*count_elem(char **map_array, char c);
 t_point				*find_elem(char **map_array, char c, t_point *axe);
+char				*found_path(char *sprite_name, char *type, int nb);
 void				draw_map(t_game *so_long);
 void				draw_img(t_game *so, t_point of,
 						mlx_image_t **img, int len);
@@ -111,11 +131,13 @@ int					sprite_len(mlx_image_t **array);
 void				del_img(mlx_image_t **img);
 void				set_anim(t_player *player, void (*anim)(t_player *),
 						mlx_image_t ***img, int len);
+void				hide_anim(mlx_image_t **anim, bool set);
 // collision
-int					player_dcoll(t_game *so_long, int vof);
-int					player_lcoll(t_game *so_long);
-int					player_rcoll(t_game *so_long);
-int					player_ucoll(t_game *so_long);
+t_point				*player_dcoll(void *so_long);
+t_point				*player_lcoll(void *so_long);
+t_point				*player_rcoll(void *so_long);
+t_point				*player_ucoll(void *so_long);
+void				player_collison_pos(t_point **coll_pos, t_game *so);
 // player anim
 void				player_idle(t_player *player);
 void				lplayer_idle(t_player *player);
@@ -124,11 +146,19 @@ void				lplayer_run(t_player *player);
 void				player_run(t_player *player);
 void				player_jet1(t_player *player);
 void				player_shoot(t_player *player);
+void				lplayer_shoot(t_player *player);
 void				bullet_anim(t_player *player);
+void				lbullet_anim(t_player *player);
 void				bullet_shoot(mlx_key_data_t data, void *param);
 void				bullet_routine(void *para);
+// item anim
+void				energy_anim(t_item *energy);
+// gate anim
+void				gate_anim(t_item *gate_anim);
 // hook
 void				player_hook(void *param);
+void				item_hook(void *param);
+void				gate_hook(void *param);
 // player movement
 void				player_move(t_player *player, float nb, char axe);
 void				player_jump(t_game *so_long);

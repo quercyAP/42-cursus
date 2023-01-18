@@ -6,11 +6,24 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:56:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/17 21:11:16 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:31:44 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
+
+static void	fire(t_game *so, mlx_image_t **bullet, int *j)
+{
+	int	i;
+
+	i = 0;
+	while (i < so->player->b_len)
+	{
+		bullet[i]->instances[*j].enabled = true;
+		i++;
+	}
+	*j = (*j + 1) % so->player->ammo;
+}
 
 static void	player_anim(t_game *so)
 {
@@ -21,16 +34,20 @@ static void	player_anim(t_game *so)
 		set_anim(so->player, lplayer_idle, so->player->sprite, len);
 	else if (so->player->dir && !so->player->move_state)
 		set_anim(so->player, player_idle, so->player->sprite, len);
-	if (!so->player->dir && so->player->move_state)
+	if (!so->player->dir && so->player->move_state
+		&& !so->player->shoot_state)
 		set_anim(so->player, lplayer_run, so->player->sprite, len);
-	else if (so->player->dir && so->player->move_state)
+	else if (so->player->dir && so->player->move_state
+		&& !so->player->shoot_state)
 		set_anim(so->player, player_run, so->player->sprite, len);
+	if (so->player->shoot_state && so->player->s_dir)
+		set_anim(so->player, player_shoot, so->player->sprite, len);
+	else if (so->player->shoot_state && !so->player->s_dir)
+		set_anim(so->player, lplayer_shoot, so->player->sprite, len);
 	if (so->player->jump_state)
 		player_jet(so->player);
-	else if (!so->player->jump_state && player_dcoll(so, 5))
+	else if (!so->player->jump_state && player_dcoll(so))
 		player_jet1(so->player);
-	if (so->player->shoot_state)
-		set_anim(so->player, player_shoot, so->player->sprite, len);
 }
 
 static void	move_hook(t_game *so)
@@ -63,5 +80,26 @@ void	player_hook(void *param)
 	player_anim(so);
 	del_img(so->player->bullet);
 	bullet_anim(so->player);
+	del_img(so->player->lbullet);
+	lbullet_anim(so->player);
 	bullet_routine(so);
+}
+
+void	bullet_shoot(mlx_key_data_t data, void *param)
+{
+	t_game	*so;
+
+	so = param;
+	if (data.key == MLX_KEY_D)
+	{
+		so->player->shoot_state = 1;
+		so->player->s_dir = 1;
+		fire(so, so->player->bullet, &so->player->bp);
+	}
+	else if (data.key == MLX_KEY_A)
+	{
+		so->player->shoot_state = 1;
+		so->player->s_dir = 0;
+		fire(so, so->player->lbullet, &so->player->lbp);
+	}
 }

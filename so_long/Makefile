@@ -6,7 +6,7 @@
 #    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/17 18:30:48 by glamazer         ###   ########.fr        #
+#    Updated: 2023/01/18 16:10:31 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRCS	= source/check/check_error_utils.c source/check/check_error.c source/utils/
 		source/player/player_movement.c source/player/player_collision.c source/player/player_hook.c \
 		source/player/player_anim1.c source/player/player_draw.c source/player/player_anim.c \
 		source/player/player_shoot.c \
+		source/item/item_hook.c source/item/item_anim.c \
+		source/gate/gate_anim.c source/gate/gate_hook.c \
 		source/so_long.c \
 		
 OBJS	= ${SRCS:.c=.o}
@@ -37,18 +39,18 @@ WINCFLAGS	= -Wall -Wextra -Werror -ldl -lglfw -pthread -lm
 
 MACCFLAGS	= -Wall -Wextra -Werror
 # Windows set
-.c.o:
-			${CC} ${WINCFLAGS} -c $< -o ${<:.c=.o}
-
-${NAME}:	${OBJS}
-			${CC} ${OBJS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
-
-# MAC set
 # .c.o:
-# 			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
+# 			${CC} ${WINCFLAGS} -c $< -o ${<:.c=.o}
 
 # ${NAME}:	${OBJS}
-# 			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
+# 			${CC} ${OBJS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
+
+# MAC set
+.c.o:
+			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
+
+${NAME}:	${OBJS}
+			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
 
 run:		
 			./${NAME} ${MAP}

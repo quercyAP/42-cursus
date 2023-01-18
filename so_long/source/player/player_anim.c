@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:49:46 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/17 09:57:50 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/18 10:09:43 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	lplayer_idle(t_player *player)
 	}
 	player->lidle[i]->enabled = true;
 }
-
 
 void	player_run(t_player *player)
 {
@@ -102,4 +101,3 @@ void	player_jet1(t_player *player)
 		del_img(player->explo);
 	player->jp = i;
 }
-
