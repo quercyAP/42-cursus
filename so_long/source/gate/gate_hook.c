@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:09:16 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/18 17:33:15 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/20 08:01:36 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ void	finish_game(t_game *so)
 		{
 			if (pos[k]->x * 64 == gate_pos->x * 64
 				&& pos[k]->y * 64 == gate_pos->y * 64)
+			{
+				write(1, "Congratulation !!!\n", 19);
+				write(1, "You won the game with ", 22);
+				ft_putnbr_fd(so->player->step, 1);
+				write(1, " steps\n", 6);
 				mlx_close_window(so->mlx);
+			}
 		}
 		k++;
 	}

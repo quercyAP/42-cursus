@@ -6,20 +6,20 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/18 17:33:33 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/19 08:45:09 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
+// # include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
 # include "get_next_line.h"
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
-// # include "/home/guigui/MLX42/include/MLX42/MLX42.h"
+# include "/home/guigui/MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_point
 {
@@ -53,6 +53,7 @@ typedef struct s_player
 	int				lbp;
 	float			var;
 	int				ammo;
+	int				step;
 	int				b_spawn[11];
 	int				lb_spawn[11];
 	int				p_len;
@@ -87,10 +88,12 @@ typedef struct s_game
 	char			**map;
 	bool			finish;
 	int				nb_pick;
+	char			*step;
 	t_elem			*elem;
 	mlx_texture_t	*void_t;
 	mlx_texture_t	*wall_t;
 	mlx_texture_t	*gate_t;
+	mlx_image_t		*step_str;
 	mlx_image_t		*void_i;
 	mlx_image_t		*wall_i;
 	mlx_image_t		*gate_i;

@@ -30,6 +30,7 @@ int32_t	main(int argc, char **argv)
 	game_init(so, map);
 	draw_map(so);
 	player_draw(so);
+	so->step_str = mlx_put_string(so->mlx, so->step, 0, 0);
 	mlx_loop_hook(so->mlx, player_hook, so);
 	mlx_loop_hook(so->mlx, item_hook, so);
 	mlx_loop_hook(so->mlx, gate_hook, so);

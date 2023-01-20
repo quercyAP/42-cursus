@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:03:45 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/18 14:36:08 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/19 09:14:37 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	player_jump(t_game *so_long)
 	if (player_ucoll(so_long))
 	{
 		so->player->jump_state = 1;
+		so->player->step++;
 		player_move(so->player, -5, 'y');
 	}
 }
@@ -58,11 +59,12 @@ void	gravity(t_game *so_long)
 	so = so_long;
 	var_max = 11.0f;
 	if (player_dcoll(so)
-		&& !mlx_is_key_down(so->mlx, MLX_KEY_SPACE))
+		&& !mlx_is_key_down(so->mlx, MLX_KEY_W))
 	{
 		so->player->var += accel;
 		if (so->player->var > var_max)
 			so->player->var = var_max;
+		so->player->step++;
 		player_move(so->player, so->player->var, 'y');
 		so_long->player->jump_state = 0;
 	}

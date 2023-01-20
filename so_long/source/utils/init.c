@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 15:44:32 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/18 16:41:21 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/19 09:31:14 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	player_init(t_player *player)
 	player->dir = 1;
 	player->s_dir = 1;
 	player->jp = 0;
+	player->step = 0;
 	player->bp = 0;
 	player->lbp = 0;
 	player->var = 0;
@@ -78,6 +79,7 @@ void	game_init(t_game *so, char **map)
 	so->mlx = mlx_init(so->win_w, so->win_h, "so", false);
 	so->map = map;
 	so->nb_pick = 0;
+	so->step = "Number of steps";
 	so->void_t = mlx_load_png("asset/Environment/Void.png");
 	so->wall_t = mlx_load_png("asset/Environment/Wall1.png");
 	so->gate_t = mlx_load_png("asset/Props/Gate.png");
