@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/18 11:30:14 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/20 14:28:46 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,17 @@ char	*found_path(char *sprite_name, char *type, int nb)
 void	set_player_sprite(char *sprite_name, int nb_sprite, mlx_image_t **img,
 t_game *so)
 {
-	int			i;
-	char		*path;
+	int				i;
+	char			*path;
+	mlx_texture_t	*tmp;
 
 	i = 0;
 	while (i < nb_sprite)
 	{
 		path = found_path(sprite_name, so->player->type, i);
-		img[i] = mlx_texture_to_image(so->mlx, mlx_load_png(path));
+		tmp = mlx_load_png(path);
+		img[i] = mlx_texture_to_image(so->mlx, tmp);
+		mlx_delete_texture(tmp);
 		free(path);
 		i++;
 	}
@@ -58,14 +61,17 @@ t_game *so)
 void	set_item_sprite(char *sprite_name, int nb_sprite, mlx_image_t **img,
 t_game *so)
 {
-	int			i;
-	char		*path;
+	int				i;
+	char			*path;
+	mlx_texture_t	*tmp;
 
 	i = 0;
 	while (i < nb_sprite)
 	{
 		path = found_path(sprite_name, so->energy->type, i);
-		img[i] = mlx_texture_to_image(so->mlx, mlx_load_png(path));
+		tmp = mlx_load_png(path);
+		img[i] = mlx_texture_to_image(so->mlx, tmp);
+		mlx_delete_texture(tmp);
 		free(path);
 		i++;
 	}

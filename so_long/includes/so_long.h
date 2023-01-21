@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/19 08:45:09 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/20 15:46:00 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_game
 	bool			finish;
 	int				nb_pick;
 	char			*step;
+	char			*itoa;
 	t_elem			*elem;
 	mlx_texture_t	*void_t;
 	mlx_texture_t	*wall_t;
@@ -113,6 +114,8 @@ void				free_map(char **map_array);
 void				t_game_clear(t_game *so_long);
 void				lst_clear(t_list **lst);
 void				elem_clear(t_elem *elem);
+void				*free_pos(t_point *pos);
+void				free_coll_pos(t_point **coll_pos);
 //	init
 void				elem_init(t_elem *elem, char **map_array);
 void				game_init(t_game *so_long, char **map);

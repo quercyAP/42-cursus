@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:56:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/19 09:33:13 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/20 13:32:05 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ void	player_hook(void *param)
 	{
 		prev = so->player->step;
 		mlx_delete_image(so->mlx, so->step_str);
-		so->step = ft_strjoin("Number of steps : ", ft_itoa(so->player->step));
+		so->itoa = ft_itoa(so->player->step);
+		so->step = ft_strjoin("Number of steps : ", so->itoa);
+		free(so->itoa);
 		ft_putstr_fd(so->step, 1);
 		write(1, "\n", 1);
 		so->step_str = mlx_put_string(so->mlx, so->step, 0, 0);

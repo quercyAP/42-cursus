@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 11:48:28 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/18 17:14:17 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/21 06:45:34 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ void	player_collison_pos(t_point **coll_pos, t_game *so)
 
 static void	del_instance(mlx_image_t **img, int inst, t_game *so, int k)
 {
-	int			i;
+	int	i;
 
 	i = 0;
+	(void)k;
 	so->nb_pick++;
-	free(so->player->coll_pos[k]);
+	// free_pos(so->player->coll_pos[k]);
 	while (i < so->energy->i_len)
 	{
 		img[i]->instances[inst].enabled = false;

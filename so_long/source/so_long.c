@@ -36,6 +36,6 @@ int32_t	main(int argc, char **argv)
 	mlx_loop_hook(so->mlx, gate_hook, so);
 	mlx_key_hook(so->mlx, bullet_shoot, so);
 	mlx_loop(so->mlx);
-	t_game_clear(so);
 	close(fd);
+	t_game_clear(so);
 }
