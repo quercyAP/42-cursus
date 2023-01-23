@@ -19,6 +19,7 @@ int32_t	main(int argc, char **argv)
 	t_game	*so;
 
 	(void)argc;
+	return (0);
 	fd = open(argv[1], O_RDONLY);
 	map = parsing(fd);
 	if (!check_error(map))

@@ -6,20 +6,20 @@
 /*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/20 15:46:00 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/23 08:58:06 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-// # include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
+# include "/Users/glamazer/goinfre/MLX42/include/MLX42/MLX42.h"
 # include "get_next_line.h"
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
-# include "/home/guigui/MLX42/include/MLX42/MLX42.h"
+// # include "/home/guigui/MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_point
 {
