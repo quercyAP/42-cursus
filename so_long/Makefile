@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/23 08:58:15 by glamazer         ###   ########.fr        #
+#    Updated: 2023/01/23 13:16:26 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,9 @@ OBJS	= ${SRCS:.c=.o}
 
 WINLIBS	= lib/win_libft.a lib/win_libmlx42.a
 
-MACLIBS	= lib/mac_libft.a lib/mac_libmlx42.a lib/libglfw3.a -framework Cocoa -framework OpenGL -framework IOKit
+MACLIBS	= lib/mac_libft.a lib/mac_libmlx42.a -lglfw -L /Users/glamazer/goinfre/.brew/opt/glfw/lib/
 
-HEADER	= -I includes -I /Users/glamazer/goinfre/MLX42/include -I /Users/glamazer/.brew/Cellar/glfw/3.3.8/include/GLFW
+HEADER	= -I includes -I /Users/glamazer/goinfre/MLX42/include -I /Users/goinfre/glamazer/.brew/Cellar/glfw/3.3.8/include/GLFW
 
 MAP		= map/test.ber
 
@@ -37,7 +37,7 @@ CC		= gcc
 
 WINCFLAGS	= -Wall -Wextra -Werror -ldl -lglfw -pthread -lm
 
-MACCFLAGS	= -Wall -Wextra -Werror
+MACCFLAGS	= -g3 -Wall -Wextra -Werror
 # Windows set
 # .c.o:
 # 			${CC} ${WINCFLAGS} -c $< -o ${<:.c=.o}
@@ -47,7 +47,7 @@ MACCFLAGS	= -Wall -Wextra -Werror
 
 # MAC set
 .c.o:
-			${CC} ${MACCFLAGS} ${HEADER} -c $< -o ${<:.c=.o}
+			${CC} ${MACCFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
 			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}

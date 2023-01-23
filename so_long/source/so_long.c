@@ -18,8 +18,11 @@ int32_t	main(int argc, char **argv)
 	int		fd;
 	t_game	*so;
 
-	(void)argc;
-	return (0);
+	if (argc != 2)
+	{
+		ft_putstr_fd("Error\nBad argument\n", 1);
+		return (0);
+	}
 	fd = open(argv[1], O_RDONLY);
 	map = parsing(fd);
 	if (!check_error(map))
@@ -39,4 +42,5 @@ int32_t	main(int argc, char **argv)
 	mlx_loop(so->mlx);
 	close(fd);
 	t_game_clear(so);
+	system("leaks so_long");
 }

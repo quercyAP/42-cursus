@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:26:22 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/20 16:02:49 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:30:18 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	free_coll_pos(t_point **coll_pos)
 	i = 0;
 	while (i < 4)
 	{
+		printf("ok\n");
 		free_pos(coll_pos[i]);
 		i++;
 	}
@@ -110,5 +111,4 @@ void	t_game_clear(t_game *so)
 	free_map(so->map);
 	free(so->player->coll_pos);
 	free(so);
-	printf("toto\n");
 }
