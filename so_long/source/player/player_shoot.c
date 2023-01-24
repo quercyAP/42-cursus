@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_shoot.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:45:26 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/18 10:54:53 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:18:05 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,6 @@ void	bullet_routine(void *param)
 
 	so = param;
 	i = 0;
-	if (!mlx_is_key_down(so->mlx, MLX_KEY_D)
-		&& !mlx_is_key_down(so->mlx, MLX_KEY_A))
-		so->player->shoot_state = 0;
 	while (i < so->player->b_len)
 	{
 		j = 0;

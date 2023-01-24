@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 11:48:28 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/23 16:40:52 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:46:38 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	del_instance(mlx_image_t **img, int inst, t_game *so)
 		img[i]->instances[inst].enabled = false;
 		i++;
 	}
-	if (so->nb_pick == ft_lstsize(so->elem->lst_item) - 1)
+	if (so->nb_pick == ft_lstsize(so->elem->lst_item))
 		so->finish = true;
 }
 
@@ -66,8 +66,6 @@ static void	pick_up(t_game *so)
 					&& pos[k]->y == so->energy->img[0]->instances[j].y / 64
 					&& so->energy->img[0]->instances[j].enabled)
 					del_instance(so->energy->img, j, so);
-				printf("k = %i\n", k);
-				printf("adr = %p\n", pos[k]);
 			}
 			k++;
 		}

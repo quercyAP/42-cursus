@@ -12,18 +12,38 @@
 
 #include "../includes/so_long.h"
 
+static int	check_file_name(char *file)
+{
+	char	*cmp;
+
+	cmp = file + (ft_strlen(file) - 4);
+	if (ft_strncmp(cmp, ".ber", 5) != 0)
+		return (0);
+	return (1);
+}
+
+static void	loop(t_game *so)
+{
+	mlx_loop_hook(so->mlx, player_hook, so);
+	mlx_loop_hook(so->mlx, item_hook, so);
+	mlx_loop_hook(so->mlx, gate_hook, so);
+	mlx_key_hook(so->mlx, bullet_shoot, so);
+	mlx_loop_hook(so->mlx, mob_hook, so);
+	mlx_loop(so->mlx);
+}
+
 int32_t	main(int argc, char **argv)
 {
 	char	**map;
 	int		fd;
 	t_game	*so;
 
-	if (argc != 2)
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1 || argc != 2 || !check_file_name(argv[1]))
 	{
 		ft_putstr_fd("Error\nBad argument\n", 1);
 		return (0);
 	}
-	fd = open(argv[1], O_RDONLY);
 	map = parsing(fd);
 	if (!check_error(map))
 	{
@@ -35,11 +55,7 @@ int32_t	main(int argc, char **argv)
 	draw_map(so);
 	player_draw(so);
 	so->step_str = mlx_put_string(so->mlx, so->step, 0, 0);
-	mlx_loop_hook(so->mlx, player_hook, so);
-	mlx_loop_hook(so->mlx, item_hook, so);
-	mlx_loop_hook(so->mlx, gate_hook, so);
-	mlx_key_hook(so->mlx, bullet_shoot, so);
-	mlx_loop(so->mlx);
+	loop(so);
 	close(fd);
 	t_game_clear(so);
 	system("leaks so_long");

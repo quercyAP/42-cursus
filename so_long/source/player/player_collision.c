@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:43:02 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/23 16:31:24 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 08:48:35 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_point	*player_dcoll(void *param)
 
 	of = 64;
 	so = param;
-	p_axe = malloc(sizeof(t_point));
+	p_axe = so->player->d_axe;
 	p_axe->y = (so->player->idle[0]->instances->y
 			+ of + so->player->var) / of;
 	i = of - 5;
@@ -29,13 +29,12 @@ t_point	*player_dcoll(void *param)
 	{
 		p_axe->x = (so->player->idle[0]->instances->x + i) / of;
 		if (so->map[p_axe->y][p_axe->x] == '1')
-			return (free_pos(p_axe));
+			return (NULL);
 		else if (so->map[p_axe->y][p_axe->x] == 'C'
 			|| so->map[p_axe->y][p_axe->x] == 'E')
 			return (p_axe);
 		i--;
 	}
-	free_pos(p_axe);
 	return (&(t_point){0, 0});
 }
 
@@ -48,20 +47,19 @@ t_point	*player_lcoll(void *param)
 
 	of = 64;
 	so = param;
-	p_axe = malloc(sizeof(t_point));
+	p_axe = so->player->l_axe;
 	p_axe->x = (so->player->idle[0]->instances->x - 5) / of;
 	i = 0;
 	while (i < of - 1)
 	{
 		p_axe->y = (so->player->idle[0]->instances->y + i) / of;
 		if (so->map[p_axe->y][p_axe->x] == '1')
-			return (free_pos(p_axe));
+			return (NULL);
 		else if (so->map[p_axe->y][p_axe->x] == 'C'
 			|| so->map[p_axe->y][p_axe->x] == 'E')
 			return (p_axe);
 		i++;
 	}
-	free_pos(p_axe);
 	return (&(t_point){0, 0});
 }
 
@@ -74,20 +72,19 @@ t_point	*player_rcoll(void *param)
 
 	of = 64;
 	so = param;
-	p_axe = malloc(sizeof(t_point));
+	p_axe = so->player->r_axe;
 	p_axe->x = (so->player->idle[0]->instances->x + of) / of;
 	i = 0;
 	while (i < of - 1)
 	{
 		p_axe->y = (so->player->idle[0]->instances->y + i) / of;
 		if (so->map[p_axe->y][p_axe->x] == '1')
-			return (free_pos(p_axe));
+			return (NULL);
 		else if (so->map[p_axe->y][p_axe->x] == 'C'
 			|| so->map[p_axe->y][p_axe->x] == 'E')
 			return (p_axe);
 		i++;
 	}
-	free_pos(p_axe);
 	return (&(t_point){0, 0});
 }
 
@@ -100,19 +97,18 @@ t_point	*player_ucoll(void *param)
 
 	of = 64;
 	so = param;
-	p_axe = malloc(sizeof(t_point));
+	p_axe = so->player->u_axe;
 	p_axe->y = (so->player->idle[0]->instances->y - 5) / of;
 	i = of - 5;
 	while (i > 0)
 	{
 		p_axe->x = (so->player->idle[0]->instances->x + i) / of;
 		if (so->map[p_axe->y][p_axe->x] == '1')
-			return (free_pos(p_axe));
+			return (NULL);
 		else if (so->map[p_axe->y][p_axe->x] == 'C'
 			|| so->map[p_axe->y][p_axe->x] == 'E')
 			return (p_axe);
 		i--;
 	}
-	free_pos(p_axe);
 	return (&(t_point){0, 0});
 }

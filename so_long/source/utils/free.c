@@ -6,31 +6,11 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:26:22 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/23 16:30:18 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:35:05 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
-
-void	*free_pos(t_point *pos)
-{
-	if (pos)
-		free(pos);
-	return (NULL);
-}
-
-void	free_coll_pos(t_point **coll_pos)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		printf("ok\n");
-		free_pos(coll_pos[i]);
-		i++;
-	}
-}
 
 void	free_map(char **map_array)
 {
@@ -107,8 +87,15 @@ void	t_game_clear(t_game *so)
 	mlx_delete_image(so->mlx, so->void_i);
 	mlx_delete_image(so->mlx, so->gate_i);
 	mlx_delete_image(so->mlx, so->wall_i);
+	free(so->player->d_axe);
+	free(so->player->u_axe);
+	free(so->player->l_axe);
+	free(so->player->r_axe);
 	elem_clear(so->elem);
 	free_map(so->map);
 	free(so->player->coll_pos);
+	free(so->player);
+	free(so->energy);
+	free(so->gate_anim);
 	free(so);
 }

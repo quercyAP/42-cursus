@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_hook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:56:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/20 13:32:05 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:17:26 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	player_hook(void *param)
 		ft_putstr_fd(so->step, 1);
 		write(1, "\n", 1);
 		so->step_str = mlx_put_string(so->mlx, so->step, 0, 0);
+		free(so->step);
 	}
 }
 
@@ -118,4 +119,6 @@ void	bullet_shoot(mlx_key_data_t data, void *param)
 		so->player->s_dir = 0;
 		fire(so, so->player->lbullet, &so->player->lbp);
 	}
+	else
+		so->player->shoot_state = 0;
 }

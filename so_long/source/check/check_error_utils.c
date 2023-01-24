@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:50:09 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/22 15:31:14 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 09:49:25 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	list_point_cmp(t_list *list, char **map_array)
 {
 	t_point	*tmp;
 
-	while (list->next)
+	while (list)
 	{
 		tmp = list->content;
 		if (map_array[tmp->y][tmp->x] != '1')
@@ -67,7 +67,7 @@ int	check_path(char **map_array)
 	elem = malloc(sizeof(t_elem));
 	elem_init(elem, tmp);
 	size.x = ft_strlen(tmp[0]) - 1;
-	size.y = map_len(tmp) - 1;
+	size.y = map_len(tmp);
 	cur = elem->lst_spawn->content;
 	flood_fill(tmp, size, cur->x, cur->y);
 	if (!list_point_cmp(elem->lst_exit, tmp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:36:35 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/18 16:49:54 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:12:50 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,23 @@ static void	browse_map(t_game *so_long, char c, mlx_image_t *img, t_point ratio)
 	}
 }
 
-void	draw_map(t_game *so)
+static void	loop_browse(t_game *so, char c, mlx_image_t **img, t_point pos)
 {
 	int	i;
 
+	i = -1;
+	while (++i < sprite_len(img))
+		browse_map(so, c, img[i], pos);
+}
+
+void	draw_map(t_game *so)
+{
 	browse_map(so, so->elem->empty, so->void_i, (t_point){0, 0});
 	browse_map(so, so->elem->wall, so->wall_i, (t_point){0, 0});
-	i = -1;
-	while (++i < so->energy->i_len)
-	{
-		browse_map(so, so->elem->item, so->energy->img[i], (t_point){16, 16});
-		browse_map(so, so->elem->exit, so->gate_anim->img[i],
-			(t_point){25, -32});
-	}
+	loop_browse(so, so->elem->exit, so->gate_anim->img, (t_point){25, -32});
 	browse_map(so, so->elem->exit, so->gate_i, (t_point){0, -64});
+	loop_browse(so, so->elem->item, so->energy->img, (t_point){16, 16});
+	loop_browse(so, so->elem->mob, so->fly_eye->idle, (t_point){-16, -16});
 }
 
 void	draw_img(t_game *so, t_point of, mlx_image_t **img, int len)

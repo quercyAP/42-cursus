@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/20 14:28:46 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:49:29 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,26 @@ t_game *so)
 	while (i < nb_sprite)
 	{
 		path = found_path(sprite_name, so->energy->type, i);
+		tmp = mlx_load_png(path);
+		img[i] = mlx_texture_to_image(so->mlx, tmp);
+		mlx_delete_texture(tmp);
+		free(path);
+		i++;
+	}
+	img[i] = NULL;
+}
+
+void	set_mob_sprite(char *sprite_name, int nb_sprite, mlx_image_t **img,
+t_game *so)
+{
+	int				i;
+	char			*path;
+	mlx_texture_t	*tmp;
+
+	i = 0;
+	while (i < nb_sprite)
+	{
+		path = found_path(sprite_name, so->fly_eye->type, i);
 		tmp = mlx_load_png(path);
 		img[i] = mlx_texture_to_image(so->mlx, tmp);
 		mlx_delete_texture(tmp);

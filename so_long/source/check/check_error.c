@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:21 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/23 11:27:31 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:49:07 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static	int	browse_map(char **map_array)
 				|| map_array[index.y][index.x] == '1'
 				|| map_array[index.y][index.x] == 'P'
 				|| map_array[index.y][index.x] == 'C'
-				|| map_array[index.y][index.x] == 'E')
+				|| map_array[index.y][index.x] == 'E'
+				|| map_array[index.y][index.x] == 'M')
 				index.x++;
 			else
 				return (0);
@@ -87,7 +88,7 @@ static	int	check_elem(char **map_array)
 
 	c_elem = malloc(sizeof(t_elem));
 	elem_init(c_elem, map_array);
-	if (ft_lstsize(c_elem->lst_exit) > 1
+	if (ft_lstsize(c_elem->lst_exit) != 1
 		|| ft_lstsize(c_elem->lst_spawn) > 1
 		|| ft_lstsize(c_elem->lst_item) < 1)
 	{

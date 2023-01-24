@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/23 16:05:36 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:17:06 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_elem
 	t_list			*lst_exit;
 	char			spawn;
 	t_list			*lst_spawn;
+	char			mob;
+	t_list			*lst_mob;
 }					t_elem;
 
 typedef struct s_item
@@ -67,6 +69,10 @@ typedef struct s_player
 	int				shoot_state;
 	int				sprite_len;
 	char			*type;
+	t_point			*d_axe;
+	t_point			*u_axe;
+	t_point			*r_axe;
+	t_point			*l_axe;
 	t_point			**coll_pos;
 	mlx_image_t		**sprite[7];
 	mlx_image_t		*idle[7];
@@ -79,6 +85,14 @@ typedef struct s_player
 	mlx_image_t		*bullet[5];
 	mlx_image_t		*lbullet[5];
 }					t_player;
+
+typedef struct s_mob
+{
+	int				i_len;
+	char			*type;
+	mlx_image_t		*idle[4];
+	mlx_image_t		*lidle[4];
+}					t_mob;
 
 typedef struct s_game
 {
@@ -101,6 +115,7 @@ typedef struct s_game
 	t_player		*player;
 	t_item			*energy;
 	t_item			*gate_anim;
+	t_mob			*fly_eye;
 }					t_game;
 
 // check map
@@ -114,8 +129,6 @@ void				free_map(char **map_array);
 void				t_game_clear(t_game *so_long);
 void				lst_clear(t_list **lst);
 void				elem_clear(t_elem *elem);
-void				*free_pos(t_point *pos);
-void				free_coll_pos(t_point **coll_pos);
 //	init
 void				elem_init(t_elem *elem, char **map_array);
 void				game_init(t_game *so_long, char **map);
@@ -123,6 +136,10 @@ void				set_player_sprite(char *sprite_name, int nb_sprite,
 						mlx_image_t **img, t_game *so_long);
 void				set_item_sprite(char *sprite_name, int nb_sprite,
 						mlx_image_t **img, t_game *so);
+void				set_mob_sprite(char *sprite_name, int nb_sprite,
+						mlx_image_t **img, t_game *so);
+void				init_sprite(t_game *so, t_player *player, t_item *item,
+						t_mob *mob);
 // utils
 int					map_len(char **map_array);
 char				**map_dup(char **map_array);
@@ -161,10 +178,13 @@ void				bullet_routine(void *para);
 void				energy_anim(t_item *energy);
 // gate anim
 void				gate_anim(t_item *gate_anim);
+//	mob anim
+void				fly_eye_anim(t_mob *mob);
 // hook
 void				player_hook(void *param);
 void				item_hook(void *param);
 void				gate_hook(void *param);
+void				mob_hook(void *param);
 // player movement
 void				player_move(t_player *player, float nb, char axe);
 void				player_jump(t_game *so_long);
