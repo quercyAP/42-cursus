@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_hook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:56:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/20 13:32:05 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:39:54 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static void	player_anim(t_game *so)
 		set_anim(so->player, lplayer_shoot, so->player->sprite, len);
 	if (so->player->jump_state)
 		player_jet(so->player);
-	else if (!so->player->jump_state && player_dcoll(so))
+	else if (!so->player->jump_state
+		&& player_dcoll(so, so->player->idle[0]->instances))
 		player_jet1(so->player);
 }
 
@@ -57,13 +58,15 @@ static void	move_hook(t_game *so)
 		mlx_close_window(so->mlx);
 	if (mlx_is_key_down(so->mlx, MLX_KEY_W))
 		player_jump(so);
-	if (mlx_is_key_down(so->mlx, MLX_KEY_A) && player_lcoll(so))
+	if (mlx_is_key_down(so->mlx, MLX_KEY_A)
+		&& player_lcoll(so, so->player->idle[0]->instances))
 	{
 		so->player->dir = 0;
 		so->player->step++;
 		player_move(so->player, -5, 'x');
 	}
-	else if (mlx_is_key_down(so->mlx, MLX_KEY_D) && player_rcoll(so))
+	else if (mlx_is_key_down(so->mlx, MLX_KEY_D)
+		&& player_rcoll(so, so->player->idle[0]->instances))
 	{
 		so->player->dir = 1;
 		so->player->step++;
@@ -76,8 +79,6 @@ static void	move_hook(t_game *so)
 void	player_hook(void *param)
 {
 	t_game		*so;
-	int			curr;
-	static int	prev;
 
 	so = param;
 	move_hook(so);
@@ -87,18 +88,7 @@ void	player_hook(void *param)
 	del_img(so->player->lbullet);
 	lbullet_anim(so->player);
 	bullet_routine(so);
-	curr = so->player->step;
-	if (curr != prev)
-	{
-		prev = so->player->step;
-		mlx_delete_image(so->mlx, so->step_str);
-		so->itoa = ft_itoa(so->player->step);
-		so->step = ft_strjoin("Number of steps : ", so->itoa);
-		free(so->itoa);
-		ft_putstr_fd(so->step, 1);
-		write(1, "\n", 1);
-		so->step_str = mlx_put_string(so->mlx, so->step, 0, 0);
-	}
+	put_step(so);
 }
 
 void	bullet_shoot(mlx_key_data_t data, void *param)
@@ -118,4 +108,6 @@ void	bullet_shoot(mlx_key_data_t data, void *param)
 		so->player->s_dir = 0;
 		fire(so, so->player->lbullet, &so->player->lbp);
 	}
+	else
+		so->player->shoot_state = 0;
 }

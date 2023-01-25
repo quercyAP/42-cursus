@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:50:09 by glamazer          #+#    #+#             */
-/*   Updated: 2022/12/22 15:31:14 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:07:30 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,12 @@ char	**map_dup(char **map_array)
 	char	**tmp;
 
 	i = 0;
-	tmp = malloc(sizeof(char *) * map_len(map_array) + 1);
-	while (map_array[i][0])
+	tmp = ft_calloc(sizeof(char *), map_len(map_array) + 1);
+	while (map_array[i])
 	{
 		tmp[i] = ft_strdup(map_array[i]);
 		i++;
 	}
-	tmp[i] = ft_calloc(1, 1);
 	return (tmp);
 }
 
@@ -44,7 +43,7 @@ int	list_point_cmp(t_list *list, char **map_array)
 {
 	t_point	*tmp;
 
-	while (list->next)
+	while (list)
 	{
 		tmp = list->content;
 		if (map_array[tmp->y][tmp->x] != '1')
@@ -67,7 +66,7 @@ int	check_path(char **map_array)
 	elem = malloc(sizeof(t_elem));
 	elem_init(elem, tmp);
 	size.x = ft_strlen(tmp[0]) - 1;
-	size.y = map_len(tmp) - 1;
+	size.y = map_len(tmp);
 	cur = elem->lst_spawn->content;
 	flood_fill(tmp, size, cur->x, cur->y);
 	if (!list_point_cmp(elem->lst_exit, tmp)
