@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:02:47 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/20 15:16:20 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:04:34 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	**create_map_array(t_list *list)
 
 	i = 0;
 	len = ft_lstsize(list);
-	map_array = malloc(sizeof(char *) * len + 1);
+	map_array = ft_calloc(len + 1, sizeof(char *));
 	if (!map_array)
 		return (NULL);
 	while (list)
@@ -73,7 +73,6 @@ static char	**create_map_array(t_list *list)
 		list = list->next;
 		i++;
 	}
-	map_array[i] = ft_calloc(1, 1);
 	return (map_array);
 }
 

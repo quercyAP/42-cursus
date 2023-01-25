@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 15:44:32 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 13:53:52 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 14:40:02 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	player_init(t_player *player)
 
 static void	mob_init(t_mob *mob)
 {
+	mob->r_axe = malloc(sizeof(t_point));
+	mob->l_axe = malloc(sizeof(t_point));
 	mob->type = "Mob";
 	mob->i_len = 4;
 }
@@ -67,6 +69,7 @@ static void	var_init(t_game *so, char **map)
 
 void	game_init(t_game *so, char **map)
 {
+	so->bonus = bonus_state();
 	so->elem = malloc(sizeof(t_elem));
 	so->player = malloc(sizeof(t_player));
 	so->energy = malloc(sizeof(t_item));

@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:03:45 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 12:02:28 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:36:45 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,9 @@ void	player_move(t_player *player, float nb, char axe)
 	player->move_state = 1;
 }
 
-void	player_jump(t_game *so_long)
+void	player_jump(t_game *so)
 {
-	t_game	*so;
-
-	so = so_long;
-	if (player_ucoll(so_long))
+	if (player_ucoll(so, so->player->idle[0]->instances))
 	{
 		so->player->jump_state = 1;
 		so->player->step++;
@@ -50,15 +47,13 @@ void	player_jump(t_game *so_long)
 	}
 }
 
-void	gravity(t_game *so_long)
+void	gravity(t_game *so)
 {
-	t_game			*so;
 	static float	accel;
 	float			var_max;
 
-	so = so_long;
 	var_max = 11.0f;
-	if (player_dcoll(so)
+	if (player_dcoll(so, so->player->idle[0]->instances)
 		&& !mlx_is_key_down(so->mlx, MLX_KEY_W))
 	{
 		so->player->var += accel;
@@ -66,7 +61,7 @@ void	gravity(t_game *so_long)
 			so->player->var = var_max;
 		so->player->step++;
 		player_move(so->player, so->player->var, 'y');
-		so_long->player->jump_state = 0;
+		so->player->jump_state = 0;
 	}
 	else
 	{

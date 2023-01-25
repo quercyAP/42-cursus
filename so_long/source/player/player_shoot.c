@@ -6,52 +6,69 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:45:26 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 14:18:05 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 14:51:18 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
 
-static int	bullet_rcoll(char **map, mlx_instance_t bullet)
+t_point	*bullet_rcoll(void *game, void *pos)
 {
-	t_point	p_axe;
-	int		of;
-	int		i;
+	t_point			*b_axe;
+	mlx_instance_t	*bullet;
+	t_game			*so;
+	int				of;
+	int				i;
 
 	of = 64;
-	p_axe.x = (bullet.x + 45) / of;
+	so = game;
+	bullet = pos;
+	b_axe = so->fly_eye->r_axe;
+	b_axe->x = (bullet->x + 20) / of;
 	i = 10;
 	while (i < 32)
 	{
-		p_axe.y = (bullet.y + i) / of;
-		if (map[p_axe.y][p_axe.x] == '1')
-			return (0);
+		b_axe->y = (bullet->y + i) / of;
+		if (so->map[b_axe->y][b_axe->x] == '1'
+		|| (so->map[b_axe->y][b_axe->x] == 'M'
+		&& so->fly_eye->idle[0]->instances[check_mob_pos(b_axe, so)].enabled))
+			return (b_axe);
 		i++;
 	}
-	return (1);
+	return (NULL);
 }
 
-static int	bullet_lcoll(char **map, mlx_instance_t bullet)
+t_point	*bullet_lcoll(void *game, void *pos)
 {
-	t_point	p_axe;
-	int		of;
-	int		i;
+	t_point			*b_axe;
+	mlx_instance_t	*bullet;
+	t_game			*so;
+	int				of;
+	int				i;
 
 	of = 64;
-	p_axe.x = bullet.x / of;
+	so = game;
+	bullet = pos;
+	b_axe = so->fly_eye->l_axe;
+	b_axe->x = (bullet->x + 20) / of;
 	i = 10;
 	while (i < 32)
 	{
-		p_axe.y = (bullet.y + i) / of;
-		if (map[p_axe.y][p_axe.x] == '1')
-			return (0);
+		b_axe->y = (bullet->y + i) / of;
+		if (so->map[b_axe->y][b_axe->x] == '1'
+		|| (so->map[b_axe->y][b_axe->x] == 'M'
+		&& so->fly_eye->idle[0]->instances[check_mob_pos(b_axe, so)].enabled))
+			return (b_axe);
 		i++;
 	}
-	return (1);
+	return (NULL);
 }
 
 static void	routine(mlx_instance_t *bullet, t_game *so, int j)
 {
+	int	i;
+
+	i = 0;
 	if (!bullet->enabled)
 	{
 		bullet->x = (so->player->idle[0]->instances[0].x) + 50;
@@ -60,15 +77,23 @@ static void	routine(mlx_instance_t *bullet, t_game *so, int j)
 	}
 	else
 	{
-		if (!bullet_rcoll(so->map, *bullet)
+		if (bullet_rcoll(so, bullet)
 			|| bullet->x >= (so->player->b_spawn[j]) + 64 * 4)
+		{
+			i = check_mob_pos(bullet_rcoll(so, bullet), so);
 			bullet->enabled = false;
+			if (i >= 0)
+				del_mob_instance(so->fly_eye->idle, i, so);
+		}
 		bullet->x += 6;
 	}
 }
 
 static void	lroutine(mlx_instance_t *bullet, t_game *so, int j)
 {
+	int	i;
+
+	i = 0;
 	if (!bullet->enabled)
 	{
 		bullet->x = (so->player->idle[0]->instances[0].x) - 18;
@@ -77,9 +102,14 @@ static void	lroutine(mlx_instance_t *bullet, t_game *so, int j)
 	}
 	else
 	{
-		if (!bullet_lcoll(so->map, *bullet)
+		if (bullet_lcoll(so, bullet)
 			|| bullet->x <= (so->player->lb_spawn[j]) - (64 * 4))
+		{
 			bullet->enabled = false;
+			i = check_mob_pos(bullet_lcoll(so, bullet), so);
+			if (i >= 0)
+				del_mob_instance(so->fly_eye->idle, i, so);
+		}
 		bullet->x -= 6;
 	}
 }

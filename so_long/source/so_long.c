@@ -28,7 +28,11 @@ static void	loop(t_game *so)
 	mlx_loop_hook(so->mlx, item_hook, so);
 	mlx_loop_hook(so->mlx, gate_hook, so);
 	mlx_key_hook(so->mlx, bullet_shoot, so);
-	mlx_loop_hook(so->mlx, mob_hook, so);
+	if (so->bonus)
+	{
+		so->step_str = mlx_put_string(so->mlx, so->step, 0, 0);
+		mlx_loop_hook(so->mlx, mob_hook, so);
+	}
 	mlx_loop(so->mlx);
 }
 
@@ -45,7 +49,7 @@ int32_t	main(int argc, char **argv)
 		return (0);
 	}
 	map = parsing(fd);
-	if (!check_error(map))
+	if (!check_error(map, bonus_state()))
 	{
 		free_map(map);
 		return (0);
@@ -54,9 +58,7 @@ int32_t	main(int argc, char **argv)
 	game_init(so, map);
 	draw_map(so);
 	player_draw(so);
-	so->step_str = mlx_put_string(so->mlx, so->step, 0, 0);
 	loop(so);
 	close(fd);
 	t_game_clear(so);
-	system("leaks so_long");
 }

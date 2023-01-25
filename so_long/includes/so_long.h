@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:09:57 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 14:17:06 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:19:47 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_point
 	int				y;
 }					t_point;
 
+typedef	t_point *(f_coll)(void *, void *);
+
 typedef struct s_elem
 {
 	char			empty;
@@ -45,7 +47,7 @@ typedef struct s_item
 {
 	int				i_len;
 	char			*type;
-	mlx_image_t		*img[5];
+	mlx_image_t		*img[6];
 }					t_item;
 
 typedef struct s_player
@@ -74,7 +76,7 @@ typedef struct s_player
 	t_point			*r_axe;
 	t_point			*l_axe;
 	t_point			**coll_pos;
-	mlx_image_t		**sprite[7];
+	mlx_image_t		**sprite[8];
 	mlx_image_t		*idle[7];
 	mlx_image_t		*lidle[7];
 	mlx_image_t		*run[7];
@@ -90,8 +92,9 @@ typedef struct s_mob
 {
 	int				i_len;
 	char			*type;
-	mlx_image_t		*idle[4];
-	mlx_image_t		*lidle[4];
+	t_point			*r_axe;
+	t_point			*l_axe;
+	mlx_image_t		*idle[5];
 }					t_mob;
 
 typedef struct s_game
@@ -99,6 +102,7 @@ typedef struct s_game
 	mlx_t			*mlx;
 	int				win_w;
 	int				win_h;
+	int				bonus;
 	char			**map;
 	bool			finish;
 	int				nb_pick;
@@ -121,7 +125,7 @@ typedef struct s_game
 // check map
 char				**parsing(int fd);
 void				flood_fill(char **tab, t_point size, int x, int y);
-int					check_error(char **map_array);
+int					check_error(char **map_array, int bonus);
 int					check_path(char **map_array);
 int					list_point_cmp(t_list *list, char **map_array);
 // clean up
@@ -143,6 +147,8 @@ void				init_sprite(t_game *so, t_player *player, t_item *item,
 // utils
 int					map_len(char **map_array);
 char				**map_dup(char **map_array);
+void				free_img_tab(mlx_image_t ***img, t_game *so);
+void				free_img(mlx_image_t **img, t_game *so);
 t_list				*count_elem(char **map_array, char c);
 t_point				*find_elem(char **map_array, char c, t_point *axe);
 char				*found_path(char *sprite_name, char *type, int nb);
@@ -155,12 +161,19 @@ void				del_img(mlx_image_t **img);
 void				set_anim(t_player *player, void (*anim)(t_player *),
 						mlx_image_t ***img, int len);
 void				hide_anim(mlx_image_t **anim, bool set);
+int					bonus_state(void);
+void				end_msg(bool win, t_game *so);
+void				del_mob_instance(mlx_image_t **img, int inst, t_game *so);
 // collision
-t_point				*player_dcoll(void *so_long);
-t_point				*player_lcoll(void *so_long);
-t_point				*player_rcoll(void *so_long);
-t_point				*player_ucoll(void *so_long);
+t_point				*player_dcoll(void *game, void *pos);
+t_point				*player_lcoll(void *game, void *pos);
+t_point				*player_rcoll(void *game, void *pos);
+t_point				*player_ucoll(void *game, void *pos);
+t_point				*bullet_rcoll(void *game, void *pos);
+t_point				*bullet_lcoll(void *game, void *pos);
+int					check_mob_pos(t_point *coll_pos, t_game *so);
 void				player_collison_pos(t_point **coll_pos, t_game *so);
+void				mob_coll_pos(t_point **coll_pos, t_game *so);
 // player anim
 void				player_idle(t_player *player);
 void				lplayer_idle(t_player *player);
@@ -180,6 +193,9 @@ void				energy_anim(t_item *energy);
 void				gate_anim(t_item *gate_anim);
 //	mob anim
 void				fly_eye_anim(t_mob *mob);
+void				fly_eye_lanim(t_mob *mob);
+//	put step
+void				put_step(t_game *so);
 // hook
 void				player_hook(void *param);
 void				item_hook(void *param);

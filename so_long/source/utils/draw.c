@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 13:36:35 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 14:12:50 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:11:43 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	browse_map(t_game *so_long, char c, mlx_image_t *img, t_point ratio)
 	int	y;
 
 	y = 0;
-	while (so_long->map[y][0])
+	while (so_long->map[y])
 	{
 		x = 0;
 		while (so_long->map[y][x])
@@ -48,7 +48,8 @@ void	draw_map(t_game *so)
 	loop_browse(so, so->elem->exit, so->gate_anim->img, (t_point){25, -32});
 	browse_map(so, so->elem->exit, so->gate_i, (t_point){0, -64});
 	loop_browse(so, so->elem->item, so->energy->img, (t_point){16, 16});
-	loop_browse(so, so->elem->mob, so->fly_eye->idle, (t_point){-16, -16});
+	if (so->bonus)
+		loop_browse(so, so->elem->mob, so->fly_eye->idle, (t_point){-16, -16});
 }
 
 void	draw_img(t_game *so, t_point of, mlx_image_t **img, int len)

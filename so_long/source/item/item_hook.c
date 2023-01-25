@@ -6,13 +6,11 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 11:48:28 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 10:46:38 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 14:06:55 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
-
-typedef	t_point *(f_coll)(void *);
 
 void	player_collison_pos(t_point **coll_pos, t_game *so)
 {
@@ -26,12 +24,12 @@ void	player_collison_pos(t_point **coll_pos, t_game *so)
 	i = 0;
 	while (i < 4)
 	{
-		coll_pos[i] = coll_func[i](so);
+		coll_pos[i] = coll_func[i](so, so->player->idle[0]->instances);
 		i++;
 	}
 }
 
-static void	del_instance(mlx_image_t **img, int inst, t_game *so)
+static void	del_item_instance(mlx_image_t **img, int inst, t_game *so)
 {
 	int	i;
 
@@ -65,7 +63,7 @@ static void	pick_up(t_game *so)
 				if (pos[k]->x == so->energy->img[0]->instances[j].x / 64
 					&& pos[k]->y == so->energy->img[0]->instances[j].y / 64
 					&& so->energy->img[0]->instances[j].enabled)
-					del_instance(so->energy->img, j, so);
+					del_item_instance(so->energy->img, j, so);
 			}
 			k++;
 		}

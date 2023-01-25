@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:50:09 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 09:49:25 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:07:30 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,12 @@ char	**map_dup(char **map_array)
 	char	**tmp;
 
 	i = 0;
-	tmp = malloc(sizeof(char *) * map_len(map_array) + 1);
-	while (map_array[i][0])
+	tmp = ft_calloc(sizeof(char *), map_len(map_array) + 1);
+	while (map_array[i])
 	{
 		tmp[i] = ft_strdup(map_array[i]);
 		i++;
 	}
-	tmp[i] = ft_calloc(1, 1);
 	return (tmp);
 }
 

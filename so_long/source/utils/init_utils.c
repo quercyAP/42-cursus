@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:08:32 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 13:53:11 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:24:51 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	elem_init(t_elem *elem, char **map_array)
 {
+	t_point	*tp;
+
 	elem->empty = '0';
 	elem->wall = '1';
 	elem->exit = 'E';
@@ -22,6 +24,7 @@ void	elem_init(t_elem *elem, char **map_array)
 	elem->lst_item = count_elem(map_array, 'C');
 	elem->spawn = 'P';
 	elem->lst_spawn = count_elem(map_array, 'P');
+	tp = elem->lst_spawn->content;
 	elem->mob = 'M';
 	elem->lst_mob = count_elem(map_array, 'M');
 }

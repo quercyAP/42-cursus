@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 14:55:21 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/24 12:49:07 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:05:54 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_rect(char **map_array)
 	i = 1;
 	if (map_len(map_array) < 3 || ft_strlen(map_array[0]) < 3)
 		return (0);
-	while (map_array[i][0])
+	while (map_array[i])
 	{
 		if (ft_strlen(map_array[i]) != ft_strlen(map_array[i - 1]))
 			return (0);
@@ -47,7 +47,7 @@ static int	is_close(char **map_array)
 		i++;
 	}
 	i = 0;
-	while (map_array[i][0])
+	while (map_array[i])
 	{
 		if (map_array[i][0] != '1'
 			|| map_array[i][ft_strlen(map_array[i]) - 1] != '1')
@@ -57,12 +57,12 @@ static int	is_close(char **map_array)
 	return (1);
 }
 
-static	int	browse_map(char **map_array)
+static	int	browse_map(char **map_array, int bonus)
 {
 	t_point	index;
 
 	index.y = 0;
-	while (map_array[index.y][0])
+	while (map_array[index.y])
 	{
 		index.x = 0;
 		while (map_array[index.y][index.x])
@@ -72,7 +72,7 @@ static	int	browse_map(char **map_array)
 				|| map_array[index.y][index.x] == 'P'
 				|| map_array[index.y][index.x] == 'C'
 				|| map_array[index.y][index.x] == 'E'
-				|| map_array[index.y][index.x] == 'M')
+				|| (map_array[index.y][index.x] == 'M' && bonus))
 				index.x++;
 			else
 				return (0);
@@ -99,9 +99,9 @@ static	int	check_elem(char **map_array)
 	return (1);
 }
 
-int	check_error(char **map_array)
+int	check_error(char **map_array, int bonus)
 {
-	if (!check_elem(map_array) || !browse_map(map_array))
+	if (!check_elem(map_array) || !browse_map(map_array, bonus))
 	{
 		ft_putstr_fd("Map Error\nelement list is wrong\n", 1);
 		return (0);
