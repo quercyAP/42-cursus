@@ -6,7 +6,7 @@
 #    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/25 16:02:11 by glamazer         ###   ########.fr        #
+#    Updated: 2023/01/26 08:41:48 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,8 @@ HEADER	= -I includes -I /Users/glamazer/goinfre/MLX42/include -I /Users/goinfre/
 
 MAP		= map/test0.ber
 
+BMAP	= map/test1_bonus.ber
+
 NAME	= so_long
 
 BNAME	= so_long_bonus
@@ -78,7 +80,7 @@ run:
 			./${NAME} ${MAP}
 
 brun:		
-			./${BNAME} ${MAP}
+			./${BNAME} ${BMAP}
 
 all:		bonus
 

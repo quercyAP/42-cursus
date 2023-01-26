@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 09:31:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/25 16:20:25 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/26 08:46:26 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_game *so)
 		i++;
 	}
 	img[i] = NULL;
-	if (so->player->sprite_len < 8)
+	if (so->player->sprite_len < 7)
 		so->player->sprite[so->player->sprite_len++] = img;
 }
 

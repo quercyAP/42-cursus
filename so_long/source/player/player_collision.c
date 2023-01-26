@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:43:02 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/25 11:39:02 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/26 09:02:00 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_point	*player_ucoll(void *game, void *player_pos)
 	so = game;
 	pos = player_pos;
 	p_axe = so->player->u_axe;
-	p_axe->y = (pos->y - 5) / of;
+	p_axe->y = (pos->y - 4) / of;
 	i = of - 5;
 	while (i > 0)
 	{
