@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 08:45:37 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/25 16:07:57 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/30 09:40:06 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	free_img_tab(mlx_image_t ***img, t_game *so)
 		i++;
 	}
 }
-
 
 void	free_img(mlx_image_t **img, t_game *so)
 {

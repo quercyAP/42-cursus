@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 15:37:47 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/28 07:32:20 by glamazer         ###   ########.fr        #
+#    Updated: 2023/01/30 09:31:05 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,24 +60,24 @@ WINCFLAGS	= -Wall -Wextra -Werror -ldl -lglfw -pthread -lm
 
 MACCFLAGS	= -g3 -Wall -Wextra -Werror -fsanitize=address
 # Windows set
-.c.o:
-			${CC} ${WINCFLAGS} -c $< -o ${<:.c=.o}
-
-${NAME}:	${OBJS}
-			${CC} ${OBJS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
-
-${BNAME}:	${BOBJS}
-			${CC} ${BOBJS} ${WINLIBS} ${WINCFLAGS} -o ${BNAME}
-
-# MAC set
 # .c.o:
-# 			${CC} ${MACCFLAGS} -c $< -o ${<:.c=.o}
+# 			${CC} ${WINCFLAGS} -c $< -o ${<:.c=.o}
 
 # ${NAME}:	${OBJS}
-# 			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
-			
+# 			${CC} ${OBJS} ${WINLIBS} ${WINCFLAGS} -o ${NAME}
+
 # ${BNAME}:	${BOBJS}
-# 			${CC} ${MACCFLAGS} ${BOBJS} ${MACLIBS} -o ${BNAME}
+# 			${CC} ${BOBJS} ${WINLIBS} ${WINCFLAGS} -o ${BNAME}
+
+# MAC set
+.c.o:
+			${CC} ${MACCFLAGS} -c $< -o ${<:.c=.o}
+
+${NAME}:	${OBJS}
+			${CC} ${MACCFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
+			
+${BNAME}:	${BOBJS}
+			${CC} ${MACCFLAGS} ${BOBJS} ${MACLIBS} -o ${BNAME}
 
 run:		
 			./${NAME} ${MAP}

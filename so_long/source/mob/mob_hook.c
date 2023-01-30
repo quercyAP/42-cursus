@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:04:43 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/25 15:10:22 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/01/30 09:40:23 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	del_mob_instance(mlx_image_t **img, int inst, t_game *so)
 		i++;
 	}
 }
-
 
 int	check_mob_pos(t_point *coll_pos, t_game *so)
 {
