@@ -1,37 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/30 09:45:44 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/30 15:23:11 by glamazer         ###   ########.fr       */
+/*   Created: 2023/01/31 12:41:24 by glamazer          #+#    #+#             */
+/*   Updated: 2023/01/31 16:19:51 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/push_swap.h"
-
-static void	*free_strs(char ***strs)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (strs[i])
-	{
-		j = 0;
-		while (strs[i][j])
-		{
-			free(strs[i][j]);
-			j++;
-		}
-		free(strs[i]);
-		i++;
-	}
-	free(strs);
-	return (strs);
-}
+#include "../../include/push_swap.h"
 
 static char	***parse_arg(char **argv, int argc)
 {
@@ -56,7 +35,8 @@ static char	***check_nbr(char **argv, int argc)
 	int		k;
 
 	strs = parse_arg(argv, argc);
-	while (strs[i])
+	i = -1;
+	while (strs[++i])
 	{
 		j = 0;
 		while (strs[i][j])
@@ -72,58 +52,52 @@ static char	***check_nbr(char **argv, int argc)
 			}
 			j++;
 		}
-		i++;
 	}
 	return (strs);
 }
 
-static int	count_nbr(char ***strs)
+static int	check_doublon(int *stack_a)
 {
 	int	i;
 	int	j;
-	int	count;
 
+	if (!stack_a)
+		return (0);
 	i = 0;
-	while (strs[i])
+	while (stack_a[i])
 	{
-		j = 0;
-		while (strs[i][j])
+		j = i + 1;
+		while (stack_a[j])
 		{
-			count++;
+			if (stack_a[i] == stack_a[j])
+			{
+				free(stack_a);
+				return (0);
+			}
 			j++;
 		}
 		i++;
 	}
-	return (count);
+	return (1);
 }
 
-static int	*set_stack(char ***strs)
+int	*check_error(char **argv, int argc)
 {
-	int	i;
-	int	j;
-	int	k;
-	int	*stack_a;
+	char	***strs;
+	int		*stack_a;
 
-	k = 0;
-	stack_a = ft_calloc(sizeof(int), count_nbr(strs));
-	i = 0;
-	while (strs[i])
+	strs = check_nbr(argv, argc);
+	if (!strs)
 	{
-		j = 0;
-		while (strs[i][j])
-		{
-			stack_a[k] = ft_atoi(strs[i][j]);
-			j++;
-			k++;
-		}
-		i++;
+		ft_putstr_fd("Error\n", 2);
+		return (NULL);
+	}
+	stack_a = set_stack(strs);
+	free_strs(strs);
+	if (!check_doublon(stack_a))
+	{
+		ft_putstr_fd("Error\n", 2);
+		return (NULL);
 	}
 	return (stack_a);
-}
-
-int	main(int argc, char **argv)
-{
-	if (argc > 1)
-	{
-	}
 }
