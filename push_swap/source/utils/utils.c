@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:46:50 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/31 16:19:55 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/01 08:59:21 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	*set_stack(char ***strs)
 	char	*tmp;
 
 	k = -1;
-	stack_a = ft_calloc(sizeof(int), count_nbr(strs));
+	stack_a = ft_calloc(sizeof(int), count_nbr(strs) + 1);
 	i = -1;
 	while (strs[++i])
 	{
@@ -66,6 +66,7 @@ int	count_nbr(char ***strs)
 	int	j;
 	int	count;
 
+	count = 0;
 	i = 0;
 	while (strs[i])
 	{

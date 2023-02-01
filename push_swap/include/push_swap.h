@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:58 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/31 18:07:04 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:11:30 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,10 @@ void	rrr(int	*stack_a, int *stack_b, int display);
 void	pa(int *stack_a, int *stack_b, int display);
 // Prend le premier élément au sommet de a et le met sur b.
 void	pb(int *stack_a, int *stack_b, int display);
+
+// sort :
+
+void	sort_three(int *stack_a);
+void	sort_five(int *stack_a, int *stack_b);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 16:04:44 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/31 18:03:30 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/01 10:00:18 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sa(int *stack_a, int display)
 {
 	int	swap;
 
-	if (stack_len(stack_a) < 2)
+	if (stack_len(stack_a) > 1)
 	{
 		swap = stack_a[0];
 		stack_a[0] = stack_a[1];
@@ -28,7 +28,7 @@ void	sa(int *stack_a, int display)
 
 void	sb(int *stack_b, int display)
 {
-	if (stack_len(stack_b) < 2)
+	if (stack_len(stack_b) > 1)
 	{
 		sa(stack_b, 0);
 		if (display)
