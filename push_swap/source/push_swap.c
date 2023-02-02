@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:44 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/01 15:51:57 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:33:56 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,33 @@ static int	is_sort(int *stack_a)
 	return (1);
 }
 
+static void	set_sort(t_stack *stack)
+{
+	if (stack_len(stack->stack_a) == 2)
+		sa(stack->stack_a, 1);
+	else if (stack_len(stack->stack_a) == 3)
+		sort_three(stack->stack_a);
+	else if (stack_len(stack->stack_a) == 4 || stack_len(stack->stack_a) == 5)
+		sort_five(stack->stack_a, stack->stack_b);
+	else if (stack_len(stack->stack_a) <= 100)
+	{
+		set_chunk(stack);
+		chunk_sort(stack);
+	}
+}
+
 int	main(int argc, char **argv)
 {
-	int		*stack_a;
-	int		*stack_b;
+	t_stack	*stack;
 
+	stack = malloc(sizeof(t_stack));
 	if (argc > 1)
 	{
-		stack_a = check_error(argv, argc);
-		if (stack_a == NULL || is_sort(stack_a))
-			return (0);
-		stack_b = ft_calloc(sizeof(int), stack_len(stack_a));
-		if (stack_len(stack_a) == 2)
-			sa(stack_a, 1);
-		else if (stack_len(stack_a) == 3)
-			sort_three(stack_a);
-		else if (stack_len(stack_a) == 4 || stack_len(stack_a) == 5)
-			sort_five(stack_a, stack_b);
-		free(stack_a);
-		free(stack_b);
+		if (check_error(argv, argc, stack) || is_sort(stack->stack_a))
+			return (free_all(stack));
+		stack->stack_b = ft_calloc(sizeof(int), stack_len(stack->stack_a));
+		set_sort(stack);
+		free_all(stack);
 	}
+	free(stack);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:41:24 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/31 16:19:51 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:29:44 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,9 @@ static int	check_doublon(int *stack_a)
 	return (1);
 }
 
-int	*check_error(char **argv, int argc)
+void	*check_error(char **argv, int argc, t_stack *stack)
 {
 	char	***strs;
-	int		*stack_a;
 
 	strs = check_nbr(argv, argc);
 	if (!strs)
@@ -92,12 +91,12 @@ int	*check_error(char **argv, int argc)
 		ft_putstr_fd("Error\n", 2);
 		return (NULL);
 	}
-	stack_a = set_stack(strs);
+	set_stack(strs, stack);
 	free_strs(strs);
-	if (!check_doublon(stack_a))
+	if (!check_doublon(stack->stack_a))
 	{
 		ft_putstr_fd("Error\n", 2);
 		return (NULL);
 	}
-	return (stack_a);
+	return (stack->stack_a);
 }
