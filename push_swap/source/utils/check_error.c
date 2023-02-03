@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:41:24 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/02 18:29:44 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:49:22 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,11 @@ void	*check_error(char **argv, int argc, t_stack *stack)
 		ft_putstr_fd("Error\n", 2);
 		return (NULL);
 	}
-	set_stack(strs, stack);
+	if (!set_stack(strs, stack))
+	{
+		ft_putstr_fd("Error\n", 2);
+		return (NULL);
+	}
 	free_strs(strs);
 	if (!check_doublon(stack->stack_a))
 	{

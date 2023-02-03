@@ -6,18 +6,22 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:44:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/02 18:30:58 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:40:08 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
 
-int	free_all(t_stack *stack)
+int	free_all(t_stack *stack, int mod)
 {
-	free(stack->stack_a);
-	free(stack->stack_b);
-	if (stack->chunk)
-		free_chunk(stack->chunk);
+	if (mod == 0)
+		free(stack->stack_a);
+	if (mod == 1)
+	{
+		free(stack->stack_a);
+		free(stack->stack_b);
+	}
+	free(stack);
 	return (0);
 }
 

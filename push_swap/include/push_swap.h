@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:58 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/02 18:07:44 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:37:18 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*free_chunk(int **chunk);
 // free stack et tmp puis retourne null
 void	*set_stack_free(char *tmp, int *stack);
 // free la structure principale
-int		free_all(t_stack *stack);
+int		free_all(t_stack *stack, int mod);
 
 // check si les argument sont valide et renvoi un tableau d'entier
 void	*check_error(char **argv, int argc, t_stack *stack);
@@ -52,8 +52,6 @@ int		stack_len(int *stack);
 void	display_stack(int *stack);
 // set up les chunk
 void	set_chunk(t_stack *stack);
-
-
 
 // cost
 

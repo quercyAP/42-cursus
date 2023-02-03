@@ -6,20 +6,20 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:44 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/02 18:33:56 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:42:08 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-static int	is_sort(int *stack_a)
+static int	is_sort(t_stack *stack)
 {
 	int	i;
 
 	i = 1;
-	while (stack_a[i])
+	while (stack->stack_a[i])
 	{
-		if (stack_a[i - 1] > stack_a[i])
+		if (stack->stack_a[i - 1] > stack->stack_a[i])
 			return (0);
 		i++;
 	}
@@ -48,11 +48,12 @@ int	main(int argc, char **argv)
 	stack = malloc(sizeof(t_stack));
 	if (argc > 1)
 	{
-		if (check_error(argv, argc, stack) || is_sort(stack->stack_a))
-			return (free_all(stack));
+		if (!check_error(argv, argc, stack))
+			return (free_all(stack, -1));
+		if (is_sort(stack))
+			return (free_all(stack, 0));
 		stack->stack_b = ft_calloc(sizeof(int), stack_len(stack->stack_a));
 		set_sort(stack);
-		free_all(stack);
+		free_all(stack, 1);
 	}
-	free(stack);
 }
