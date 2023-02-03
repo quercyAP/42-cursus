@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:58 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/03 11:37:18 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:13:29 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		cost(int index, int *stack);
 // math
 
 int		is_upper(int *stack, int j);
-int		is_lower(int *stack, int j);
+int		is_lower_of(int *stack, int of);
 int		is_pair(int nb);
 int		f_upper(int *stack);
 int		f_lower(int *stack);

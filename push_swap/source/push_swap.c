@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:44 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/03 11:42:08 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/03 13:12:23 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,6 @@ int	main(int argc, char **argv)
 		set_sort(stack);
 		free_all(stack, 1);
 	}
+	else
+		free(stack);
 }

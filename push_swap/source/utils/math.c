@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 11:31:23 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/02 13:56:59 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:01:35 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	is_pair(int nb)
 	return (0);
 }
 
-int	is_lower(int *stack, int j)
+int	is_lower_of(int *stack, int of)
 {
 	int	i;
 
 	i = 0;
 	while (stack[i])
 	{
-		if (j > stack[i])
-			return (0);
+		if (stack[i] < of)
+			return (stack[i]);
 		i++;
 	}
 	return (1);
@@ -58,7 +58,7 @@ int	f_lower(int *stack)
 	j = INT_MAX;
 	while (stack[i])
 	{
-		if (stack[i] <= j)
+		if (stack[i] < j)
 		{
 			j = stack[i];
 			index = i;
@@ -79,7 +79,7 @@ int	f_upper(int *stack)
 	j = INT_MIN;
 	while (stack[i])
 	{
-		if (stack[i] >= j)
+		if (stack[i] > j)
 		{
 			j = stack[i];
 			index = i;
