@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:58 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/03 12:13:29 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:10:53 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_stack
 	int	*stack_a;
 	int	*stack_b;
 	int	**chunk;
+	int	chunk_len;
 	int	save;
 }		t_stack;
 
@@ -32,7 +33,7 @@ typedef struct s_stack
 // free le tableau d'argument
 void	*free_strs(char ***strs);
 // free les chunks
-void	*free_chunk(int **chunk);
+void	*free_chunk(t_stack *stack);
 // free stack et tmp puis retourne null
 void	*set_stack_free(char *tmp, int *stack);
 // free la structure principale
@@ -54,9 +55,13 @@ void	display_stack(int *stack);
 void	set_chunk(t_stack *stack);
 
 // cost
-
+// apllique ra ou rra selon is_ra
 void	loop_sort(int *stack, int is_ra, int nb);
+// calcule s'il vaut mieux aplliquer ra ou rra renvoi 1 pour ra
 int		is_ra(int index, int *stack);
+// calule le cout de deplacement de index et le renvoi
+// le retour de cette fonction est le nombre d'action 
+// a aplliquer pour que le nombre a l'index donné soit en tete de list
 int		cost(int index, int *stack);
 
 // math

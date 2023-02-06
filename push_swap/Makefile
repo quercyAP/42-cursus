@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
+#    By: glamazer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 09:42:28 by glamazer          #+#    #+#              #
-#    Updated: 2023/02/03 11:43:02 by glamazer         ###   ########.fr        #
+#    Updated: 2023/02/04 12:20:18 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,13 @@ MACLIBS		= lib/mac_libftprintf.a lib/mac_libft.a
 
 WINLIBS		= lib/win_libftprintf.a lib/win_libft.a
 
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror
 
 .c.o:
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
-			${CC} ${CFLAGS} ${OBJS} ${MACLIBS} -o ${NAME}
+			${CC} ${CFLAGS} ${OBJS} ${WINLIBS} -o ${NAME}
 
 all:		${NAME}
 			

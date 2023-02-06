@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 11:31:23 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/03 16:01:35 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/04 10:32:53 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,23 @@ int	is_pair(int nb)
 int	is_lower_of(int *stack, int of)
 {
 	int	i;
+	int	j;
+	int	tmp;
 
-	i = 0;
-	while (stack[i])
+	i = -1;
+	tmp = INT_MAX;
+	while (stack[++i])
 	{
-		if (stack[i] < of)
-			return (stack[i]);
-		i++;
+		if (stack[i] <= of)
+			continue ;
+		j = -1;
+		while (stack[++j])
+		{
+			if (stack[j] > of && stack[j] < tmp)
+				tmp = stack[j];
+		}
 	}
-	return (1);
+	return (tmp);
 }
 
 int	is_upper(int *stack, int j)

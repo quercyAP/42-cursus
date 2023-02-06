@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_chunk.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:34:54 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/03 15:41:45 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:17:56 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static int	chunk_alloc(t_stack *stack)
 	i = 0;
 	while (i < nb_chunk)
 	{
-		stack->chunk[i] = ft_calloc(sizeof(int), 20);
+		stack->chunk[i] = ft_calloc(sizeof(int), 20 + 1);
 		i++;
 	}
 	if (len % 20 == 0)
-		stack->chunk[i] = ft_calloc(sizeof(int), 20);
+		stack->chunk[i] = ft_calloc(sizeof(int), 20 + 1);
 	else
-		stack->chunk[i] = ft_calloc(sizeof(int), len % 20);
+		stack->chunk[i] = ft_calloc(sizeof(int), len % 20 + 1);
 	return (nb_chunk);
 }
 
@@ -45,7 +45,7 @@ static void	stock_chunk(t_stack *stack, int nb)
 	int	pivot;
 
 	rest = 20;
-	pivot = f_lower(stack->stack_a);
+	pivot = INT_MIN;
 	i = 0;
 	while (i < nb)
 	{
@@ -64,15 +64,6 @@ static void	stock_chunk(t_stack *stack, int nb)
 
 void	set_chunk(t_stack *stack)
 {
-	int	len;
-	int	i;
-
-	len = chunk_alloc(stack);
-	stock_chunk(stack, len);
-	i = 0;
-	while (i < len)
-	{
-		display_stack(stack->chunk[i]);
-		i++;
-	}
+	stack->chunk_len = chunk_alloc(stack);
+	stock_chunk(stack, stack->chunk_len);
 }
