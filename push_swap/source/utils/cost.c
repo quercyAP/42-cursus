@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 13:58:54 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/02 13:59:23 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:29:36 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ void	loop_sort(int *stack, int is_ra, int nb)
 			ra(stack, 1);
 		else
 			rra(stack, 1);
+		i++;
+	}
+}
+
+void	loop_sort_b(int *stack, int is_rb, int nb)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb)
+	{
+		if (is_rb)
+			rb(stack, 1);
+		else
+			rrb(stack, 1);
 		i++;
 	}
 }

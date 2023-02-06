@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:44:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/04 10:46:05 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:00:12 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	*free_chunk(t_stack *stack)
 
 	i = 0;
 	len = stack_len(stack->stack_a);
-	if (len % 20 == 0)
-		len = len / 20;
+	if (len % stack->nb_chunk == 0)
+		len = len / stack->nb_chunk;
 	else
-		len = (len / 20) + 1;
+		len = (len / stack->nb_chunk) + 1;
 	while (i <= len)
 	{
 		free(stack->chunk[i]);

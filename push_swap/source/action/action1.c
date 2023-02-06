@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 16:43:50 by glamazer          #+#    #+#             */
-/*   Updated: 2023/01/31 18:00:02 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/06 10:48:36 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	rrb(int *stack_b, int display)
 {
 	rra(stack_b, 0);
 	if (display)
-		ft_printf("rra\n");
+		ft_printf("rrb\n");
 }
 
 void	rrr(int	*stack_a, int *stack_b, int display)

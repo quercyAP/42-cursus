@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:44 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/03 13:12:23 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:01:17 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ static void	set_sort(t_stack *stack)
 		sort_five(stack->stack_a, stack->stack_b);
 	else if (stack_len(stack->stack_a) <= 100)
 	{
+		stack->nb_chunk = 20;
+		set_chunk(stack);
+		chunk_sort(stack);
+	}
+	else if (stack_len(stack->stack_a) > 100)
+	{
+		stack->nb_chunk = 46;
 		set_chunk(stack);
 		chunk_sort(stack);
 	}
@@ -52,7 +59,7 @@ int	main(int argc, char **argv)
 			return (free_all(stack, -1));
 		if (is_sort(stack))
 			return (free_all(stack, 0));
-		stack->stack_b = ft_calloc(sizeof(int), stack_len(stack->stack_a));
+		stack->stack_b = ft_calloc(sizeof(int), stack_len(stack->stack_a) + 1);
 		set_sort(stack);
 		free_all(stack, 1);
 	}
