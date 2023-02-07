@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:26:04 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/06 16:46:09 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:57:09 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	chunk_sort(t_stack *stack)
 				loop_sort(a, is_ra(hold_up, a), cost(hold_up, a));
 			else
 				loop_sort(a, is_ra(hold_down, a), cost(hold_down, a));
-			pb(a, stack->stack_b, 1);
 			little_sort_b(stack, i);
+			pb(stack->stack_a, stack->stack_b, 1);
 			len--;
 		}
 	}

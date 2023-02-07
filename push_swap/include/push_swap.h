@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:58 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/06 16:14:50 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:02:17 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	set_chunk_max(t_stack *stack);
 // apllique ra ou rra selon is_ra
 void	loop_sort(int *stack, int is_ra, int nb);
 void	loop_sort_b(int *stack, int is_rb, int nb);
-void	loop_ch_sort(t_stack *stack, int is_ra, int nb, int n_chunk);
 // calcule s'il vaut mieux aplliquer ra ou rra renvoi 1 pour ra
 int		is_ra(int index, int *stack);
 // calule le cout de deplacement de index et le renvoi
