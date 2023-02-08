@@ -6,9 +6,11 @@
 #    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/26 09:54:16 by glamazer          #+#    #+#              #
-#    Updated: 2023/01/26 15:30:34 by glamazer         ###   ########.fr        #
+#    Updated: 2023/02/08 09:02:15 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+NAME		= minitalk
 
 CC			= gcc
 
@@ -19,13 +21,15 @@ CFLAGS		= -Wall -Wextra -Werror
 .c.o:
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
+${NAME}:	client server
+
 client:		client.o
 			${CC} ${CFLAGS} client.o ${LIBS} -o client
 
 server:		server.o
 			${CC} ${CFLAGS} server.o ${LIBS} -o server
 
-all:		client server
+all:		${NAME}
 			
 clean:			
 			rm -f client.o server.o
