@@ -6,15 +6,15 @@
 #    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 12:55:21 by glamazer          #+#    #+#              #
-#    Updated: 2023/02/08 13:00:54 by glamazer         ###   ########.fr        #
+#    Updated: 2023/03/13 09:39:23 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= philo.c
+SRCS		= philo.c utils.c
 
 OBJS		= ${SRCS:.c=.o}
 
-NAME		= philosophers
+NAME		= philo
 
 CC			= gcc
 
