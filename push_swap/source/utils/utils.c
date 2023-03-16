@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:46:50 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/03 11:18:55 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/09 10:32:43 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	*set_stack(char ***strs, t_stack *stack)
 	char	*tmp;
 
 	k = -1;
+	stack->stack_len = count_nbr(strs);
 	stack->stack_a = ft_calloc(sizeof(int), count_nbr(strs) + 1);
 	i = -1;
 	while (strs[++i])
