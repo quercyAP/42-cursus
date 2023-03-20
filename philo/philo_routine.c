@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 20:56:29 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/17 21:50:10 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/20 10:01:51 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	eat(t_philosopher *philosopher)
 	pthread_mutex_lock(philosopher->left_fork);
 	print_log(philosopher, "has taken a fork");
 	pthread_mutex_lock(philosopher->right_fork);
+	if (!philosopher->params->philosopher_died)
+	{
+		pthread_mutex_unlock(philosopher->right_fork);
+		pthread_mutex_unlock(philosopher->left_fork);
+	}
 	print_log(philosopher, "has taken a fork");
 	print_log(philosopher, "is eating");
 	gettimeofday(&philosopher->last_meal, NULL);
@@ -67,24 +72,27 @@ void	sleep_and_think(t_philosopher *philosopher)
 
 void	*philosopher_simulation(void *arg)
 {
-	t_philosopher *philosopher;
-	int eat_count;
+	t_philosopher	*philosopher;
+	int				eat_count;
 
 	philosopher = (t_philosopher *)arg;
 	eat_count = 0;
 	wait_with_id(philosopher->id);
-	while (is_philosopher_alive(philosopher) && (philosopher->params->num_eat ==
-			-1 || eat_count < philosopher->params->num_eat)
-		&& !philosopher->params->philosopher_died)
+	while (philosopher->params->num_eat == -1
+		|| eat_count < philosopher->params->num_eat)
 	{
 		eat(philosopher);
 		eat_count++;
-		if (is_philosopher_alive(philosopher) && !philosopher->params->philosopher_died)
-			sleep_and_think(philosopher);
+		sleep_and_think(philosopher);
+		if (philosopher->params->philosopher_died)
+		{
+			pthread_mutex_lock(philosopher->params->stop_lock);
+			if (philosopher->params->simulation_stopped == 0)
+				print_log(philosopher, "died");
+			philosopher->params->simulation_stopped = 1;
+			pthread_mutex_unlock(philosopher->params->stop_lock);
+			break ;
+		}
 	}
-	pthread_mutex_lock(philosopher->params->stop_lock);
-	if (!is_philosopher_alive(philosopher) && philosopher->params->philosopher_died)
-		print_log(philosopher, "died");
-	pthread_mutex_unlock(philosopher->params->stop_lock);
 	return (NULL);
 }
