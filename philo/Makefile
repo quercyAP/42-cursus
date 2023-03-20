@@ -6,11 +6,11 @@
 #    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 12:55:21 by glamazer          #+#    #+#              #
-#    Updated: 2023/03/16 20:56:52 by glamazer         ###   ########.fr        #
+#    Updated: 2023/03/20 14:28:33 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= philo.c utils.c philo_routine.c
+SRCS		= philo.c utils.c philo_routine.c supervisor.c
 
 OBJS		= ${SRCS:.c=.o}
 

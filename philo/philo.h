@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:55:59 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/20 09:59:47 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:34:28 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ void					print_log(t_philosopher *philosopher,
 
 int						ft_atoi(const char *str);
 unsigned long			get_current_time_ms(unsigned long start_time);
-void					wait_with_id(int id);
+int						wait_with_id(int id);
 
 #endif // PHILO_H
