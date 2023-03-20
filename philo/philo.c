@@ -6,69 +6,79 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:55:48 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/13 16:29:00 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/17 21:50:19 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	start_simulation(int argc, char **argv, pthread_mutex_t *forks, int nb)
+static void	init_params(t_simulation_params *params, int argc, char **argv)
 {
-	t_philosopher	*philo;
-	pthread_t		*threads;
-	pthread_mutex_t	print;
-	int				i;
+	params->num_philosophers = atoi(argv[1]);
+	params->time_to_die = atoi(argv[2]);
+	params->time_to_eat = atoi(argv[3]);
+	params->time_to_sleep = atoi(argv[4]);
+	params->num_eat = (argc == 6) ? atoi(argv[5]) : -1;
+	params->start_time = get_current_time_ms(0);
+	params->philosopher_died = 0;
+	params->simulation_stopped = 0;
+	params->print_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	params->stop_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(params->stop_lock, NULL);
+	pthread_mutex_init(params->print_lock, NULL);
+	params->philosophers = NULL;
+}
 
-	philo = (t_philosopher *)malloc(nb * sizeof(t_philosopher));
-	threads = (pthread_t *)malloc(nb * sizeof(pthread_t));
-	i = -1;
-	while (++i < nb)
-		pthread_mutex_init(&forks[i], NULL);
-	pthread_mutex_init(&print, NULL);
-	i = -1;
-	while (++i < nb)
+void	join_threads(pthread_t *threads, t_simulation_params *params)
+{
+	int	i;
+
+	i = 0;
+	while (i < params->num_philosophers)
 	{
-		philo[i].print = print;
-		philo[i].forks = forks;
-		philo[i].count = nb;
-		philo[i].id = i + 1;
-		philo[i].left_fork = i;
-		philo[i].right_fork = (i + 1) % nb;
-		philo[i].time_to_die = ft_atoi(argv[2]);
-		philo[i].time_to_eat = ft_atoi(argv[3]);
-		philo[i].time_to_sleep = ft_atoi(argv[4]);
-		if (argc == 6)
-			philo[i].num_meals = ft_atoi(argv[5]);
-		else
-			philo[i].num_meals = -1;
-		gettimeofday(&philo[i].start_time, NULL);
-		gettimeofday(&philo[i].last_meal_time, NULL);
-		pthread_create(&threads[i], NULL, philosopher_thread, &philo[i]);
-	}
-	i = -1;
-	while (++i < nb)
 		pthread_join(threads[i], NULL);
-	i = -1;
-	while (++i < nb)
-		pthread_mutex_destroy(&forks[i]);
-	free(forks);
-	free(philo);
-	free(threads);
+		i++;
+	}
+}
+static void	start_threads(pthread_t *threads, t_philosopher *philosophers,
+		t_simulation_params *params)
+{
+	int	i;
+
+	for (i = 0; i < params->num_philosophers; i++)
+	{
+		pthread_create(&threads[i], NULL, philosopher_simulation,
+				&philosophers[i]);
+	}
 }
 
 int	main(int argc, char **argv)
 {
-	pthread_mutex_t		*forks;
-	int					nb_philo;
+	t_simulation_params params;
+	t_philosopher *philosophers;
+	pthread_mutex_t *forks;
+	pthread_t *threads;
+	pthread_t supervisor;
 
 	if (argc < 5 || argc > 6)
-	{
-		printf("error\n");
 		return (1);
-	}
-	nb_philo = ft_atoi(argv[1]);
-	forks = malloc(nb_philo * sizeof(pthread_mutex_t));
-	start_simulation(argc, argv, forks, nb_philo);
 
+	init_params(&params, argc, argv);
+	philosophers = (t_philosopher *)malloc(params.num_philosophers
+			* sizeof(t_philosopher));
+	params.philosophers = philosophers;
+	forks = (pthread_mutex_t *)malloc(params.num_philosophers
+			* sizeof(pthread_mutex_t));
+	threads = (pthread_t *)malloc(params.num_philosophers * sizeof(pthread_t));
+	initialize_philosophers(philosophers, forks, &params);
+	pthread_create(&supervisor, NULL, supervisor_thread, (void *)&params);
+	start_threads(threads, philosophers, &params);
+	pthread_join(supervisor, NULL);
+	join_threads(threads, &params);
+	free(philosophers);
+	free(forks);
+	free(threads);
+	pthread_mutex_destroy(params.print_lock);
+	free(params.print_lock);
 	return (0);
 }
