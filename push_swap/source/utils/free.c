@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:44:20 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/06 16:00:12 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/09 10:27:56 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	free_all(t_stack *stack, int mod)
 	if (mod == 0)
 		free(stack->stack_a);
 	if (mod == 1)
+	{
+		free(stack->stack_a);
+		free(stack->stack_b);
+	}
+	else if (mod == 2)
 	{
 		free_chunk(stack);
 		free(stack->stack_a);

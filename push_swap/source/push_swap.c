@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:44 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/07 12:59:00 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:02:52 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,15 @@ int	main(int argc, char **argv)
 	{
 		if (!check_error(argv, argc, stack))
 			return (free_all(stack, -1));
+		set_index(stack);
 		if (is_sort(stack))
 			return (free_all(stack, 0));
 		stack->stack_b = ft_calloc(sizeof(int), stack_len(stack->stack_a) + 1);
 		set_sort(stack);
-		free_all(stack, 1);
+		if (stack_len(stack->stack_a) < 6)
+			free_all(stack, 1);
+		else
+			free_all(stack, 2);
 	}
 	else
 		free(stack);

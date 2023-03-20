@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 09:45:58 by glamazer          #+#    #+#             */
-/*   Updated: 2023/02/07 13:02:17 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/02/09 10:54:35 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 typedef struct s_stack
 {
 	int	*stack_a;
+	int	stack_len;
 	int	*stack_b;
 	int	**chunk;
 	int	chunk_len;
@@ -45,6 +46,7 @@ void	*check_error(char **argv, int argc, t_stack *stack);
 // utils :
 // converti les arguments en tableau d'entier
 int		*set_stack(char ***strs, t_stack *stack);
+void	set_index(t_stack *stack);
 // compte les nombre qu'il y a dans strs
 int		count_nbr(char ***strs);
 // renvoi la taille de stack
