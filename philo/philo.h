@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:55:59 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/20 15:34:28 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/21 08:25:02 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philosopher
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	int					is_alive;
+	int					eat_count;
 	struct timeval		last_meal;
 }						t_philosopher;
 
@@ -54,7 +55,7 @@ void					initialize_philosophers(t_philosopher *philosophers,
 // Fonction de simulation pour un philosophe
 // (doit être exécutée dans un thread).
 void					*philosopher_simulation(void *arg);
-void					eat(t_philosopher *philosopher);
+void					eat(t_philosopher *philosopher, int *eat_count);
 void					sleep_and_think(t_philosopher *philosopher);
 void					*supervisor_thread(void *arg);
 

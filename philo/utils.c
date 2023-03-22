@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:10:24 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/20 15:35:11 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/21 08:25:40 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	initialize_philosophers(t_philosopher *philosophers,
 	{
 		philosophers[i].id = i + 1;
 		philosophers[i].params = params;
+		philosophers[i].eat_count = 0;
 		philosophers[i].left_fork = &forks[i];
 		philosophers[i].right_fork = &forks[(i + 1) % params->num_philosophers];
 		philosophers[i].is_alive = 1;
