@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:55:59 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/21 08:25:02 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:44:27 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
 
 typedef struct s_philosopher	t_philosopher;
 
@@ -69,5 +72,7 @@ void					print_log(t_philosopher *philosopher,
 int						ft_atoi(const char *str);
 unsigned long			get_current_time_ms(unsigned long start_time);
 int						wait_with_id(int id);
+int						check_args(int argc, char **argv);
+int						ft_perror(char *msg);
 
 #endif // PHILO_H

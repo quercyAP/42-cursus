@@ -1,21 +1,42 @@
 import subprocess
 import re
+import signal
 import plotly.figure_factory as ff
 import plotly.graph_objs as go
 import dash
+import os
+from contextlib import contextmanager
 from dash import dcc
 from dash import html
+import threading
 from dash.dependencies import Input, Output
 
-def run_philo_test(args, show_logs=False):
-    process = subprocess.Popen(['../philo'] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = process.communicate()
+@contextmanager
+def timeout_handler(timeout, process):
+    def _handle_timeout(*args, **kwargs):
+        process.terminate()
+        process.wait()
 
-    if show_logs:
-        print("\nLogs:")
-        print(stdout.decode('utf-8'))
+    timer = threading.Timer(timeout, _handle_timeout)
+    timer.start()
+    try:
+        yield
+    finally:
+        timer.cancel()
 
-    return stdout.decode('utf-8'), stderr.decode('utf-8'), process.returncode
+def run_philo_test(args, execution_timeout):
+    process = subprocess.Popen(['./philo'] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding = 'utf8')
+
+    with timeout_handler(execution_timeout, process):
+        stdout, stderr = process.communicate()
+
+    # Affiche la sortie et les erreurs dans le terminal
+    print("Sortie:")
+    print(stdout)
+    print("Erreurs:")
+    print(stderr)
+
+    return stdout, stderr
 
 def analyze_logs(logs):
     pattern = r'(\d+) (\d+) (has taken a fork|is eating|is sleeping|is thinking|died)'
@@ -28,7 +49,7 @@ def analyze_logs(logs):
 
         results[philosopher].append((int(timestamp), action))
 
-    return results
+    return results if results else {}
 
 def general_evaluate_test(args, results):
     num_philosophers = int(args[0])
@@ -55,14 +76,7 @@ def general_evaluate_test(args, results):
                 return False
         return True
 
-def plot_results(results, logs, args):
-    num_philosophers = int(args[0])
-    time_to_die = int(args[1])
-    time_to_eat = int(args[2])
-    time_to_sleep = int(args[3])
-    num_eat = int(args[4]) if len(args) > 4 else None
-    time_to_think = int(5)
-
+def plot_results(results, logs, args):  
     colors = {
         "has taken a fork": "rgb(0, 0, 255)",
         "is eating": "rgb(0, 255, 0)",
@@ -73,7 +87,6 @@ def plot_results(results, logs, args):
 
     fig = go.Figure()
 
-    # Ajoutez ces lignes pour créer des marqueurs de légende pour chaque couleur
     for action, color in colors.items():
         fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers',
                                  marker=dict(size=10, color=color),
@@ -88,57 +101,20 @@ def plot_results(results, logs, args):
     }
 
     for philosopher, events in results.items():
-        simultaneous_actions = {}
         for i in range(len(events) - 1):
             start = events[i][0]
             end = events[i + 1][0]
             action = events[i][1]
-
-            if action == "is eating":
-                # Ajouter l'action de dormir après avoir mangé
-                next_start = start
-                next_end = next_start + time_to_sleep
-                if next_start not in simultaneous_actions:
-                    simultaneous_actions[next_start] = []
-
-                simultaneous_actions[next_start].append((next_end, "is sleeping"))
-
-            elif action == "is sleeping":
-                if start not in simultaneous_actions:
-                    simultaneous_actions[start] = []
-
-                simultaneous_actions[start].append((end, action))
-
-                # Ajouter l'action de penser après avoir dormi
-                next_start = end
-                next_end = next_start + time_to_think  # time_to_think doit être défini
-                if next_start not in simultaneous_actions:
-                    simultaneous_actions[next_start] = []
-
-                simultaneous_actions[next_start].append((next_end, "is thinking"))
-
-            elif action == "is thinking":
-                if start not in simultaneous_actions:
-                    simultaneous_actions[start] = []
-
-                simultaneous_actions[start].append((end, action))
-
-        for i, event in enumerate(events):
-            start, action = event
             y_offset = action_offset[action]
-            
-            if i < len(events) - 1:
-                next_start, next_action = events[i + 1]
-                if start == next_start:
-                    y_offset += 0.2 * i
 
-                fig.add_shape(type="rect",
-                              x0=start, x1=end, y0=int(philosopher) * 5 + y_offset + i * 0.2 - 0.5,
-                              y1=int(philosopher) * 5 + y_offset + i * 0.2 + 0.5,
-                              fillcolor=colors[action],
-                              line=dict(width=0),
-                              yref="y",
-                              xref="x")
+            fig.add_shape(type="rect",
+                          x0=start, x1=end, y0=int(philosopher) * 5 + y_offset - 0.5,
+                          y1=int(philosopher) * 5 + y_offset + 0.5,
+                          fillcolor=colors[action],
+                          line=dict(width=0),
+                          yref="y",
+                          xref="x")
+
         fig.add_trace(go.Scatter(x=[0], y=[int(philosopher) * 5 + 1.5], text=[philosopher], mode="text", showlegend=False))
 
     fig.update_layout(
@@ -146,11 +122,12 @@ def plot_results(results, logs, args):
         xaxis_title="Time (ms)",
         yaxis_title="Philosopher",
         yaxis=dict(tickmode="array", tickvals=[int(philosopher) * 5 + 1.5 for philosopher in results.keys()]),
-        height=len(results) * 80,
+        height=max(len(results) * 80, 200),
         shapes=dict(layer="below")
     )
 
     return fig
+
 
 
 
@@ -177,6 +154,8 @@ app.layout = html.Div([
         dcc.Input(id='num_eat', type='number', placeholder='Number of times each philosopher must eat (optional)', style={"margin-right": "10px", "border": "1px solid #e0e0e0", "border-radius": "5px", "padding": "5px"})
     ], style={"background-color": "#ffffff", "border": "1px solid #e0e0e0", "border-radius": "5px", "padding": "20px", "box-shadow": "0 4px 6px rgba(0, 0, 0, 0.1)"}),
     html.Br(),
+    dcc.Input(id='execution_timeout', type='number', value=10, min=1, step=1),
+    html.Label('Execution Timeout (seconds)'),
     html.Button('Run Test', id='run_test_button', style={'background-color': '#2a9d8f', 'color': 'white', 'border': 'none', 'cursor': 'pointer', 'padding': '14px 28px', 'font-size': '16px', 'text-align': 'center', 'transition-duration': '0.4s', 'border-radius': '5px', 'font-family': 'Arial, Helvetica, sans-serif', 'box-shadow': '0 4px 6px rgba(0, 0, 0, 0.1)', 'margin-top': '10px'})  # Bouton pour exécuter le test
 ], style={"padding": "30px", "background-color": "#fafafa"})
 
@@ -190,10 +169,11 @@ app.layout = html.Div([
      dash.dependencies.State('time_to_die', 'value'),
      dash.dependencies.State('time_to_eat', 'value'),
      dash.dependencies.State('time_to_sleep', 'value'),
-     dash.dependencies.State('num_eat', 'value')]
+     dash.dependencies.State('num_eat', 'value'),
+     dash.dependencies.State('execution_timeout', 'value')]
 )
 
-def run_test_and_update_chart(n_clicks, num_philosophers, time_to_die, time_to_eat, time_to_sleep, num_eat):
+def run_test_and_update_chart(n_clicks, num_philosophers, time_to_die, time_to_eat, time_to_sleep, num_eat, execution_timeout):
     if n_clicks is None:
         return go.Figure(), ""
 
@@ -201,30 +181,26 @@ def run_test_and_update_chart(n_clicks, num_philosophers, time_to_die, time_to_e
     if num_eat is not None:
         args.append(str(num_eat))
 
-    stdout, stderr, returncode = run_philo_test(args)
-    if returncode == 0:
-        results = analyze_logs(stdout)
-        fig = plot_results(results, stdout, args)
-        num_actions = 5  # Nombre d'actions (prendre une fourchette, manger, dormir, penser)
-        fig.update_layout(height=len(results) * num_actions * 20)  # Mettre à jour la hauteur du graphique
-        
-        evaluation = general_evaluate_test(args, results)
-        philo_died = any([event[1] == "died" for events in results.values() for event in events])
-        if evaluation is None:
-            return fig, stdout
-        elif evaluation:
-             if philo_died:
-                return fig, f"Test réussi\n\n{stdout}"
-             else:
-                return fig, f"Test échoué : aucun philosophe n'aurait du mourir\n\n{stdout}"
+    stdout, stderr = run_philo_test(args, execution_timeout)
+    results = analyze_logs(stdout)
+    fig = plot_results(results, stdout, args)
+    num_actions = 4  # Nombre d'actions (prendre une fourchette, manger, dormir, penser)
+    fig.update_layout(height=len(results) * num_actions * 20)  # Mettre à jour la hauteur du graphique
+    
+    evaluation = general_evaluate_test(args, results)
+    philo_died = any([event[1] == "died" for events in results.values() for event in events])
+    if evaluation is None:
+        return fig, stdout
+    elif evaluation:
+        if philo_died:
+            return fig, f"Test réussi\n\n{stdout}"
         else:
-            if not philo_died:
-                return fig, f"Test échoué : un philosophe aurait dû mourir\n\n{stdout}"
-            elif philo_died:
-                return fig, f"Test réussi\n\n{stdout}"
-
+            return fig, f"Test échoué : aucun philosophe n'aurait du mourir\n\n{stdout}"
     else:
-        return go.Figure(), f"Error: {stderr}"
+        if not philo_died:
+            return fig, f"Test échoué : un philosophe aurait dû mourir\n\n{stdout}"
+        elif philo_died:
+            return fig, f"Test réussi\n\n{stdout}"
 
 
 

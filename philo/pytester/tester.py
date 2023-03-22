@@ -8,7 +8,7 @@ from dash import html
 from dash.dependencies import Input, Output
 
 def run_philo_test(args, show_logs=False):
-    process = subprocess.Popen(['../philo'] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen(['./philo'] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
 
     if show_logs:
@@ -55,7 +55,13 @@ def general_evaluate_test(args, results):
                 return False
         return True
 
-def plot_results(results, logs):
+def plot_results(results, logs, args):
+    num_philosophers = int(args[0])
+    time_to_die = int(args[1])
+    time_to_eat = int(args[2])
+    time_to_sleep = int(args[3])
+    num_eat = int(args[4]) if len(args) > 4 else None
+
     colors = {
         "has taken a fork": "rgb(0, 0, 255)",
         "is eating": "rgb(0, 255, 0)",
@@ -66,7 +72,6 @@ def plot_results(results, logs):
 
     fig = go.Figure()
 
-    # Ajoutez ces lignes pour créer des marqueurs de légende pour chaque couleur
     for action, color in colors.items():
         fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers',
                                  marker=dict(size=10, color=color),
@@ -81,28 +86,20 @@ def plot_results(results, logs):
     }
 
     for philosopher, events in results.items():
-        simultaneous_actions = {}
         for i in range(len(events) - 1):
             start = events[i][0]
             end = events[i + 1][0]
             action = events[i][1]
+            y_offset = action_offset[action]
 
-            if start not in simultaneous_actions:
-                simultaneous_actions[start] = []
+            fig.add_shape(type="rect",
+                          x0=start, x1=end, y0=int(philosopher) * 5 + y_offset - 0.5,
+                          y1=int(philosopher) * 5 + y_offset + 0.5,
+                          fillcolor=colors[action],
+                          line=dict(width=0),
+                          yref="y",
+                          xref="x")
 
-            simultaneous_actions[start].append((end, action))
-
-        for start, actions in simultaneous_actions.items():
-            for i, (end, action) in enumerate(actions):
-                y_offset = action_offset[action]
-
-                fig.add_shape(type="rect",
-                              x0=start, x1=end, y0=int(philosopher) * 5 + y_offset + i * 0.2 - 0.5,
-                              y1=int(philosopher) * 5 + y_offset + i * 0.2 + 0.5,
-                              fillcolor=colors[action],
-                              line=dict(width=0),
-                              yref="y",
-                              xref="x")
         fig.add_trace(go.Scatter(x=[0], y=[int(philosopher) * 5 + 1.5], text=[philosopher], mode="text", showlegend=False))
 
     fig.update_layout(
@@ -115,6 +112,9 @@ def plot_results(results, logs):
     )
 
     return fig
+
+
+
 
 # Créez une application Dash
 app = dash.Dash(__name__)
@@ -166,8 +166,8 @@ def run_test_and_update_chart(n_clicks, num_philosophers, time_to_die, time_to_e
     stdout, stderr, returncode = run_philo_test(args)
     if returncode == 0:
         results = analyze_logs(stdout)
-        fig = plot_results(results, stdout)
-        num_actions = 4  # Nombre d'actions (prendre une fourchette, manger, dormir, penser)
+        fig = plot_results(results, stdout, args)
+        num_actions = 5  # Nombre d'actions (prendre une fourchette, manger, dormir, penser)
         fig.update_layout(height=len(results) * num_actions * 20)  # Mettre à jour la hauteur du graphique
         
         evaluation = general_evaluate_test(args, results)

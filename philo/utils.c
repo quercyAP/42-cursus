@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:10:24 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/21 08:25:40 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/22 09:50:41 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void	initialize_philosophers(t_philosopher *philosophers,
 {
 	int	i;
 
+	i = 0;
+	while (i < params->num_philosophers)
+		pthread_mutex_init(&forks[i++], NULL);
 	i = 0;
 	while (i < params->num_philosophers)
 	{
