@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:10:24 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/22 09:50:41 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:03:46 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ unsigned long	get_current_time_ms(unsigned long start_time)
 			+ current_time.tv_usec / 1000) - start_time);
 }
 
-void	print_log(t_philosopher *philosopher, const char *status)
+void	print_log(t_philosopher *philosopher, const char *status,
+		unsigned long time)
 {
 	unsigned long	timestamp;
 
@@ -61,7 +62,10 @@ void	print_log(t_philosopher *philosopher, const char *status)
 	if (!philosopher->params->simulation_stopped)
 	{
 		timestamp = get_current_time_ms(philosopher->params->start_time);
-		printf("%lu %d %s\n", timestamp, philosopher->id, status);
+		if (!time)
+			printf("%lu %d %s\n", timestamp, philosopher->id, status);
+		else
+			printf("%lu %d %s\n", time, philosopher->id, status);
 	}
 	pthread_mutex_unlock(philosopher->params->print_lock);
 }

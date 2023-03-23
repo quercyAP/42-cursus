@@ -6,7 +6,7 @@
 #    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 12:55:21 by glamazer          #+#    #+#              #
-#    Updated: 2023/03/22 12:24:12 by glamazer         ###   ########.fr        #
+#    Updated: 2023/03/23 15:48:53 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ OBJS = ${SRCS:.c=.o}
 NAME = philo
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+SFLAGS = -fsanitize=thread -g
+
 
 RED = \033[0;31m
 GREEN = \033[0;32m
@@ -31,7 +33,11 @@ ${NAME}: ${OBJS}
 	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
 
 all: ${NAME}
-			
+
+sanitize: ${NAME}
+	@echo "$(GREEN)Linking objects into executable with sflags ${NAME}...$(RESET)"
+	@${CC} ${SFLAGS} ${CFLAGS} ${OBJS} -o ${NAME}
+
 clean:
 	@echo "$(YELLOW)Removing object files...$(RESET)"
 	@rm -f ${OBJS}

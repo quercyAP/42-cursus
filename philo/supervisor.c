@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:27:58 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/20 15:37:52 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:36:14 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@ void	*supervisor_thread(void *arg)
 	while (params->philosopher_died == 0)
 	{
 		i = 0;
+		pthread_mutex_lock(params->stop_lock);
 		while (i < params->num_philosophers)
 		{
 			if (!is_philosopher_alive(&params->philosophers[i]))
 			{
-				params->philosopher_died = 1;
+				params->philosopher_died = i + 1;
+				params->die_time = get_current_time_ms(params->start_time);
 				return (NULL);
 			}
 			i++;
 		}
+		pthread_mutex_unlock(params->stop_lock);
+		usleep(1000);
 	}
 	return (NULL);
 }
