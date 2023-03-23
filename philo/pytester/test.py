@@ -1,34 +1,48 @@
 import subprocess
 import re
 import signal
+from time import sleep
+import queue
 import plotly.figure_factory as ff
 import plotly.graph_objs as go
-import dash
-import os
-from contextlib import contextmanager
-from dash import dcc
-from dash import html
 import threading
-from dash.dependencies import Input, Output
+from contextlib import contextmanager
+import os
+import time
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
 
-@contextmanager
-def timeout_handler(timeout, process):
-    def _handle_timeout(*args, **kwargs):
+def stdout_reader(process, stdout_queue, stop_event):
+    while not stop_event.is_set():
+        line = process.stdout.readline()
+        if line:
+            stdout_queue.put(line)
+        else:
+            break
+
+def run_philo_test(args, execution_timeout):
+    process = subprocess.Popen(['./philo'] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf8', bufsize=1, universal_newlines=True)
+
+    stdout_queue = queue.Queue()
+    stop_event = threading.Event()
+    stdout_thread = threading.Thread(target=stdout_reader, args=(process, stdout_queue, stop_event))
+    stdout_thread.start()
+
+    stdout_thread.join(timeout=execution_timeout)
+
+    if stdout_thread.is_alive():
+        stop_event.set()
         process.terminate()
         process.wait()
 
-    timer = threading.Timer(timeout, _handle_timeout)
-    timer.start()
-    try:
-        yield
-    finally:
-        timer.cancel()
+    stdout_lines = []
+    while not stdout_queue.empty():
+        stdout_lines.append(stdout_queue.get())
 
-def run_philo_test(args, execution_timeout):
-    process = subprocess.Popen(['./philo'] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding = 'utf8')
-
-    with timeout_handler(execution_timeout, process):
-        stdout, stderr = process.communicate()
+    stdout = "".join(stdout_lines)
+    stderr = process.stderr.read()
 
     # Affiche la sortie et les erreurs dans le terminal
     print("Sortie:")
@@ -128,9 +142,6 @@ def plot_results(results, logs, args):
 
     return fig
 
-
-
-
 # Créez une application Dash
 app = dash.Dash(__name__)
 
@@ -154,11 +165,57 @@ app.layout = html.Div([
         dcc.Input(id='num_eat', type='number', placeholder='Number of times each philosopher must eat (optional)', style={"margin-right": "10px", "border": "1px solid #e0e0e0", "border-radius": "5px", "padding": "5px"})
     ], style={"background-color": "#ffffff", "border": "1px solid #e0e0e0", "border-radius": "5px", "padding": "20px", "box-shadow": "0 4px 6px rgba(0, 0, 0, 0.1)"}),
     html.Br(),
-    dcc.Input(id='execution_timeout', type='number', value=10, min=1, step=1),
-    html.Label('Execution Timeout (seconds)'),
+	html.Div([
+    html.Div(id="progress_bar", style={"background-color": "#2a9d8f", "height": "5px", "width": "0%"})  # Ajout de la barre de progression
+	], style={"background-color": "#e0e0e0", "height": "5px", "width": "100%", "border-radius": "5px"}),
+	html.Div([
+    html.Div(id="progress_bar", style={"background-color": "#2a9d8f", "height": "5px", "width": "0%"}, **{"data-progress": 0})
+	], style={"background-color": "#e0e0e0", "height": "5px", "width": "100%", "border-radius": "5px"}),
+    html.Div([
+    html.Label('Execution Timeout (seconds):', style={"font-weight": "bold", "font-family": "Arial, Helvetica, sans-serif", "font-size": "18px", "color": "#2a9d8f"}),
+    html.Div([
+		dcc.Interval(id='progress_interval', interval=1000),  # intervalle de 1000 ms (1 seconde)
+        dcc.Input(id='execution_timeout', type='number', value=10, min=1, step=1, style={"border": "1px solid #e0e0e0", "border-radius": "5px", "padding": "5px"})
+    	], style={"background-color": "#ffffff", "border": "1px solid #e0e0e0", "border-radius": "5px", "padding": "20px", "box-shadow": "0 4px 6px rgba(0, 0, 0, 0.1)"})
+	], style={"background-color": "#f0f0f0", "border": "1px solid #e0e0e0", "border-radius": "5px", "padding": "20px", "box-shadow": "0 4px 6px rgba(0, 0, 0, 0.1)", "margin-bottom": "10px"}),
     html.Button('Run Test', id='run_test_button', style={'background-color': '#2a9d8f', 'color': 'white', 'border': 'none', 'cursor': 'pointer', 'padding': '14px 28px', 'font-size': '16px', 'text-align': 'center', 'transition-duration': '0.4s', 'border-radius': '5px', 'font-family': 'Arial, Helvetica, sans-serif', 'box-shadow': '0 4px 6px rgba(0, 0, 0, 0.1)', 'margin-top': '10px'})  # Bouton pour exécuter le test
-], style={"padding": "30px", "background-color": "#fafafa"})
+	], style={"padding": "30px", "background-color": "#fafafa"})
 
+
+@app.callback(
+    [Output("progress_bar", "style"), Output("progress_bar", "data-progress")],
+    [Input("run_test_button", "n_clicks"), Input("progress_interval", "n_intervals")],
+    [State("progress_bar", "data-progress"), State('execution_timeout', 'value')],
+)
+def update_progress_bar(n_clicks, n_intervals, current_progress, execution_timeout):
+    ctx = dash.callback_context
+
+    if not ctx.triggered:
+        raise PreventUpdate
+    else:
+        trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
+
+    if trigger_id == "run_test_button":
+        new_progress = 0
+        start_time = time.time()
+        return (
+            {"background-color": "#2a9d8f", "height": "5px", "width": f"{new_progress}%"},
+            new_progress,
+        )
+
+    elif trigger_id == "progress_interval":
+        elapsed_time = time.time() - start_time
+        if elapsed_time >= execution_timeout:
+            new_progress = 100
+        else:
+            new_progress = int(elapsed_time / execution_timeout * 100)
+        return (
+            {"background-color": "#2a9d8f", "height": "5px", "width": f"{new_progress}%"},
+            new_progress,
+        )
+
+    else:
+        raise PreventUpdate
 
 
 # Mettez à jour le graphique et les logs lorsque le bouton 'Run Test' est cliqué
@@ -172,7 +229,6 @@ app.layout = html.Div([
      dash.dependencies.State('num_eat', 'value'),
      dash.dependencies.State('execution_timeout', 'value')]
 )
-
 def run_test_and_update_chart(n_clicks, num_philosophers, time_to_die, time_to_eat, time_to_sleep, num_eat, execution_timeout):
     if n_clicks is None:
         return go.Figure(), ""
@@ -180,6 +236,16 @@ def run_test_and_update_chart(n_clicks, num_philosophers, time_to_die, time_to_e
     args = [str(num_philosophers), str(time_to_die), str(time_to_eat), str(time_to_sleep)]
     if num_eat is not None:
         args.append(str(num_eat))
+
+    # Affichez la barre de progression pendant l'exécution du test
+    for i in range(execution_timeout):
+        sleep(1)
+        progress = (i + 1) / execution_timeout
+        app.clientside_callback(
+            f"document.getElementById('progress_bar').style.width = '{progress * 100}%';",
+            Output("dummy", "children"),
+            Input("dummy", "children")
+        )
 
     stdout, stderr = run_philo_test(args, execution_timeout)
     results = analyze_logs(stdout)
@@ -201,9 +267,6 @@ def run_test_and_update_chart(n_clicks, num_philosophers, time_to_die, time_to_e
             return fig, f"Test échoué : un philosophe aurait dû mourir\n\n{stdout}"
         elif philo_died:
             return fig, f"Test réussi\n\n{stdout}"
-
-
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)
