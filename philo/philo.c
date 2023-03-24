@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:55:48 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/23 15:37:12 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:39:01 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ static void	init_params(t_simulation_params *params, int argc, char **argv)
 	params->philosopher_died = 0;
 	params->simulation_stopped = 0;
 	params->print_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	params->dtime_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	params->stop_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(params->stop_lock, NULL);
 	pthread_mutex_init(params->print_lock, NULL);
+	pthread_mutex_init(params->stop_lock, NULL);
+	pthread_mutex_init(params->dtime_lock, NULL);
 	params->philosophers = NULL;
 }
 
@@ -63,9 +65,11 @@ static void	start_threads(pthread_t *threads, t_philosopher *philosophers,
 static void	ft_free(t_simulation_params *params)
 {
 	pthread_mutex_destroy(params->print_lock);
+	pthread_mutex_destroy(params->dtime_lock);
 	pthread_mutex_destroy(params->stop_lock);
 	free(params->print_lock);
 	free(params->stop_lock);
+	free(params->dtime_lock);
 }
 
 int	main(int argc, char **argv)
