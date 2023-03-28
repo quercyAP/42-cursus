@@ -6,15 +6,17 @@
 #    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 12:55:21 by glamazer          #+#    #+#              #
-#    Updated: 2023/03/24 16:40:50 by glamazer         ###   ########.fr        #
+#    Updated: 2023/03/28 15:33:36 by glamazer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = philo.c utils.c philo_routine.c supervisor.c check_args.c ft_error.c
+SRCS = philo.c utils.c philo_routine.c supervisor.c check_args.c ft_error.c\
+		utils2.c \
+
 OBJS = ${SRCS:.c=.o}
 NAME = philo
 CC = gcc
-CFLAGS = -fsanitize=thread -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 SFLAGS = -fsanitize=thread -g
 
 
