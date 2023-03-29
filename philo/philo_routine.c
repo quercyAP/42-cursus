@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 20:56:29 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/28 14:51:53 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:55:48 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ int	eat(t_philosopher *philosopher)
 		end_eating(philosopher);
 		return (0);
 	}
+	pthread_mutex_lock(philosopher->sleep);
 	ft_sleep(philosopher->params->time_to_eat);
+	pthread_mutex_unlock(philosopher->sleep);
 	end_eating(philosopher);
 	return (1);
 }

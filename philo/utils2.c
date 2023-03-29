@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:07:49 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/28 15:17:54 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:30:52 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 void	ft_sleep(unsigned long millisec)
 {
-	int	i;
+	unsigned long	start;
 
-	i = 0;
-	while (++i < 20)
-		usleep(millisec * 50);
+	start = get_current_time_ms();
+	while (1)
+	{
+		if (get_current_time_ms() - start > millisec)
+			break ;
+		usleep(100);
+	}
 }
 
 int	check_died(t_philosopher *philo)

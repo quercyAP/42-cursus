@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:55:59 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/28 15:29:31 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:52:38 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_philosopher
 	t_simulation_params	*params;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
+	pthread_mutex_t		*sleep;
 	int					eat_count;
 	unsigned long		last_meal;
 }						t_philosopher;

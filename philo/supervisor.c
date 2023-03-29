@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:27:58 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/28 15:27:42 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:56:03 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ int	supervisor(t_simulation_params *params, t_philosopher *philo)
 		if (last_meal && get_current_time_ms()
 			- last_meal > params->time_to_die)
 		{
+			pthread_mutex_lock(philo[i].sleep);
 			set_died(params);
 			print_log(&philo[i], "died");
+			pthread_mutex_unlock(philo[i].sleep);
 			break ;
 		}
 		i = (i + 1) % params->num_philosophers;
-		usleep(50);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:55:48 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/28 15:35:58 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:28:42 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int argc, char **argv)
 	pthread_t			*threads;
 
 	if (check_args(argc, argv))
-		return (ft_perror("ERROR: Bad argument"));
+		return (ft_perror("ERROR: Bad argument\n"));
 	init_params(&params, argc, argv);
 	philosophers = (t_philosopher *)malloc(params.num_philosophers
 			* sizeof(t_philosopher));

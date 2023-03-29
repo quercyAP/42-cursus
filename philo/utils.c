@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:10:24 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/28 15:29:03 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:55:23 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	initialize_philosophers(t_philosopher *philosophers,
 	i = 0;
 	while (i < params->num_philosophers)
 	{
+		philosophers[i].sleep = malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(philosophers[i].sleep, NULL);
 		philosophers[i].id = i + 1;
 		philosophers[i].params = params;
 		philosophers[i].eat_count = 0;

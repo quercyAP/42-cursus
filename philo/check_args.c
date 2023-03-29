@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:29:18 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/22 12:40:45 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:28:35 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	ft_isnum(char *str)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] < 48 || str[i] > 57)
