@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:29:18 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/29 15:28:35 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/04/03 09:12:21 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ long	ft_atol(const char *str)
 		return (nb *= -1);
 	return (nb);
 }
-
 
 static int	ft_isnum(char *str)
 {

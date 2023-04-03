@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:55:48 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/29 15:28:42 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/04/03 09:21:21 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ static void	ft_free(t_simulation_params *params, t_philosopher *philo)
 
 	i = 0;
 	while (i < params->num_philosophers)
+	{
+		pthread_mutex_destroy (philo[i].sleep);
+		free(philo[i].sleep);
 		pthread_mutex_destroy (philo[i++].left_fork);
+	}
 	i = 0;
 	while (i < params->num_philosophers)
 		pthread_mutex_destroy (&params->mutex[i++]);
