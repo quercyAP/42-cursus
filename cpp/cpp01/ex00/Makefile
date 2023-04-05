@@ -1,9 +1,10 @@
-SRCS = class/contact.cpp \
-	 class/phonebook.cpp \
-	 main.cpp 
+SRCS = src/class/Zombie.cpp \
+	 src/main.cpp \
+	 src/newZombie.cpp \
+	 src/randomChump.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = phonebook
+NAME = zombie
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
@@ -74,6 +75,13 @@ class:
 	done
 	@echo "$(RED)File created successfully$(RESET)"
 
+.cpp:	
+	@echo "$(RED)Enter the names of your cpp files (separated by spaces):$(RESET)"
+	@read cpp_files; \
+	for cpp_file in $$cpp_files; do \
+		touch src/$$cpp_file.cpp; \
+	done
+	@echo "$(RED)File created successfully$(RESET)"
 add:
 	@script="tools/update_srcs.sh"; \
 	while [ ! -f $$script ] && [ ! $$PWD = "/" ]; do cd ..; done; \

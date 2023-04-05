@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:57:59 by glamazer          #+#    #+#             */
-/*   Updated: 2023/04/05 12:43:06 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:48:59 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,25 @@ bool	is_num(std::string &str)
 	return (true);
 }
 
-std::string	*user_loop(std::string &speech)
+std::string	user_loop(std::string &speech)
 {
-	std::string *data = new std::string;
+	std::string data;
 	bool input;
 	
 	do
 	{
 		input = true;
 		std::cout << speech;
-		std::getline(std::cin, *data);
+		std::getline(std::cin, data);
 		if ((speech == "Enter Phone Number: "
-			|| speech == "Enter the contact index: ") && !is_num(*data))
+			|| speech == "Enter the contact index: ") && !is_num(data))
 		{
 			std::cout << "Only number." << std::endl;
 			input = false;
 		}
 		if (std::cin.eof())
-		{
-			delete (data);
 			exit(0);
-		} 
-	} while (data->empty() || !input);
+	} while (data.empty() || !input);
 
 	return (data);
 }
@@ -105,11 +102,11 @@ std::string	*PhoneBook::add_routine()
 	std::string *data = new std::string[5];
 
 	for (int i = 0; i < 5; i++)
-		data[i] = *user_loop(this->speech[i]);
+		data[i] = user_loop(this->speech[i]);
 	return (data);
 }
 
 int	PhoneBook::search_routine()
 {
-	return std::stoi(*user_loop(this->speech[5]));
+	return std::stoi(user_loop(this->speech[5]));
 }
