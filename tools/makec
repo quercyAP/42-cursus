@@ -1,0 +1,72 @@
+SRCS =
+
+OBJS = ${SRCS:.c=.o}
+NAME = 
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+SFLAGS = -fsanitize=thread -g
+
+
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+RESET = \033[0m
+
+.c.o:
+	@echo "$(BLUE)Compiling $<...$(RESET)"
+	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+
+${NAME}: ${OBJS}
+	@echo "$(GREEN)Linking objects into executable ${NAME}...$(RESET)"
+	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+
+all: ${NAME}
+
+sanitize: ${NAME}
+	@echo "$(GREEN)Linking objects into executable with sflags ${NAME}...$(RESET)"
+	@${CC} ${SFLAGS} ${CFLAGS} ${OBJS} -o ${NAME}
+
+.h:	
+	@echo "$(RED)Enter the names of your .h files (separated by spaces):$(RESET)"
+	@read h_files; \
+	for h_file in $$h_files; do \
+		touch include/$$h_file.h; \
+	done
+	@echo "$(RED)File created successfully$(RESET)"
+
+dir:
+	@if [ ! -d "obj" ]; then \
+		echo "$(RED)Creating directory obj...$(RESET)"; \
+		mkdir -p obj; \
+	fi
+	@if [ ! -d "include" ]; then \
+		echo "$(RED)Creating directory include...$(RESET)"; \
+		mkdir -p include; \
+	fi
+	@if [ ! -d "src" ]; then \
+		echo "$(RED)Creating directory src...$(RESET)"; \
+		mkdir -p src; \
+	fi
+
+add:
+	@script="tools/update_srcs.sh"; \
+	while [ ! -f $$script ] && [ ! $$PWD = "/" ]; do cd ..; done; \
+	if [ -f $$script ]; then \
+		./$$script "$(CURDIR)"; \
+		echo "$(RED)SRCS File added successfully.$(RESET)"; \
+	else \
+		echo "$(RED)update_srcs.sh not found in parent directories"; \
+	fi
+
+clean:
+	@echo "$(YELLOW)Removing object files...$(RESET)"
+	@rm -f ${OBJS}
+
+fclean: clean
+	@echo "$(YELLOW)Removing executable...$(RESET)"
+	@rm -f ${NAME}
+
+re: fclean all
+
+.PHONY: all clean fclean re .h add
