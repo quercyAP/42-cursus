@@ -1,7 +1,10 @@
-SRCS = 
+SRCS = src/class/HumanA.cpp \
+	 src/class/HumanB.cpp \
+	 src/class/Weapon.cpp \
+	 src/main.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = 
+NAME = violance 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
@@ -24,6 +27,10 @@ ${NAME}: ${OBJS}
 	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
 
 all: ${NAME}
+
+sanitize: ${NAME}
+	@echo "$(GREEN)Linking objects into executable with sflags ${NAME}...$(RESET)"
+	@${CC} ${SFLAGS} ${CFLAGS} ${OBJS} -o ${NAME}
 
 clean:
 	@echo "$(YELLOW)Removing object files...$(RESET)"
@@ -57,16 +64,24 @@ class:
 	for cpp_file in $$cpp_files; do \
 		touch src/class/$$cpp_file.cpp; \
 		touch include/class/$$cpp_file.hpp; \
+		echo "$(RED)$$cpp_file.hpp, $$cpp_file.cpp created successfully$(RESET)"; \
 	done
-	@echo "$(RED)File created successfully$(RESET)"
 	
-.h:	
+.h:
 	@echo "$(RED)Enter the names of your .h files (separated by spaces):$(RESET)"
 	@read h_files; \
 	for h_file in $$h_files; do \
 		touch include/$$h_file.h; \
+		echo "$(RED)$$h_file.h created successfully$(RESET)"; \
 	done
-	@echo "$(RED)File created successfully$(RESET)"
+
+.cpp:
+	@echo "$(RED)Enter the names of your cpp files (separated by spaces):$(RESET)"
+	@read cpp_files; \
+	for cpp_file in $$cpp_files; do \
+		touch src/$$cpp_file.cpp; \
+		echo "$(RED)$$cpp_file.cpp created successfully$(RESET)"; \
+	done
 
 add:
 	@script="tools/update_srcs.sh"; \
@@ -75,7 +90,7 @@ add:
 		./$$script "$(CURDIR)"; \
 		echo "$(RED)SRCS File added successfully.$(RESET)"; \
 	else \
-		echo "$(RED)update_srcs.sh not found in parent directories"; \
+		echo "$(RED)update_srcs.sh not found in parent directories$(RESET)"; \
 	fi
 
 fclean: clean
@@ -84,4 +99,5 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re add .h class dir
+.PHONY: all clean fclean re
+

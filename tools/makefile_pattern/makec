@@ -27,13 +27,21 @@ sanitize: ${NAME}
 	@echo "$(GREEN)Linking objects into executable with sflags ${NAME}...$(RESET)"
 	@${CC} ${SFLAGS} ${CFLAGS} ${OBJS} -o ${NAME}
 
+.c:
+	@echo "$(RED)Enter the names of your .c files (separated by spaces):$(RESET)"
+	@read c_files; \
+	for c_file in $$cpp_files; do \
+		touch src/$$c_file.cpp; \
+		@echo "$(RED)src/$$c_file.cpp created successfully$(RESET)"; \
+	done
+
 .h:	
 	@echo "$(RED)Enter the names of your .h files (separated by spaces):$(RESET)"
 	@read h_files; \
 	for h_file in $$h_files; do \
 		touch include/$$h_file.h; \
+		@echo "$(RED)include/$$h_file.h created successfully$(RESET)"; \
 	done
-	@echo "$(RED)File created successfully$(RESET)"
 
 dir:
 	@if [ ! -d "obj" ]; then \
