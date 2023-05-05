@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:43:53 by glamazer          #+#    #+#             */
-/*   Updated: 2023/04/05 12:43:36 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:03:47 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	Contact::set_contact_info(std::string *data)
 	this->last_name = data[1];
 	this->nickname = data[2];
 	this->phone_number = data[3];
-	this->darkest_secret = data[4];
-
-	delete[] data;				
+	this->darkest_secret = data[4];				
 }
 
 std::string	Contact::get_fisrt_name()

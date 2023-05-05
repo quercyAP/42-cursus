@@ -23,9 +23,14 @@ int	main(void)
 		{
 			std::cout << "Enter a command (ADD, SEARCH, or EXIT): ";
 			std::getline(std::cin, command);
-			if (std::cin.eof()) 
-				exit(0);
-		} while (command.empty());
+			if (std::cin.eof())
+			{
+				std::cin.clear();
+				std::clearerr(stdin);
+				std::cout << std::endl;
+			}
+		}
+		while (command.empty());
 		if (command == "ADD")
 		{
 			Contact contact;

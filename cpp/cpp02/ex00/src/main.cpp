@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phonebook.hpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 10:42:09 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/04 10:16:17 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/05 09:46:58 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/05 10:57:41 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes.h"
+#include <iostream>
+#include "../include/class/Fixed.hpp"
 
-class PhoneBook
+int main( void ) 
 {
-	private:
-		Contact	contacts[8];
-		int	contact_count;
-		std::string speech[6];
-		std::string data[5];
-
-	public:
-		PhoneBook();
-		void add_contact(Contact &contact);
-		void display_contact_list();
-		void display_contact_info(int index);
-		std::string *add_routine();
-		int search_routine();
-};
+	Fixed a;
+	Fixed b( a );
+	Fixed c;
+	
+	c = b;
+	
+	std::cout << a.getRawBits() << std::endl;
+	std::cout << b.getRawBits() << std::endl;
+	std::cout << c.getRawBits() << std::endl;
+	return 0;
+}
