@@ -3,7 +3,7 @@ SRCS =
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror Wno-unknown-pragmas -std=c++98
 
 RED = \033[0;31m
 GREEN = \033[0;32m

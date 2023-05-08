@@ -1,8 +1,8 @@
-SRCS = src/class/Fixed.cpp \
-	 src/main.cpp \
+SRCS = src/main.cpp \
+	 src/class/ClapTrap.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = Fixed
+NAME = claptrap
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
 

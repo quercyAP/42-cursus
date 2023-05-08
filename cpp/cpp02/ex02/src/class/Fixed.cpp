@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:12:42 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/05 15:51:15 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/07 18:53:36 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,27 @@ int Fixed::toInt(void) const
 {
 	return this->value >> bits;
 }
+
+const Fixed &Fixed::max(const Fixed &a, const Fixed &b)
+{
+	return (a > b) ? a : b;
+}
+
+const Fixed &Fixed::min(const Fixed &a, const Fixed &b)
+{
+	return (a < b) ? a : b;
+}
+
+Fixed &Fixed::min(Fixed &a, Fixed &b)
+{
+	return (a < b) ? a : b;
+}
+
+Fixed &Fixed::max(Fixed &a, Fixed &b)
+{
+	return (a > b) ? a : b;
+}
+
 #pragma endregion
 
 // Surcharge d'operateur
@@ -102,36 +123,71 @@ Fixed Fixed::operator*(const Fixed &copy) const
 
 Fixed Fixed::operator/(const Fixed &copy) const
 {
+	if (copy.value == 0)
+	{
+		std::cerr << "Division par 0" << std::endl;
+		return *this;
+	}
 	Fixed ret;
-	int tmp = this->value / copy.value;
-	ret.value = (int)(tmp >> this->bits);
+	long long tmp = ((long long)this->value << this->bits) / (long long)copy.value;
+	ret.value = (int)(tmp);
 	return ret;
 }
 
 Fixed Fixed::operator++(int)
 {
 	Fixed &copy(*this);
-	++this->value;
+	this->value += 1;
 	return copy;
 }
 
 Fixed &Fixed::operator++()
 {
-	this->value += (this->value << bits);
+	this->value += 1;
 	return *this;
 }
 
 Fixed Fixed::operator--(int)
 {
 	Fixed &copy(*this);
-	--this->value;
+	this->value -= 1;
 	return copy;
 }
 
 Fixed &Fixed::operator--()
 {
-	this->value -= (this->value << bits);
+	this->value -= 1;
 	return *this;
+}
+
+bool Fixed::operator>(const Fixed &copy) const
+{
+	return this->value > copy.value;
+}
+
+bool Fixed::operator<(const Fixed &copy) const
+{
+	return this->value < copy.value;
+}
+
+bool Fixed::operator>=(const Fixed &copy) const
+{
+	return this->value >= copy.value;
+}
+
+bool Fixed::operator<=(const Fixed &copy) const
+{
+	return this->value <= copy.value;
+}
+
+bool Fixed::operator==(const Fixed &copy) const
+{
+	return this->value == copy.value;
+}
+
+bool Fixed::operator!=(const Fixed &copy) const
+{
+	return this->value != copy.value;
 }
 
 #pragma endregion
