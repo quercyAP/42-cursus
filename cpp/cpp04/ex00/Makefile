@@ -1,7 +1,12 @@
-SRCS =
+SRCS = src/class/Animal.cpp \
+	 src/class/Cat.cpp \
+	 src/class/Dog.cpp \
+	 src/class/WrongAnimal.cpp \
+	 src/class/WrongCat.cpp \
+	 src/main.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = 
+NAME = polymorphisme
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
 
