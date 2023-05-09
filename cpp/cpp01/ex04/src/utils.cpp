@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 11:27:55 by glamazer          #+#    #+#             */
-/*   Updated: 2023/04/10 11:37:22 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:29:53 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool copy_file(const std::string &src_filename, const std::string &dest_filename)
 {
-    std::ifstream src(src_filename, std::ios::binary);
-    std::ofstream dest(dest_filename, std::ios::binary);
+    std::ifstream src(src_filename.c_str());
+    std::ofstream dest(dest_filename.c_str());
     
     if (!src.is_open() || !dest.is_open())
         return false;
@@ -31,7 +31,7 @@ bool replace_in_file(const std::string &filename, const std::string &s1, const s
     if (!copy_file(filename, output_filename)) 
         return false;
 
-    std::fstream output_file(output_filename, std::ios::in | std::ios::out);
+    std::fstream output_file(output_filename.c_str());
     if (!output_file.is_open()) 
         return false;
 
