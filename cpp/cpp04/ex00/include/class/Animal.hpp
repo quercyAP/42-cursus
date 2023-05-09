@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.hpp                                         :+:      :+:    :+:   */
+/*   Animal.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 14:45:55 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/09 14:46:04 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/09 13:50:56 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/09 14:00:31 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Zombie.h"
+#ifndef ANIMAL_HPP
+# define ANIMAL_HPP
+# include <string>
+# include <iostream>
 
-class Zombie
+class Animal
 {
-	private:
-		std::string name;
-		
+	protected:
+		std::string type;
+	
 	public:
-		Zombie();
-		~Zombie();
-		void anounce(void);
-		void setName(std::string name);
-		std::string getName();
+		Animal( void );
+		Animal ( Animal const &src );
+		~Animal ( void );
+		
+		Animal &operator=( Animal const &copy );
 };
+
+#endif

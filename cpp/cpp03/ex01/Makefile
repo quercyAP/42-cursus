@@ -1,7 +1,9 @@
-SRCS =
+SRCS = src/class/ClapTrap.cpp \
+	 src/class/ScavTrap.cpp \
+	 src/main.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = 
+NAME = claptrap
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
 

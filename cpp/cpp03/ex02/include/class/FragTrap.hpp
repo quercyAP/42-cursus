@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.hpp                                         :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 14:45:55 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/09 14:46:04 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/09 11:32:11 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/09 13:53:03 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Zombie.h"
+#ifndef FRAGTRAP_HPP
+# define FRAGTRAP_HPP
+# include "ClapTrap.hpp"
 
-class Zombie
+class FragTrap : public ClapTrap
 {
-	private:
-		std::string name;
-		
 	public:
-		Zombie();
-		~Zombie();
-		void anounce(void);
-		void setName(std::string name);
-		std::string getName();
+		FragTrap( void );
+		FragTrap( std::string name );
+		FragTrap( FragTrap const &src );
+		~FragTrap( void );
+
+		void attack( const std::string &target );
+		void highFiveGuys( void );
 };
+
+#endif
