@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 09:18:31 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/10 09:19:11 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/10 10:04:08 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/10 12:33:40 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WRONGANIMAL_HPP
-# define WRONGANIMAL_HPP
-# include <string>
+#ifndef HARL_HPP
+# define HARL_HPP
 # include <iostream>
+# include <string>
 
-class WrongAnimal
+
+class Harl
 {
-	protected:
-		std::string type;
-	
 	public:
-		WrongAnimal( void );
-		WrongAnimal( WrongAnimal const &src );
-		virtual ~WrongAnimal( void );
+		Harl( void );
+		~Harl( void );
 		
-		WrongAnimal &operator=( WrongAnimal const &copy );
-
-		void makeSound( void ) const;
-		
-		std::string getType( void ) const;
+		void debug( void );
+		void info( void );
+		void warning( void );
+		void error( void );
+		void complain( std::string level);
 };
+
+typedef void (Harl::*funcptr)( void );
 
 #endif

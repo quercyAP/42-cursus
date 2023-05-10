@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 09:18:31 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/10 09:19:11 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/10 10:03:45 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/10 12:42:39 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WRONGANIMAL_HPP
-# define WRONGANIMAL_HPP
-# include <string>
-# include <iostream>
+#include "../include/class/Harl.hpp"
 
-class WrongAnimal
+int	main( void )
 {
-	protected:
-		std::string type;
-	
-	public:
-		WrongAnimal( void );
-		WrongAnimal( WrongAnimal const &src );
-		virtual ~WrongAnimal( void );
-		
-		WrongAnimal &operator=( WrongAnimal const &copy );
+	Harl toto;
 
-		void makeSound( void ) const;
-		
-		std::string getType( void ) const;
-};
-
-#endif
+	toto.complain("debug");
+	toto.complain("info");
+	toto.complain("warning");
+	toto.complain("error");
+}

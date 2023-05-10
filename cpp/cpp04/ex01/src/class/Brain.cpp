@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
+/*   Brain.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 09:18:31 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/10 09:19:11 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/10 09:30:43 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/10 14:47:14 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WRONGANIMAL_HPP
-# define WRONGANIMAL_HPP
-# include <string>
-# include <iostream>
+#include "../../include/class/Brain.hpp"
 
-class WrongAnimal
+Brain::Brain() {}
+
+Brain::Brain( Brain const &src)
 {
-	protected:
-		std::string type;
-	
-	public:
-		WrongAnimal( void );
-		WrongAnimal( WrongAnimal const &src );
-		virtual ~WrongAnimal( void );
-		
-		WrongAnimal &operator=( WrongAnimal const &copy );
+	if (this != &src)
+		*this = src;
+}
 
-		void makeSound( void ) const;
-		
-		std::string getType( void ) const;
-};
+Brain::~Brain( void ) {}
 
-#endif
+Brain &Brain::operator=( Brain const &copy )
+{
+	for (size_t i = 0; i < ideas->length(); i++)
+		ideas[i] = copy.ideas[i];
+	return *this;
+}

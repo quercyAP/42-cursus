@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:50:56 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/09 15:54:01 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/10 08:56:49 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class Animal
 	public:
 		Animal( void );
 		Animal( Animal const &src );
-		~Animal( void );
+		virtual ~Animal( void );
 		
 		Animal &operator=( Animal const &copy );
 
