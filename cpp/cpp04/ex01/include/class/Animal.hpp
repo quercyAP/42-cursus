@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:50:56 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/10 14:42:17 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:30:38 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class Animal
 		Animal( Animal const &src );
 		virtual ~Animal( void );
 		
-		Animal &operator=( Animal const &copy );
+		virtual Animal &operator=( Animal const &copy );
 
 		virtual void makeSound( void ) const;
 		

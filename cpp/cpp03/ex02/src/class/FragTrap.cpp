@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:29:30 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/09 11:59:15 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:57:40 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,8 @@ void FragTrap::attack( const std::string &target )
 
 void FragTrap::highFiveGuys( void )
 {
-	std::cout << "FragTrap " << _name << " wait for high five !" << std::endl;
+	if ( _hitPoints > 0)
+		std::cout << "FragTrap " << _name << " wait for high five !" << std::endl;
+	else
+		std::cout << _name << " is dead" << std::endl;
 }
