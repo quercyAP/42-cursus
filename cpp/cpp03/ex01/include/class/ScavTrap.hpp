@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:25:17 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/09 13:53:14 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:40:06 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ class ScavTrap : public ClapTrap
 
 		void attack( const std::string &target );
 		void guardGate( void );
+
+		ScavTrap& operator=( ScavTrap const & copy );
 };
 
 #endif

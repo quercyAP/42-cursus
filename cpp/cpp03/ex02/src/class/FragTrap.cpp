@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:29:30 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/11 12:57:40 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:46:55 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,17 @@ void FragTrap::highFiveGuys( void )
 		std::cout << "FragTrap " << _name << " wait for high five !" << std::endl;
 	else
 		std::cout << _name << " is dead" << std::endl;
+}
+
+FragTrap&	FragTrap::operator=( FragTrap const & copy )
+{
+	if (this != &copy)
+	{
+		_name = copy.getName();
+		_hitPoints = copy.getHitPoints();
+		_energyPoints = copy.getEnergyPoints();
+		_attackDamage = copy.getAttackDamage();
+	}
+	std::cout << "ClapTrap copy assignment operator called" << std::endl;
+	return (*this);
 }

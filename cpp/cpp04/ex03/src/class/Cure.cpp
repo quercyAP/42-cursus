@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   Cure.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 15:43:02 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/11 20:22:56 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/11 21:57:12 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/11 21:57:51 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOG_HPP
-# define DOG_HPP
-# include "Animal.hpp"
-# include "Brain.hpp"
+#include "../../include/class/Cure.hpp"
 
-class Dog : public Animal
+Cure::Cure( void ) : AMateria("cure") {}
+
+Cure::~Cure( void ) {}
+
+AMateria *Cure::clone( void ) const
 {
-	private:
-		Brain *brain;
-	
-	public:
-		Dog( void );
-		Dog( Dog const &src );
-		~Dog( void );
-		
-		Dog &operator=( Dog const &copy );
-		
-		void makeSound( void ) const;
+	return (new Cure(*this));
+}
 
-		Brain *getBrain() const;
-		void setBrain( Brain *brain );
-};
-
-#endif
+void Cure::use( ICharacter &target ) const
+{
+	std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
+}

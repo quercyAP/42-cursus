@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   MateriaSource.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 15:43:02 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/11 20:22:56 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/11 22:19:28 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/11 22:34:06 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOG_HPP
-# define DOG_HPP
-# include "Animal.hpp"
-# include "Brain.hpp"
+#ifndef METARIASOURCE_HPP
+# define METARIASOURCE_HPP
 
-class Dog : public Animal
+# include "AMateria.hpp"
+# include "IMateriaSource.hpp"
+#define MAX_INVENTORY_SIZE 4
+
+class MateriaSource : public IMateriaSource
 {
 	private:
-		Brain *brain;
+		AMateria *learnedMateria[MAX_INVENTORY_SIZE];
 	
 	public:
-		Dog( void );
-		Dog( Dog const &src );
-		~Dog( void );
-		
-		Dog &operator=( Dog const &copy );
-		
-		void makeSound( void ) const;
+		MateriaSource( void );
+		virtual ~MateriaSource( void );
 
-		Brain *getBrain() const;
-		void setBrain( Brain *brain );
+		void learnMateria( AMateria *m );
+		AMateria *createMateria( std::string const &type );
 };
 
 #endif

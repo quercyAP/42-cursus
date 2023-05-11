@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:50:56 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/11 21:09:10 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/11 21:23:48 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ class Animal
 		
 		virtual Animal &operator=( Animal const &copy );
 
-		virtual void makeSound( void ) const;
+		virtual void makeSound( void ) const = 0;
 		
 		std::string getType( void ) const;
 		virtual Brain *getBrain( void ) const;

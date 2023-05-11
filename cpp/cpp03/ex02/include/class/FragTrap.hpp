@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:32:11 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/09 13:53:03 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:46:18 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ class FragTrap : public ClapTrap
 
 		void attack( const std::string &target );
 		void highFiveGuys( void );
+
+		FragTrap& operator=( FragTrap const & copy );
 };
 
 #endif
