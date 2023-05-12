@@ -6,10 +6,10 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 22:02:45 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/11 22:03:11 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/12 09:17:54 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ICharacter.hpp"
+#include "../../include/class/ICharacter.hpp"
 
 ICharacter::~ICharacter( void ) {}

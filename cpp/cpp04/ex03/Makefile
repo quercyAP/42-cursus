@@ -1,11 +1,11 @@
-SRCS = src/main.cpp \
-	 src/class/AMateria.cpp \
-	 src/class/Ice.cpp \
-	 src/class/Cure.cpp \
+SRCS = src/class/AMateria.cpp \
 	 src/class/Character.cpp \
-	 src/class/MetariaSource.cpp \
+	 src/class/Cure.cpp \
+	 src/class/Ice.cpp \
 	 src/class/ICharacter.cpp \
 	 src/class/IMateriaSource.cpp \
+	 src/class/MateriaSource.cpp \
+	 src/main.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = interface
