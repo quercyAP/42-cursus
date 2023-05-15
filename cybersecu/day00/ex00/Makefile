@@ -1,15 +1,17 @@
-SRCS = src/callback.cpp \
-	 src/download_image.cpp \
-	 src/find_image.cpp \
+SRCS = src/main.cpp \
 	 src/find_links.cpp \
-	 src/main.cpp \
+	 src/download_image.cpp \
+	 src/read_url.cpp \
+	 src/callback.cpp \
+	 src/recusrcive.cpp \
+	 src/find_image.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = spider
 CC = c++
-CFLAGS = -Wall -Wextra -Wno-unknown-pragmas -std=c++11
-CPPFLAGS=-I /goinfre/glamazer/.brew/opt/curl/include 
-LDFLAGS=-lcurl -L /goinfre/glamazer/.brew/opt/curl/lib
+CFLAGS = -Wall -Wextra -Wno-unknown-pragmas -std=c++17
+CPPFLAGS=-I /goinfre/glamazer/.brew/opt/curl/include -I /usr/include/x86_64-linux-gnu/curl
+LDFLAGS= -L /goinfre/glamazer/.brew/opt/curl/lib -L /usr/lib/x86_64-linux-gnu/ -lcurl
 
 RED = \033[0;31m
 GREEN = \033[0;32m
@@ -27,7 +29,7 @@ obj/%.o: src/%.cpp | dir
 
 ${NAME}: ${OBJS}
 	@echo "$(GREEN)Linking objects into executable ${NAME}...$(RESET)"
-	@${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${OBJS} -o ${NAME}
+	@${CC} ${CFLAGS} ${CPPFLAGS} ${OBJS} -o ${NAME} ${LDFLAGS}
 
 all: ${NAME}
 
