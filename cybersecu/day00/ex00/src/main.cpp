@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:15:08 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/15 22:23:03 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/16 10:17:56 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,14 @@ int main(int argc, char** argv)
     if (r_flag)
 	{
 		std::unordered_set<std::string> visited;
+		std::cout << std::to_string(max_depth) << std::endl;
 		recursive(html, argv[optind], visited, 0, max_depth, path); 	
         std::cout << "Option r activée." << std::endl;
 	}
 	else
 	{
 		std::unordered_set<std::string> visited;
-		recursive(html, argv[optind], visited, 0, 1, path); 	
+		non_recursive(html, argv[optind], visited, path); 	
         std::cout << "Option r désactivée." << std::endl;
 	}
 

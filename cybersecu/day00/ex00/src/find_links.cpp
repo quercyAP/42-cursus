@@ -6,14 +6,15 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:43:53 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/15 20:00:02 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/16 10:28:28 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/spider.h"
 
-std::string extractDomain(const std::string& url) {
+static std::string extractDomain(const std::string& url)
+{
     size_t start = 0;
     if (url.find("http://") == 0) {
         start = 7;
@@ -27,7 +28,7 @@ std::string extractDomain(const std::string& url) {
     return url.substr(0, end);
 }
 
-std::string cleanURL(const std::string& url, const std::string& domain)
+static std::string cleanURL(const std::string& url, const std::string& domain)
 {
     std::string cleaned_url = url;
     size_t pos = url.find("/url?q=");
@@ -37,6 +38,13 @@ std::string cleanURL(const std::string& url, const std::string& domain)
     if (cleaned_url[0] == '/') {
         cleaned_url = domain + cleaned_url;
     }
+    if (cleaned_url.find("https://wordpress") != std::string::npos)
+    {
+        size_t pos = cleaned_url.find("https://wordpress");
+        cleaned_url.replace(pos, 18, "https://www");
+    }  
+    // if (cleaned_url.find(domain) == std::string::npos)
+    //     return "";
     return cleaned_url;
 }
 
@@ -52,7 +60,9 @@ std::vector<std::string> find_links(std::string html, std::string domain)
 	{
 		std::smatch match = *i;
 		std::string match_str = match[1].str();
-		// std::cout << match_str << std::endl;
+        std::string tmp = cleanURL(match_str, extractDomain(domain));
+        if (tmp == "")
+            continue ;
 		links.push_back(cleanURL(match_str, extractDomain(domain)));
 	}
 	return links;
