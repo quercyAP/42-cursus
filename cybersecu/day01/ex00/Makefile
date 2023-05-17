@@ -3,7 +3,7 @@ SRCS = src/main.cpp \
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = ft_otp
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98 -Wno-deprecated-declarations
+CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++17 -Wno-deprecated-declarations
 CPPFLAGS =-I/goinfre/glamazer/.brew/opt/openssl@3/include
 LDFLAGS =-L/goinfre/glamazer/.brew/opt/openssl@3/lib -lssl -lcrypto
 

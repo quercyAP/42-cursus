@@ -3,9 +3,9 @@ SRCS = src/main.cpp \
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = scorpion
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
-CPPFLAGS = -I/goinfre/glamazer/.brew/opt/exiv2/include -I/goinfre/glamazer/.brew/opt/libssh/include
-LDFLAGS = -L/goinfre/glamazer/.brew/opt/exiv2/lib -L/goinfre/glamazer/.brew/opt/libssh/lib -lexiv2 -lssh
+CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++17
+CPPFLAGS = -I/goinfre/glamazer/.brew/opt/exiv2/include -I/goinfre/glamazer/.brew/opt/libssh/include -I/usr/include/x86_64-linux-gnu/exiv2 -I include/tabulate/include
+LDFLAGS = -L/goinfre/glamazer/.brew/opt/exiv2/lib -L/goinfre/glamazer/.brew/opt/libssh/lib -L/usr/lib/x86_64-linux-gnu/ -lexiv2 -lssh
 
 RED = \033[0;31m
 GREEN = \033[0;32m

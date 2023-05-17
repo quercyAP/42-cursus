@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <cassert>
 #include <vector>
+#include "../include/tabulate/single_include/tabulate/tabulate.hpp"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -10,7 +11,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    Exiv2::LogMsg::setLevel(Exiv2::LogMsg::mute);  // désactive les avertissements
+    // Exiv2::LogMsg::setLevel(Exiv2::LogMsg::mute);
 
     for (int i = 1; i < argc; ++i) {
         try {
@@ -26,21 +27,23 @@ int main(int argc, char* argv[]) {
             }
 
             std::cout << "Metadata pour " << argv[i] << ":\n";
+
+            tabulate::Table table;
+            table.add_row({"Clé", "Tag", "Type", "Nombre", "Valeur"});
+
             Exiv2::ExifData::const_iterator end = exifData.end();
             for (Exiv2::ExifData::const_iterator i = exifData.begin(); i != end; ++i) {
                 const char* tn = i->typeName();
-                std::cout << std::setw(44) << std::setfill(' ') << std::left
-                          << i->key() << " "
-                          << "0x" << std::setw(4) << std::setfill('0') << std::right
-                          << std::hex << i->tag() << " "
-                          << std::setw(9) << std::setfill(' ') << std::left
-                          << (tn ? tn : "Unknown") << " "
-                          << std::dec << std::setw(3)
-                          << std::setfill(' ') << std::right
-                          << i->count() << "  "
-                          << std::dec << i->value()
-                          << "\n";
+                std::string key = i->key();
+                std::string tag = "0x" + std::to_string(i->tag());
+                std::string type = tn ? tn : "Unknown";
+                std::string count = std::to_string(i->count());
+                std::string value = i->toString();
+
+                table.add_row({key, tag, type, count, value});
             }
+
+            std::cout << table << std::endl;
         }
         catch (Exiv2::AnyError& e) {
             std::cout << "Erreur : " << e << "\n";
