@@ -42,13 +42,8 @@ std::string decrypt(const std::string& key, const std::string& encryptedData) {
 
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
     EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, (const unsigned char*)(key.data()), iv);
-
-    if (!EVP_DecryptUpdate(ctx, outbuf, &outlen, (const unsigned char*)(encryptedData.data()), encryptedData.size())) {
-        // handle error
-    }
-    if (!EVP_DecryptFinal_ex(ctx, outbuf + outlen, &tmplen)) {
-        // handle error
-    }
+    EVP_DecryptUpdate(ctx, outbuf, &outlen, (const unsigned char*)(encryptedData.data()), encryptedData.size());
+    EVP_DecryptFinal_ex(ctx, outbuf + outlen, &tmplen));
     outlen += tmplen;
     EVP_CIPHER_CTX_free(ctx);
 
@@ -63,13 +58,9 @@ std::string encrypt(const std::string& key, const std::string& data) {
 
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
     EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, (const unsigned char*)(key.data()), iv);
-
-    if (!EVP_EncryptUpdate(ctx, outbuf, &outlen, (const unsigned char*)(data.data()), data.size())) {
-        // handle error
-    }
-    if (!EVP_EncryptFinal_ex(ctx, outbuf + outlen, &tmplen)) {
-        // handle error
-    }
+    EVP_EncryptUpdate(ctx, outbuf, &outlen, (const unsigned char*)(data.data()), data.size());
+    EVP_EncryptFinal_ex(ctx, outbuf + outlen, &tmplen));
+    
     outlen += tmplen;
     EVP_CIPHER_CTX_free(ctx);
 
