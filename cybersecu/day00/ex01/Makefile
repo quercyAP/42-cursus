@@ -3,7 +3,7 @@ SRCS = src/main.cpp \
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = scorpion
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++17
+CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++11 -Wno-deprecated-declarations
 CPPFLAGS = -I/goinfre/glamazer/.brew/opt/exiv2/include -I/goinfre/glamazer/.brew/opt/libssh/include -I/usr/include/x86_64-linux-gnu/exiv2 -I include/tabulate/include
 LDFLAGS = -L/goinfre/glamazer/.brew/opt/exiv2/lib -L/goinfre/glamazer/.brew/opt/libssh/lib -L/usr/lib/x86_64-linux-gnu/ -lexiv2 -lssh
 

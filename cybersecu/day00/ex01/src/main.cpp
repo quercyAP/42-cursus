@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    // Exiv2::LogMsg::setLevel(Exiv2::LogMsg::mute);
+    Exiv2::LogMsg::setLevel(Exiv2::LogMsg::mute);
 
     for (int i = 1; i < argc; ++i) {
         try {
@@ -47,7 +47,6 @@ int main(int argc, char* argv[]) {
         }
         catch (Exiv2::AnyError& e) {
             std::cout << "Erreur : " << e << "\n";
-            return -1;
         }
     }
     return 0;

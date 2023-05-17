@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:43:43 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/16 10:36:07 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:24:37 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ std::vector<std::string> find_image(std::string html)
         
         std::filesystem::path p(match_str);
         std::string extension = p.extension().string();
-
-        // Convertir en minuscule pour faciliter la comparaison
-        // std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 
         if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" || extension == ".bmp")
         {

@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:05:35 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/17 06:36:49 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/17 14:42:49 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ std::string decrypt(const std::string& key, const std::string& encryptedData) {
     memset(iv, 0, AES_BLOCK_SIZE);
 
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
-    EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, (const unsigned char*)(key.data()), iv);
-    EVP_DecryptUpdate(ctx, outbuf, &outlen, (const unsigned char*)(encryptedData.data()), encryptedData.size());
-    EVP_DecryptFinal_ex(ctx, outbuf + outlen, &tmplen));
+    EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, reinterpret_cast<const unsigned char*>(key.data()), iv);
+    EVP_DecryptUpdate(ctx, outbuf, &outlen, reinterpret_cast<const unsigned char*>(encryptedData.data()), encryptedData.size());
+    EVP_DecryptFinal_ex(ctx, outbuf + outlen, &tmplen);
     outlen += tmplen;
     EVP_CIPHER_CTX_free(ctx);
 
-    return std::string((const unsigned char*)(outbuf), outlen);
+    return to_hex(outbuf, outlen);
 }
 
 std::string encrypt(const std::string& key, const std::string& data) {
@@ -57,9 +57,9 @@ std::string encrypt(const std::string& key, const std::string& data) {
     memset(iv, 0, AES_BLOCK_SIZE);
 
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
-    EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, (const unsigned char*)(key.data()), iv);
-    EVP_EncryptUpdate(ctx, outbuf, &outlen, (const unsigned char*)(data.data()), data.size());
-    EVP_EncryptFinal_ex(ctx, outbuf + outlen, &tmplen));
+    EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, reinterpret_cast<const unsigned char*>(key.data()), iv);
+    EVP_EncryptUpdate(ctx, outbuf, &outlen, reinterpret_cast<const unsigned char*>(data.data()), data.size());
+    EVP_EncryptFinal_ex(ctx, outbuf + outlen, &tmplen);
     
     outlen += tmplen;
     EVP_CIPHER_CTX_free(ctx);
@@ -72,7 +72,7 @@ std::string hotp(const std::string& key, uint64_t counter) {
 
     HMAC_CTX *ctx = HMAC_CTX_new();
     HMAC_Init_ex(ctx, key.data(), key.length(), EVP_sha1(), nullptr);
-    HMAC_Update(ctx, (const unsigned char*)(&counter), sizeof(counter));
+    HMAC_Update(ctx, reinterpret_cast<const unsigned char*>(&counter), sizeof(counter));
     HMAC_Final(ctx, result, &result_len);
     HMAC_CTX_free(ctx);
 
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
         std::string encryptedKey((std::istreambuf_iterator<char>(infile)), std::istreambuf_iterator<char>());
 
         std::string key = decrypt(encryptedKey, encryptedKey);
-
+        
         uint64_t counter = static_cast<uint64_t>(time(nullptr)) / 30;
         std::string otp = hotp(key, counter);
         std::cout << otp << std::endl;

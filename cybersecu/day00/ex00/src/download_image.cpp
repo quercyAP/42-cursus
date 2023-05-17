@@ -6,17 +6,43 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:49:36 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/16 09:36:32 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/17 14:00:55 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/spider.h"
 
+#include <string>
+
+static std::string find_name(std::string url)
+{
+    std::size_t found = url.find_last_of("/");
+
+    if (found != std::string::npos) {
+        std::string filename = url.substr(found+1);
+
+        return filename;
+    }
+    else
+        return "";
+}
+
+static bool check_doublon(std::string name, std::string path)
+{
+    for (const auto &entry : std::filesystem::directory_iterator(path))
+    {
+        if (entry.path().filename() == name)
+            return true;
+    }
+
+    return false;
+}
+
+
 void download_image(std::vector<std::string> img_links, std::string path) 
 {
     CURL* curl;
     FILE* fp;
-    static int counter;
 
     curl = curl_easy_init();
     if (curl)
@@ -26,12 +52,12 @@ void download_image(std::vector<std::string> img_links, std::string path)
             std::filesystem::create_directories(dir);
         for (std::string url : img_links)
         {
-            std::filesystem::path p(url);
-            std::string extension = p.extension().string();
-
+            std::string filename = find_name(url);
+            if (check_doublon(filename, path))
+                continue;
+               
             std::cout << url << std::endl;
             
-            std::string filename = "output" + std::to_string(counter) + extension;
             std::string fullpath = path + "/" + filename;
             fp = fopen(fullpath.c_str(),"wb");
             curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
@@ -44,7 +70,6 @@ void download_image(std::vector<std::string> img_links, std::string path)
                 std::cerr << "URL : " << url << std::endl;
             }
             fclose(fp);
-            ++counter;
         }
         curl_easy_cleanup(curl);
     }

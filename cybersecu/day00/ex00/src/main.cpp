@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:15:08 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/16 10:17:56 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/17 12:57:03 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int main(int argc, char** argv)
 
 	std::string html;
     if (optind < argc) 
-        html = read_url(argv[optind], path);
+        html = read_url(argv[optind]);
 	else 
 	{
         std::cerr << "URL manquante." << std::endl;
@@ -72,15 +72,10 @@ int main(int argc, char** argv)
 	{
 		std::unordered_set<std::string> visited;
 		std::cout << std::to_string(max_depth) << std::endl;
-		recursive(html, argv[optind], visited, 0, max_depth, path); 	
-        std::cout << "Option r activée." << std::endl;
-	}
+		recursive(html, argv[optind], visited, 0, max_depth, path);
+	}	
 	else
-	{
-		std::unordered_set<std::string> visited;
-		non_recursive(html, argv[optind], visited, path); 	
-        std::cout << "Option r désactivée." << std::endl;
-	}
+		non_recursive(html, path); 	
 
 	curl_global_cleanup();
     return 0;

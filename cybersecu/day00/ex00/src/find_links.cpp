@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:43:53 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/16 10:28:28 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/17 09:33:13 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static std::string cleanURL(const std::string& url, const std::string& domain)
         size_t pos = cleaned_url.find("https://wordpress");
         cleaned_url.replace(pos, 18, "https://www");
     }  
-    // if (cleaned_url.find(domain) == std::string::npos)
-    //     return "";
+    if (cleaned_url.find(domain) == std::string::npos)
+        return "";
     return cleaned_url;
 }
 
