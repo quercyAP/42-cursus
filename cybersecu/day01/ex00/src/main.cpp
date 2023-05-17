@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:05:35 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/17 14:42:49 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/17 23:01:27 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ std::string to_hex(unsigned char* data, size_t len) {
         ss << std::setw(2) << std::setfill('0') << (int)data[i];
     }
     return ss.str();
+}
+
+std::string hex_to_binary(const std::string& hex) {
+    std::string binary;
+    for (size_t i = 0; i < hex.length(); i += 2) {
+        std::string byte = hex.substr(i, 2);
+        char bin = static_cast<char>(strtol(byte.c_str(), nullptr, 16));
+        binary += bin;
+    }
+    return binary;
 }
 
 std::string decrypt(const std::string& key, const std::string& encryptedData) {
@@ -66,13 +76,16 @@ std::string encrypt(const std::string& key, const std::string& data) {
 
     return to_hex(outbuf, outlen);
 }
+
 std::string hotp(const std::string& key, uint64_t counter) {
     unsigned char result[EVP_MAX_MD_SIZE];
     unsigned int result_len;
+    std::string binary_key = hex_to_binary(key);
 
     HMAC_CTX *ctx = HMAC_CTX_new();
-    HMAC_Init_ex(ctx, key.data(), key.length(), EVP_sha1(), nullptr);
-    HMAC_Update(ctx, reinterpret_cast<const unsigned char*>(&counter), sizeof(counter));
+    HMAC_Init_ex(ctx, binary_key.data(), binary_key.length(), EVP_sha1(), nullptr);
+    uint64_t counter_be = htobe64(counter);
+    HMAC_Update(ctx, reinterpret_cast<const unsigned char*>(&counter_be), sizeof(counter_be));
     HMAC_Final(ctx, result, &result_len);
     HMAC_CTX_free(ctx);
 
@@ -106,7 +119,7 @@ int main(int argc, char* argv[]) {
             std::cerr << "Error: key must be 64 hexadecimal characters." << std::endl;
             return 1;
         }
-
+        
         std::string encrypted_key = encrypt(key, key);
         std::ofstream outfile("ft_otp.key");
         outfile << encrypted_key;
@@ -118,11 +131,12 @@ int main(int argc, char* argv[]) {
             return 1;
         }
         std::string encryptedKey((std::istreambuf_iterator<char>(infile)), std::istreambuf_iterator<char>());
-
+        
         std::string key = decrypt(encryptedKey, encryptedKey);
+        std::cout << "Key: " << encryptedKey << std::endl;
         
         uint64_t counter = static_cast<uint64_t>(time(nullptr)) / 30;
-        std::string otp = hotp(key, counter);
+        std::string otp = hotp(encryptedKey, counter);
         std::cout << otp << std::endl;
     } else {
         std::cerr << "Usage: " << argv[0] << " [-g keyfile | -k keyfile]" << std::endl;
