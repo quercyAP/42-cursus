@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
+/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:05:35 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/17 23:01:27 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/18 13:58:44 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,19 @@
 #include <openssl/hmac.h>
 #include <openssl/evp.h>
 #include <openssl/aes.h>
+#include <cstdint>
 #include <cstring>
+
+uint64_t swap64(uint64_t value) {
+    return ((value & 0xFF00000000000000ULL) >> 56) |
+           ((value & 0x00FF000000000000ULL) >> 40) |
+           ((value & 0x0000FF0000000000ULL) >> 24) |
+           ((value & 0x000000FF00000000ULL) >> 8) |
+           ((value & 0x00000000FF000000ULL) << 8) |
+           ((value & 0x0000000000FF0000ULL) << 24) |
+           ((value & 0x000000000000FF00ULL) << 40) |
+           ((value & 0x00000000000000FFULL) << 56);
+}
 
 bool is_hex(const std::string& s) {
     return s.find_first_not_of("0123456789abcdefABCDEF") == std::string::npos;
@@ -44,37 +56,16 @@ std::string hex_to_binary(const std::string& hex) {
     return binary;
 }
 
-std::string decrypt(const std::string& key, const std::string& encryptedData) {
-    unsigned char outbuf[1024];
-    int outlen, tmplen;
-    unsigned char iv[AES_BLOCK_SIZE];
-    memset(iv, 0, AES_BLOCK_SIZE);
-
-    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
-    EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, reinterpret_cast<const unsigned char*>(key.data()), iv);
-    EVP_DecryptUpdate(ctx, outbuf, &outlen, reinterpret_cast<const unsigned char*>(encryptedData.data()), encryptedData.size());
-    EVP_DecryptFinal_ex(ctx, outbuf + outlen, &tmplen);
-    outlen += tmplen;
-    EVP_CIPHER_CTX_free(ctx);
-
-    return to_hex(outbuf, outlen);
-}
-
-std::string encrypt(const std::string& key, const std::string& data) {
-    unsigned char outbuf[1024];
-    int outlen, tmplen;
-    unsigned char iv[AES_BLOCK_SIZE];
-    memset(iv, 0, AES_BLOCK_SIZE);
-
-    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
-    EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, reinterpret_cast<const unsigned char*>(key.data()), iv);
-    EVP_EncryptUpdate(ctx, outbuf, &outlen, reinterpret_cast<const unsigned char*>(data.data()), data.size());
-    EVP_EncryptFinal_ex(ctx, outbuf + outlen, &tmplen);
-    
-    outlen += tmplen;
-    EVP_CIPHER_CTX_free(ctx);
-
-    return to_hex(outbuf, outlen);
+std::string exec(const char* cmd) {
+    char buffer[1024];
+    std::string result = "";
+    FILE* pipe = popen(cmd, "r");
+    if (!pipe) throw std::runtime_error("popen() failed!");
+    while (fgets(buffer, sizeof buffer, pipe) != NULL) {
+        result += buffer;
+    }
+    pclose(pipe);
+    return result;
 }
 
 std::string hotp(const std::string& key, uint64_t counter) {
@@ -84,7 +75,7 @@ std::string hotp(const std::string& key, uint64_t counter) {
 
     HMAC_CTX *ctx = HMAC_CTX_new();
     HMAC_Init_ex(ctx, binary_key.data(), binary_key.length(), EVP_sha1(), nullptr);
-    uint64_t counter_be = htobe64(counter);
+    uint64_t counter_be = swap64(counter);
     HMAC_Update(ctx, reinterpret_cast<const unsigned char*>(&counter_be), sizeof(counter_be));
     HMAC_Final(ctx, result, &result_len);
     HMAC_CTX_free(ctx);
@@ -108,35 +99,28 @@ int main(int argc, char* argv[]) {
     std::string key_file = argv[2];
     std::ifstream infile(key_file);
 
+    if (!infile) {
+        std::cerr << "Error: Could not open key file." << std::endl;
+        return 1;
+    }
+
     if (arg == "-g") {
-        if (!infile) {
-            std::cerr << "Error: Could not open key file." << std::endl;
-            return 1;
-        }
         std::string key((std::istreambuf_iterator<char>(infile)), std::istreambuf_iterator<char>());
 
-        if (key.length() != 64 || !is_hex(key)) {
-            std::cerr << "Error: key must be 64 hexadecimal characters." << std::endl;
+        if (key.length() < 64 || !is_hex(key) || key.length() % 2 != 0) {
+            std::cerr << "Error: The key must be at least 64 characters of an even hexadecimal number." << std::endl;
             return 1;
         }
         
-        std::string encrypted_key = encrypt(key, key);
-        std::ofstream outfile("ft_otp.key");
-        outfile << encrypted_key;
-        outfile.close();
+        std::string command = "openssl enc -aes-256-cbc -in " + key_file + " -out ft_otp.key -pass pass:mysecretpassword";
+        system(command.c_str());
         std::cout << "Key was successfully saved in ft_otp.key." << std::endl;
-    } else if (arg == "-k") {
-        if (!infile) {
-            std::cerr << "Error: Could not open key file." << std::endl;
-            return 1;
-        }
-        std::string encryptedKey((std::istreambuf_iterator<char>(infile)), std::istreambuf_iterator<char>());
-        
-        std::string key = decrypt(encryptedKey, encryptedKey);
-        std::cout << "Key: " << encryptedKey << std::endl;
-        
+    } else if (arg == "-k") {      
+        std::string decrypted_key = exec("openssl enc -aes-256-cbc -d -in ft_otp.key -pass pass:mysecretpassword");
+        std::cout << "Key: " << decrypted_key << std::endl;
+
         uint64_t counter = static_cast<uint64_t>(time(nullptr)) / 30;
-        std::string otp = hotp(encryptedKey, counter);
+        std::string otp = hotp(decrypted_key, counter);
         std::cout << otp << std::endl;
     } else {
         std::cerr << "Usage: " << argv[0] << " [-g keyfile | -k keyfile]" << std::endl;
@@ -145,3 +129,4 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
