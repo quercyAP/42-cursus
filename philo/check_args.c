@@ -6,7 +6,7 @@
 /*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:29:18 by glamazer          #+#    #+#             */
-/*   Updated: 2023/03/22 12:40:45 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/04/05 13:36:05 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ long	ft_atol(const char *str)
 	return (nb);
 }
 
-
 static int	ft_isnum(char *str)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] < 48 || str[i] > 57)
@@ -66,7 +65,8 @@ int	check_args(int argc, char **argv)
 	{
 		if (!ft_isnum(argv[i]))
 			return (1);
-		if (ft_atol(argv[i]) < INT_MIN || ft_atol(argv[i]) > INT_MAX)
+		if (ft_atol(argv[i]) < INT_MIN || ft_atol(argv[i]) > INT_MAX
+			|| ft_atol(argv[i]) == 0)
 			return (1);
 		i++;
 	}

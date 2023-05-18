@@ -3,18 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+         #
+#    By: guigui <guigui@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 12:55:21 by glamazer          #+#    #+#              #
-#    Updated: 2023/03/24 17:41:23 by lamazerg         ###   ########.fr        #
+#    Updated: 2023/05/18 07:03:46 by guigui           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = philo.c utils.c philo_routine.c supervisor.c check_args.c ft_error.c
+SRCS = philo.c utils.c philo_routine.c supervisor.c check_args.c ft_error.c\
+		utils2.c \
+
 OBJS = ${SRCS:.c=.o}
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror
 SFLAGS = -fsanitize=thread -g
 
 
