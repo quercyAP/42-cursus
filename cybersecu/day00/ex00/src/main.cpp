@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <marvin@42mulhouse.fr>            +#+  +:+       +#+        */
+/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:15:08 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/17 12:57:03 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/19 13:30:31 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,4 @@ int main(int argc, char** argv)
 	curl_global_cleanup();
     return 0;
 }
+p

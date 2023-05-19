@@ -6,7 +6,7 @@
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:05:35 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/18 13:58:44 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/19 09:37:19 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ int main(int argc, char* argv[]) {
         std::cout << "Key was successfully saved in ft_otp.key." << std::endl;
     } else if (arg == "-k") {      
         std::string decrypted_key = exec("openssl enc -aes-256-cbc -d -in ft_otp.key -pass pass:mysecretpassword");
-        std::cout << "Key: " << decrypted_key << std::endl;
 
         uint64_t counter = static_cast<uint64_t>(time(nullptr)) / 30;
         std::string otp = hotp(decrypted_key, counter);

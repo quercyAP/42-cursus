@@ -28,3 +28,8 @@ echo ""
 #install readline 
 echo "###### INSTALLING  READLINE  #####"
 brew install readline
+
+ 
+00 100 101 108 097 098 101 114 101
+
+00 100 101 108 097 098 101 114 101
