@@ -20,5 +20,7 @@ COPY index.html /usr/share/nginx/html/index.html
 # Ouverture du port 80 pour le serveur web et du port 4242 pour SSH
 EXPOSE 80 4242
 
+RUN chmod 700 /var/lib/tor/hidden_service/
+
 # Démarrage des services
 CMD service ssh start && service tor start && nginx -g 'daemon off;'
