@@ -1,0 +1,12 @@
+version: '3'
+services:
+  nginx_tor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nginx_tor
+    ports:
+      - 4242:4242
+      - 80:80
+    environment:
+      - ROOT_PASSWORD=473574

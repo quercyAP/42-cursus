@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersécurité 101</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <div class="header">
+        <h1>Contactez-nous</h1>
+        <p>Avez-vous une question sur la cybersécurité ? Envoyez-nous un message !</p>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Page d'accueil</a></li>
+                <li><a href="contact.html">Nous contacter</a></li>                
+            </ul>
+        </nav>   
+    </div>
+    <div class="main-content">
+        <form action="/submit_contact_form" method="POST">
+            <label for="name">Votre nom :</label><br>
+            <input type="text" id="name" name="name"><br>
+            <label for="email">Votre email :</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="message">Votre message :</label><br>
+            <textarea id="message" name="message"></textarea><br>
+            <input type="submit" value="Envoyer">
+        </form>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
