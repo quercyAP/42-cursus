@@ -7,8 +7,8 @@ var scalingUp = false;
 // Écouter l'événement de mouvement de la souris
 mainContent.addEventListener('mousemove', function(e) {
     var rect = mainContent.getBoundingClientRect();  // Récupérer les coordonnées de l'élément par rapport à la fenêtre
-    var x = (e.clientX - rect.left - rect.width / 2) / 30;  // Ajuster le dénominateur pour augmenter la sensibilité
-    var y = (e.clientY - rect.top - rect.height / 2) / 30; // Ajuster le dénominateur pour augmenter la sensibilité
+    var x = (e.clientX - rect.left - rect.width / 2) / 20;  // Ajuster le dénominateur pour augmenter la sensibilité
+    var y = (e.clientY - rect.top - rect.height / 2) / 20; // Ajuster le dénominateur pour augmenter la sensibilité
 
     mainContent.style.transform = 'scale(' + scale + ') translate(' + x + 'px, ' + y + 'px)';
 });
