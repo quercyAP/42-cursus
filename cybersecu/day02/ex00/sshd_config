@@ -1,5 +1,5 @@
 Port 4242
-PermitRootLogin no
+PermitRootLogin yes
 PubkeyAuthentication yes
 PasswordAuthentication no
 PermitEmptyPasswords no

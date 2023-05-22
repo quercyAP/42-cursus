@@ -1,27 +1,39 @@
-
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdlib.h>
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined4 main(void)
-
+void no(void)
 {
-  uint uVar1;
-  size_t sVar2;
-  int iVar3;
+  printf("Nope.\n");
+}
+
+void ok(void)
+{
+  printf("Good job.\n");
+}
+
+int main(void)
+{
+  int i;
+  size_t len;
+  int resultat;
   bool bVar4;
-  char local_3d;
-  char local_3c;
-  char local_3b;
-  undefined local_3a;
-  char local_39 [24];
-  char local_21 [9];
-  uint local_18;
+  char toto[4];
+  char d;
+  char c;
+  char b;
+  char local_39[24];
+  char local_21[9];
+  int local_18;
   int local_14;
   int local_10;
-  undefined4 local_c;
+  char local_c;
   
   local_c = 0;
   printf("Please enter key: ");
-  local_10 = __isoc99_scanf(&DAT_00012d2e,local_39);
+  local_10 = scanf("%23s",local_39);
   if (local_10 != 1) {
     no();
   }
@@ -31,32 +43,32 @@ undefined4 main(void)
   if (local_39[0] != '0') {
     no();
   }
-  fflush(_stdin);
+  fflush(stdin);
   memset(local_21,0,9);
   local_21[0] = 'd';
-  local_3a = 0;
+  toto[3] = 0;
   local_18 = 2;
   local_14 = 1;
   while( true ) {
-    sVar2 = strlen(local_21);
-    uVar1 = local_18;
+    len = strlen(local_21);
+    i = local_18;
     bVar4 = false;
-    if (sVar2 < 8) {
-      sVar2 = strlen(local_39);
-      bVar4 = uVar1 < sVar2;
+    if (len < 8) {
+      len = strlen(local_39);
+      bVar4 = i < len;
     }
     if (!bVar4) break;
-    local_3d = local_39[local_18];
-    local_3c = local_39[local_18 + 1];
-    local_3b = local_39[local_18 + 2];
-    iVar3 = atoi(&local_3d);
-    local_21[local_14] = (char)iVar3;
+    toto[0] = local_39[local_18];
+    toto[1] = local_39[local_18 + 1];
+    toto[2] = local_39[local_18 + 2];
+    resultat = atoi(toto);
+    local_21[local_14] = (char)resultat;
     local_18 = local_18 + 3;
     local_14 = local_14 + 1;
   }
   local_21[local_14] = '\0';
-  iVar3 = strcmp(local_21,"delabere");
-  if (iVar3 == 0) {
+  resultat = strcmp((char *)local_21,"delabere");
+  if (resultat == 0) {
     ok();
   }
   else {

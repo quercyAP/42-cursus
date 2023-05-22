@@ -1,12 +1,15 @@
 FROM nginx
 
 RUN apt-get update && apt-get install -y openssh-server tor
-# RUN mkdir -p /root/.ssh
-# RUN chmod 700 /root/.ssh
-# RUN mkdir -p /root/.ssh/authorized_keys
-# RUN chmod 600 /root/.ssh/authorized_keys
 
-# COPY ~/.ssh/id_rsa.pub /root/.ssh/authorized_keys/id_rsa.pub
+RUN groupadd sshgroup && \
+	useradd -ms /bin/bash -g sshgroup sshuser && \
+	mkdir -p /home/sshuser/.ssh
+COPY id_rsa.pub /home/sshuser/.ssh/authorized_keys
+RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && \
+	chmod 600 /home/sshuser/.ssh/authorized_keys
+RUN service ssh start
+
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY sshd_config /etc/ssh/sshd_config

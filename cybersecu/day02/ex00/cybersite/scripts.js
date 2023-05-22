@@ -4,7 +4,7 @@ const context = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
-const characters = '0123456789ABCDEF'; // nous utilisons ces caractères
+const characters = '0123456789ABCDEF';
 const columns = canvas.width / 15; 
 
 const drops = [];

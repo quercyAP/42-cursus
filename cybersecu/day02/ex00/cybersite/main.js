@@ -2,7 +2,6 @@ var cybersecurityTips = [
     "Utilisez toujours des mots de passe forts",
     "Mettez régulièrement à jour vos logiciels",
     "Ne cliquez pas sur des liens douteux",
-    // Ajoutez plus de conseils ici
 ];
 
 function loadTips() {

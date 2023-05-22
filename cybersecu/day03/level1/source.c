@@ -1,34 +1,30 @@
+#include <stdio.h>
+#include <string.h>
 
-undefined4 main(void)
-
+int main(void)
 {
-  int iVar1;
-  undefined4 local_7e;
-  undefined4 local_7a;
-  undefined4 local_76;
-  undefined2 local_72;
-  char local_70 [100];
-  undefined4 local_c;
+  int ret;
+  char  mdp[14];
+  char in[100];
   
-  local_c = 0;
-  local_7e._0_1_ = '_';
-  local_7e._1_1_ = '_';
-  local_7e._2_1_ = 's';
-  local_7e._3_1_ = 't';
-  local_7a._0_1_ = 'a';
-  local_7a._1_1_ = 'c';
-  local_7a._2_1_ = 'k';
-  local_7a._3_1_ = '_';
-  local_76._0_1_ = 'c';
-  local_76._1_1_ = 'h';
-  local_76._2_1_ = 'e';
-  local_76._3_1_ = 'c';
-  local_72._0_1_ = 'k';
-  local_72._1_1_ = '\0';
+  mdp[0] = '_';
+  mdp[1] = '_';
+  mdp[2] = 's';
+  mdp[3] = 't';
+  mdp[4] = 'a';
+  mdp[5] = 'c';
+  mdp[6] = 'k';
+  mdp[7] = '_';
+  mdp[8] = 'c';
+  mdp[9] = 'h';
+  mdp[10] = 'e';
+  mdp[11] = 'c';
+  mdp[12] = 'k';
+  mdp[13] = '\0';
   printf("Please enter key: ");
-  __isoc99_scanf(&DAT_00012029,local_70);
-  iVar1 = strcmp(local_70,(char *)&local_7e);
-  if (iVar1 == 0) {
+  scanf("%s",in);
+  ret = strcmp(in,(char *)mdp);
+  if (ret == 0) {
     printf("Good job.\n");
   }
   else {
