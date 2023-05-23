@@ -1,13 +1,17 @@
-SRCS = src/main.cpp \
-	 src/class/Bureaucrat.cpp \
+SRCS = src/class/Bureaucrat.cpp \
+	 src/class/Form.cpp \
+	 src/class/Intern.cpp \
+	 src/class/PresidentialPardonForm.cpp \
+	 src/class/RobotomyRequestForm.cpp \
+	 src/class/ShrubberyCreationForm.cpp \
+	 src/main.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = bureaucrat
+NAME = Bureaucrat
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
-CPPFLAGS = 
+CPPFLAGS = -I include
 LDFLAGS = -lncurses
-
 
 RED = \033[0;31m
 GREEN = \033[0;32m

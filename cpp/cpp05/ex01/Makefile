@@ -1,13 +1,13 @@
-SRCS = src/main.cpp \
-	 src/class/Bureaucrat.cpp \
+SRCS = src/class/Bureaucrat.cpp \
+	 src/class/Form.cpp \
+	 src/main.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = bureaucrat
+NAME = Bureaucrat
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
 CPPFLAGS = 
 LDFLAGS = -lncurses
-
 
 RED = \033[0;31m
 GREEN = \033[0;32m

@@ -5,12 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 07:59:52 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/23 11:03:02 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/23 11:03:11 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/23 12:06:32 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
 #include "../include/class/Bureaucrat.hpp"
 
 static void printWithBorder(const std::string& text) {
@@ -21,35 +20,28 @@ static void printWithBorder(const std::string& text) {
 }
 
 int main() {
-    printWithBorder("Bureaucrat grade 151");
+    printWithBorder("Form toto gradeToSign 151, gradeToExecute 0");
     try {
-        Bureaucrat john("John", 151);
+        Form toto("toto", 151, 0);
     } catch (std::exception &except) {
         std::cerr << except.what() << std::endl;
     }
     
-    printWithBorder("Bureaucrat grade 0");
+    printWithBorder("Form tata gradeToSign 0, gradeToExecute 151");
     try {
-        Bureaucrat jane("Jane", 0);
+        Form tata("tata", 0, 151);
     } catch (std::exception &except) {
         std::cerr << except.what() << std::endl;
     }
     try {
-        printWithBorder("Bureaucrat grade 75 and increment then decrement");    
+        printWithBorder("Bureaucrat bob grade 75 sign Form tutu gradeToSign 100");    
         Bureaucrat bob("Bob", 75);
-        std::cout << bob << std::endl;
-        bob.incrementGrade();
-        std::cout << bob << std::endl;
-        bob.decrementGrade();
-        std::cout << bob << std::endl;
-        
-        printWithBorder("Bureaucrat grade 1 and increment");    
-        Bureaucrat alice("Alice", 1);
-        std::cout << alice << std::endl;
-        alice.incrementGrade();
+        Form tutu("tutu", 100, 50);
+        std::cout << tutu << std::endl;
+        bob.signForm(tutu);
+        std::cout << tutu << std::endl;
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 
     return 0;
-}
