@@ -6,7 +6,7 @@
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 07:58:42 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/23 10:15:53 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/23 12:59:27 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 #include <string>
 #include <exception>
 #include <ostream>
+#include <iostream>
+#include "Form.hpp"
 #define RESET "\033[0m"
 #define RED "\033[31m"
 #define GREEN "\033[32m"
 #define YELLOW "\033[33m"
 #define BLUE "\033[34m"
 
+class Form;
 
 class Bureaucrat {
     private:
@@ -39,14 +42,20 @@ class Bureaucrat {
             virtual const char* what() const throw();
         };
 
+
         Bureaucrat();
         Bureaucrat(const Bureaucrat &copy);
         Bureaucrat(std::string name, int grade);
         ~Bureaucrat();
+        
         std::string getName() const;
         int getGrade() const;
+        
         void incrementGrade();
         void decrementGrade();
+        void signForm(Form &form);
+        void executeForm(Form const &form) const;
+        
         Bureaucrat &operator=(const Bureaucrat &copy);
 
 };
