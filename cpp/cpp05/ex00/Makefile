@@ -1,4 +1,5 @@
 SRCS = src/main.cpp \
+	 src/class/Bureaucrat.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = bureaucrat
