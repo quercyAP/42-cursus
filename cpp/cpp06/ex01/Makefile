@@ -1,10 +1,13 @@
 SRCS = src/main.cpp \
-	 src/class/ScalarConversion.cpp \
+	 src/serialize.cpp \
+	 src/deserialize.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = Scalar
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
+CPPFLAGS = -I include
+LDFLAGS = -lncurses
 
 RED = \033[0;31m
 GREEN = \033[0;32m
@@ -14,15 +17,15 @@ RESET = \033[0m
 
 obj/%.o: src/class/%.cpp | dir
 	@echo "$(BLUE)Compiling $(notdir $<)...$(RESET)"
-	@${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CPPFLAGS} ${CFLAGS} -c $< -o $@
 
 obj/%.o: src/%.cpp | dir
 	@echo "$(BLUE)Compiling $(notdir $<)...$(RESET)"
-	@${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CPPFLAGS} ${CFLAGS} -c $< -o $@
 
 ${NAME}: ${OBJS}
 	@echo "$(GREEN)Linking objects into executable ${NAME}...$(RESET)"
-	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+	@${CC} ${CFLAGS} ${CPPFLAGS} ${OBJS} -o ${NAME} ${LDFLAGS}
 
 all: ${NAME}
 
