@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConversion.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guillaume <guillaume@student.42.fr>        +#+  +:+       +#+        */
+/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:46:37 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/23 19:06:29 by guillaume        ###   ########.fr       */
+/*   Updated: 2023/05/25 10:06:24 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,8 @@ void ScalarConversion::printFloat() const
     if (_isPseudoLiteral) {
         std::cout << "float: " << _str << "f" << std::endl;
     } else {
-        float f = static_cast<float>(_doubleValue);
-        if (_doubleValue == f) {
-            std::cout << "float: " << f;
+            std::cout << "float: " << static_cast<float>(_doubleValue);
             std::cout << (_doubleValue - static_cast<int>(_doubleValue) == 0 ? ".0" : "") << "f" << std::endl;
-        } else {
-            std::cout << "float: impossible" << std::endl;
-        }
     }
 }
 
@@ -80,18 +75,19 @@ ScalarConversion::ScalarConversion(const std::string &str) : _str(str)
     }
     else if (_str == "nan" || _str == "nanf")
     {
-        _doubleValue = 0.0 / 0.0;
+        _doubleValue = std::nan("");
         _isPseudoLiteral = true;
     }
     else
     {
-        std::istringstream iss(_str);
-        iss >> _doubleValue;
-        if (iss.fail())
+        try
         {
-            _isPseudoLiteral = true;
-            _doubleValue = 0.0 / 0.0;
-            }
+            _doubleValue = std::stod(_str);
             _isPseudoLiteral = false;
+        }
+        catch (std::exception &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
     }
 }

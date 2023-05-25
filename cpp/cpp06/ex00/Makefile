@@ -2,7 +2,7 @@ SRCS = src/main.cpp \
 	 src/class/ScalarConversion.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = Scalar
+NAME = convert
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
 
