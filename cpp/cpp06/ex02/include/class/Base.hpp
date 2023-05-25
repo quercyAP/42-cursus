@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Template.h                                         :+:      :+:    :+:   */
+/*   Base.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 07:49:25 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/25 11:44:28 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/25 11:32:52 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/25 11:35:06 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEMPLATE_H 
-# define TEMPLATE_H
+#ifndef BASE_HPP
+# define BASE_HPP
 
-template<typename T>
-void swap(T &a, T &b)
-{
-    T tmp = a;
-    a = b;
-    b = tmp;
-}
+# include <cstdlib>
+# include <iostream>
 
-template<typename T>
-T min(T a, T b)
+class Base
 {
-    if (a < b)
-        return a;
-    return b;
-}
+    public:
+        virtual ~Base() {}
+};
 
-template<typename T>
-T max(T a, T b)
-{
-    if (a > b)
-        return a;
-    return b;
-}
+class A : public Base {};
+class B : public Base {};
+class C : public Base {};
 
 #endif

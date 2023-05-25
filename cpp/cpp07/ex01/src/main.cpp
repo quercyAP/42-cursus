@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigui <guigui@student.42.fr>              +#+  +:+       +#+        */
+/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 07:57:18 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/25 08:02:24 by guigui           ###   ########.fr       */
+/*   Updated: 2023/05/25 11:44:07 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 template <typename T>
 void printElement(T const & element) {
-    std::cout << element << std::endl;
+        std::cout << element << std::endl;
 }
 
 int main() {

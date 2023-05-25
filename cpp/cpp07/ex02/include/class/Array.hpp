@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigui <guigui@student.42.fr>              +#+  +:+       +#+        */
+/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 08:10:00 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/25 08:11:12 by guigui           ###   ########.fr       */
+/*   Updated: 2023/05/25 11:46:37 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
-#include <stdexcept>
-
+# include <stdexcept>
 template<typename T>
 class Array {
 public:
@@ -32,6 +31,6 @@ private:
     unsigned int _size;
 };
 
-#include "../src/class/Array.tpp"
+# include "../src/class/Array.tpp"
 
 #endif

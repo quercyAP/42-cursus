@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigui <guigui@student.42.fr>              +#+  +:+       +#+        */
+/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:35:02 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/23 16:39:40 by guigui           ###   ########.fr       */
+/*   Updated: 2023/05/25 11:36:12 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cstdlib>
-#include <iostream>
-
-class Base
-{
-public:
-    virtual ~Base() {}
-};
-
-class A : public Base {};
-class B : public Base {};
-class C : public Base {};
-
+#include "../include/class/Base.hpp"
 
 Base* generate()
 {
