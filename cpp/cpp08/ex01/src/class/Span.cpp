@@ -3,80 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guigui <guigui@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:05:05 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/25 14:27:11 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:45:33 by guigui           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/class/Span.hpp"
 
-Span::Span(unsigned int n) : _n(n), _size(0), _array(new int[n]) {}
+Span::Span(unsigned int n) : _n(n) {}
 
 Span::Span(Span const &src)
 {
     *this = src;
 }
 
-Span::~Span()
-{
-    delete[] _array;
-}
+Span::~Span() {}
 
 Span &Span::operator=(Span const &copy)
 {
     if (this != &copy)
     {
         _n = copy._n;
-        _size = copy._size;
-        _array = new int[_n];
-        for (unsigned int i = 0; i < _n; i++)
-            _array[i] = copy._array[i];
+        _numbers = copy._numbers;
     }
     return *this;
 }
 
 void Span::addNumber(int n)
 {
-    if (_size < _n)
-    {
-        _array[_size++] = n;
-    }
-    else
+    if (_numbers.size() >= _n)
         throw Span::outsideException();
+    _numbers.push_back(n);
 }
-
 int Span::shortestSpan()
 {
-    if (_size < 2)
+    if (_numbers.size() < 2)
         throw Span::longerException();
-    int shortest = INT_MAX;
-    for (unsigned int i = 0; i < _size - 1; i++)
-    {
-        for (unsigned int j = i + 1; j < _size; j++)
-        {
-            if (_array[j] - _array[i] < shortest)
-                shortest = _array[j] - _array[i];
-        }
-    }
-    return shortest;
+    std::sort(_numbers.begin(), _numbers.end());
+    int minSpan = INT_MAX;
+    for (std::size_t i = 1; i < _numbers.size(); ++i)
+        minSpan = std::min(minSpan, _numbers[i] - _numbers[i - 1]);
+    return minSpan;
 }
 
 int Span::longestSpan()
 {
-    if (_size < 2)
+    if (_numbers.size() < 2)
         throw Span::longerException();
-    int longest = 0;
-    for (unsigned int i = 0; i < _size - 1; i++)
-    {
-        for (unsigned int j = i + 1; j < _size; j++)
-        {   
-            if (_array[j] - _array[i] > longest)
-                longest = _array[j] + _array[i];
-        }
-    }
-    return longest;
+    int minNumber = *std::min_element(_numbers.begin(), _numbers.end());
+    int maxNumber = *std::max_element(_numbers.begin(), _numbers.end());
+    return maxNumber - minNumber;
 }
 
 const char *Span::longerException::what() const throw()
