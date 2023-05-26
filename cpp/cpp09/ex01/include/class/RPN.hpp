@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MutantStack.hpp                                    :+:      :+:    :+:   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 17:04:26 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/26 09:33:09 by glamazer         ###   ########.fr       */
+/*   Created: 2023/05/26 12:45:12 by glamazer          #+#    #+#             */
+/*   Updated: 2023/05/26 13:42:26 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MUTANTSTACK_HPP
-# define MUTANTSTACK_HPP
-# define RESET "\033[0m"
-# define RED "\033[31m"
-# define GREEN "\033[32m"
-# define YELLOW "\033[33m"
-# define BLUE "\033[34m"
+#ifndef RPN_HPP
+#define RPN_HPP
 
+#include <string>
 #include <stack>
+#include <sstream>
+#include <stdexcept>
+#include <iostream>
 
-template<typename T>
-class MutantStack : public std::stack<T>
-{
+class RPN {
     public:
-        typedef typename std::stack<T>::container_type::iterator iterator;
-        iterator begin() { return std::stack<T>::c.begin(); }
-        iterator end() { return std::stack<T>::c.end(); }
+        double calculate(const std::string& expression);
+    private:
+        bool is_operator(const std::string& token);
+        double apply_operator(const std::string& token, double operand1, double operand2);
 };
 
 #endif
-

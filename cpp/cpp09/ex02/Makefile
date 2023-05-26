@@ -1,8 +1,8 @@
-SRCS = src/main.cpp \
-	 src/class/MutantStack.cpp \
+SRCS = src/class/PmergeMe.cpp \
+	 src/main.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
-NAME = MutantStack
+NAME = PmergeMe
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -Wno-unknown-pragmas -std=c++98
 CPPFLAGS = -I include

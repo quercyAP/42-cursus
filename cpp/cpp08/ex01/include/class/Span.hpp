@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigui <guigui@student.42.fr>              +#+  +:+       +#+        */
+/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:05:14 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/25 16:46:53 by guigui           ###   ########.fr       */
+/*   Updated: 2023/05/26 09:43:07 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ class Span
         void addNumber(It begin, It end)
         {
             if (std::distance(begin, end) + _numbers.size() > _n)
-                throw Span::longerException();
+                throw Span::outsideException();
             _numbers.insert(_numbers.end(), begin, end);            
         }
         int shortestSpan();

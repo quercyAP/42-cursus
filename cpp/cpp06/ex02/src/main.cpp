@@ -6,7 +6,7 @@
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:35:02 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/25 11:36:12 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:10:37 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int main()
     for (int i = 0; i < 10; ++i)
     {
         Base* ptr = generate();
-        identify(ptr);
+        identify(*ptr);
         delete ptr;
     }
 
