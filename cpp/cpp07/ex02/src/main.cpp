@@ -6,7 +6,7 @@
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 08:08:37 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/25 11:44:58 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/30 09:32:26 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int main() {
             a[i] = i;
             std::cout << a[i] << ' ';
         }
+        std::cout << std::endl;
+        Array<int> b(a);
+        std::cout << "b[4] = " << b[4] << std::endl;
 
-        std::cout << "\nAccessing element out of bounds: ";
+        std::cout << "Accessing element out of bounds: ";
         std::cout << a[10] << std::endl;
     } catch (const std::exception& e) {
         std::cout << e.what() << std::endl;
