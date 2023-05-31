@@ -6,7 +6,7 @@
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:05:14 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/26 09:43:07 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/31 09:52:41 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ class Span
                 virtual const char* what() const throw();
         };
 
-        class outsideException : public std::exception{
-            public:
-                virtual const char* what() const throw();
-        };
-
         Span(unsigned int n);
         Span(Span const &src);
         ~Span();
@@ -50,7 +45,7 @@ class Span
         void addNumber(It begin, It end)
         {
             if (std::distance(begin, end) + _numbers.size() > _n)
-                throw Span::outsideException();
+                 throw std::out_of_range("Span::addNumber");
             _numbers.insert(_numbers.end(), begin, end);            
         }
         int shortestSpan();

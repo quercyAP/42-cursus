@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigui <guigui@student.42.fr>              +#+  +:+       +#+        */
+/*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:05:05 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/25 16:45:33 by guigui           ###   ########.fr       */
+/*   Updated: 2023/05/31 09:48:46 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ Span &Span::operator=(Span const &copy)
 void Span::addNumber(int n)
 {
     if (_numbers.size() >= _n)
-        throw Span::outsideException();
+        throw std::out_of_range("Span::addNumber");
     _numbers.push_back(n);
 }
 int Span::shortestSpan()
@@ -60,10 +60,5 @@ int Span::longestSpan()
 const char *Span::longerException::what() const throw()
 {
     return "Span::longer: no longer possible";
-}
-
-const char *Span::outsideException::what() const throw()
-{
-    return "Span::outside: out of range";
 }
 

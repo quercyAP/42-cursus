@@ -9,7 +9,11 @@ up:
 	docker-compose -f $(DOCKER_COMPOSE_FILE) up -d
 
 clean:
+	-docker stop $$(docker ps -a -q)
+	-docker rm $$(docker ps -a -q)
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down --volumes --rmi all
 
-.PHONY: build up clean
+re: clean build up
+
+.PHONY: build up clean re
 

@@ -1,5 +1,4 @@
 SRCS = src/main.cpp \
-	 src/class/MutantStack.cpp \
 	
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.cpp=.o)))
 NAME = MutantStack

@@ -33,7 +33,6 @@ services:
 
   wordpress:
     container_name: wordpress
-    env_file: .env
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -41,6 +40,7 @@ services:
     build: 
       context: ./requirements/wordpress
       dockerfile: Dockerfile
+    env_file: .env
     depends_on:
       - mariadb
     restart: on-failure

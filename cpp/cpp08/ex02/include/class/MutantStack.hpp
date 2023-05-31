@@ -6,7 +6,7 @@
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:04:26 by guigui            #+#    #+#             */
-/*   Updated: 2023/05/26 09:33:09 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/31 10:09:40 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ class MutantStack : public std::stack<T>
 };
 
 #endif
-

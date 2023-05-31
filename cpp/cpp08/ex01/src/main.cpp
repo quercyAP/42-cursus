@@ -6,7 +6,7 @@
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:04:43 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/26 09:55:05 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/31 09:57:40 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,19 @@ int main()
         for (int i = 0; i < 100; ++i)
             numbers[i] = i * 2;
         spRange.addNumber(numbers.begin(), numbers.end());
-        std::cout << "shortestSpan" << spRange.shortestSpan() << std::endl;
-        std::cout << "longestSpan" << spRange.longestSpan() << std::endl;
+        std::cout << "shortestSpan: " << spRange.shortestSpan() << std::endl;
+        std::cout << "longestSpan: " << spRange.longestSpan() << std::endl;
+
+        try {
+            printWithBorder("try longestSpan with no range");
+            Span spNoRange = Span(0);
+            spNoRange.longestSpan();
+        } catch (std::exception &e) {
+            std::cerr << "Exception: " << e.what() << std::endl;
+        }
+         
+        printWithBorder("try to add a number out of range");
+        sp.addNumber(10);
     } catch (std::exception &e) {
         std::cerr << "Exception: " << e.what() << std::endl;
     }

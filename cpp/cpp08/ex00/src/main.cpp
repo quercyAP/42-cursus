@@ -6,14 +6,14 @@
 /*   By: glamazer <glamazer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:22:43 by glamazer          #+#    #+#             */
-/*   Updated: 2023/05/25 12:41:52 by glamazer         ###   ########.fr       */
+/*   Updated: 2023/05/31 09:32:11 by glamazer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include <../include/easyfind.h>
+#include "../include/easyfind.h"
 
 static void printWithBorder(const std::string& text) {
     std::string border(text.size(), '-');
