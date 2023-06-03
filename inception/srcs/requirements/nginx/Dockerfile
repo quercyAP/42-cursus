@@ -1,22 +1,33 @@
-FROM debian:buster
+FROM	alpine:3.14
 
-RUN apt update -y && apt upgrade -y && apt install -y nginx
-RUN apt install -y vim
-RUN apt install -y curl
-RUN apt install -y openssl
+RUN		apk update
+RUN		apk upgrade
 
-RUN mkdir -p /etc/nginx/ssl
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=ALS/L=Mulhouse/O=42/CN=glamazer.42.fr/UID=glamazer"
+#==== NGINX ===================================================================#
+RUN		apk add nginx
 
-RUN mkdir -p /var/run/nginx
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+RUN		mkdir -p /var/www/html/
 
-RUN mkdir -p /usr/share/nginx/html
-COPY tools/cybersite /usr/share/nginx/html/
+COPY	conf/default.conf /etc/nginx/http.d/default.conf
 
-EXPOSE 443
+#==== OPENSSL =================================================================#
+RUN		apk add openssl
+RUN		mkdir -p /etc/nginx/ssl
 
-RUN chmod 755 /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+RUN		openssl req \
+		-newkey rsa:4096 \
+		-x509 \
+		-sha256 \
+		-days 365 \
+		-nodes \
+		-subj "/C=FR/ST=PACA/L=Nice/O=42/OU=acoezard/CN=localhost" \
+		-keyout /etc/nginx/ssl/inception.key \
+		-out /etc/nginx/ssl/inception.cert
 
-CMD nginx -g 'daemon off;'
+#==== OPENRC ==================================================================#
+RUN		apk add openrc
+RUN		rc-update add nginx default
+
+#==============================================================================#
+EXPOSE	443
+CMD		["nginx", "-g", "daemon off;"]

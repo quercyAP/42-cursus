@@ -1,16 +1,35 @@
-FROM debian:buster
 
-RUN apt update -y && apt upgrade -y
-RUN apt-get install mariadb-server -y
+FROM		alpine:3.14
 
-EXPOSE 3306
+RUN			apk update
+RUN			apk upgrade
 
-RUN mkdir -p /var/run/mysqld \
-    && chown -R mysql:mysql /var/run/mysqld \
-    && chmod 777 /var/run/mysqld
+#==== OPENRC ==================================================================#
+RUN			apk add openrc
 
-COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
-COPY tools/db_config.sh /usr/local/bin/db_config.sh
-RUN chmod +x /usr/local/bin/db_config.sh
+#==== MARIADB =================================================================#
+RUN			apk add mariadb
+RUN			apk add mariadb-common
+RUN			apk add mariadb-client
+RUN			apk add mariadb-server-utils
 
-ENTRYPOINT /usr/local/bin/db_config.sh
+RUN			rm -f	/etc/mysql/my.cnf \
+					/etc/my.cnf \
+					~/my.cnf
+
+COPY		conf/default.conf /etc/mysql/my.cnf
+COPY		conf/default.conf /etc/my.cnf
+COPY		conf/default.conf ~/my.cnf
+
+RUN			mkdir -p /run/mysqld
+RUN			mkdir -p /var/lib/mysql
+
+RUN			chown -R mysql /var/lib/mysql
+RUN			chmod 777 /var/lib/mysql
+
+COPY		tools/entrypoint.sh entrypoint.sh
+RUN			chmod +x entrypoint.sh
+ENTRYPOINT	["./entrypoint.sh"]
+
+#==============================================================================#
+EXPOSE		3306

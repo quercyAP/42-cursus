@@ -1,6 +1,5 @@
 version: "3.9"
 services:
-#==== NGINX ===================================================================#
   nginx:
     container_name: nginx
     build: requirements/nginx
@@ -13,24 +12,22 @@ services:
     networks:
       - inception
     volumes:
-      - www:/var/www/html
+      - wordpress:/var/www/html
     restart: unless-stopped
 
-#==== MARIADB =================================================================#
   mariadb:
     container_name: mariadb
     build: requirements/mariadb
     image: mariadb
     env_file: .env
     ports:
-      - 3306:3306
+      - 3306
     networks:
       - inception
     volumes:
-      - database:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     restart: unless-stopped
 
-#==== WORDPRESS ===============================================================#
   wordpress:
     container_name: wordpress
     build: requirements/wordpress
@@ -41,25 +38,23 @@ services:
     networks:
       - inception
     volumes:
-      - www:/var/www/html
+      - wordpress:/var/www/html
     restart: unless-stopped
 
-#==============================================================================#
 volumes:
-  www:
+  wordpress:
     driver: local
     driver_opts:
       type: none
-      device: ${VOLUME_WWW_PATH}
+      device: ${VOLUME_WORDPRESS_PATH}
       o: bind
-  database:
+  mariadb:
     driver: local
     driver_opts:
       type: none
-      device: ${VOLUME_DB_PATH}
+      device: ${VOLUME_MARIADB_PATH}
       o: bind
 
-  #============================================================================#
 networks:
   inception:
     name: inception

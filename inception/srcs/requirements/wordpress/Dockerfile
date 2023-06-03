@@ -1,29 +1,53 @@
-FROM debian:buster
+FROM	alpine:3.14
 
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y wget vim php7.3 php-fpm php-mysql mariadb-client && \
-    rm -rf /var/lib/apt/lists/*
+RUN		apk update
+RUN		apk upgrade
 
-RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
+#==== PHP_FPM =================================================================#
+RUN		apk add php7 \
+				php7-fpm \
+				php7-opcache \
+				php7-mysqli \
+				php7-session \
+				php7-iconv \
+				php7-json \
+				php7-gd \
+				php7-curl \
+				php7-xml \
+				php7-common \
+				php7-imap \
+				php7-cgi \
+				php7-pdo \
+				php7-pdo_mysql \
+				php7-soap \
+				php7-xmlrpc \
+				php7-posix \
+				php7-mcrypt \
+				php7-redis \
+				php7-gettext \
+				php7-ldap \
+				php7-ctype \
+				php7-dom \
+				php7-phar \
+				php7-gd \
+				php7-zlib
 
-RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
+RUN		apk add curl wget
+RUN		apk add openrc
 
-COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-COPY conf/wp_config.php /var/www
+RUN		rm -f /etc/php7/php-fpm.d/www.conf
+COPY	conf/default.conf /etc/php7/php-fpm.d/www.conf
 
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
+#==== WORDPRESS ===============================================================#
+RUN		mkdir 					-p /var/www/html
+RUN		adduser 				-u 82 -D -S -G www-data www-data
+RUN		chmod 777 				-R /var/www/html
+RUN		chown 					-R www-data:www-data /var/www/html
 
-RUN chown -R www-data:www-data /var/www/wordpress
+COPY	./conf/wp-config.php	./
+COPY	./tools/entrypoint.sh	./
+RUN		chmod +x 				./entrypoint.sh
+ENTRYPOINT						["./entrypoint.sh"]
 
-COPY tools/auto_config.sh /usr/local/bin/auto_config.sh
-RUN chmod +x /usr/local/bin/auto_config.sh
-
-RUN mkdir -p /run/php
-
-ENTRYPOINT /usr/local/bin/auto_config.sh
-
-CMD /usr/sbin/php-fpm7.3 -F
-
+#==============================================================================#
+EXPOSE	9000
