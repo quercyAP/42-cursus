@@ -14,7 +14,7 @@ BLUE			=	"\033[1;36m"
 WHITE			=	"\033[1;37m"
 END				=	"\033[0;0m"
 
-all: fclean build
+all: build
 
 build:
 	@mkdir -p ~/data/wordpress ~/data/mariadb
