@@ -16,8 +16,7 @@ RUN apt-get update && apt-get install -y \
     php7.3-xml \
     php7.3-xmlrpc \
     php7.3-zip \
-    mariadb-client \
-    curl
+    mariadb-client
 
 RUN mkdir -p /run/php && chown -R www-data:www-data /run/php
 

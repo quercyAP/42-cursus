@@ -1,7 +1,7 @@
 #!/bin/sh
 
-mkdir -p /home/glamazer/data/mariadb
-mkdir -p /home/glamazer/data/wordpress
+mkdir -p /Users/glamazer/data/mariadb
+mkdir -p /Users/glamazer/data/wordpress
 
 mysql_install_db --user=root --datadir=/var/lib/mysql
 mysqld --user=root --datadir=/var/lib/mysql & sleep 5
