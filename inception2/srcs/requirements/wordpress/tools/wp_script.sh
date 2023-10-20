@@ -30,7 +30,4 @@ wp	user create \
 	--role=author \
 	--user_pass=${WORDPRESS_PASSWORD}
 
-wp option update --allow-root --path="/var/www/html" home 'https://localhost'
-wp option update --allow-root --path="/var/www/html" siteurl 'https://localhost'
-
 exec	php-fpm7.3 -F

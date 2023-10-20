@@ -9,10 +9,6 @@ RUN			rm -f	/etc/mysql/my.cnf \
 					/etc/my.cnf \
 					~/my.cnf
 
-COPY		conf/my.cnf /etc/mysql/my.cnf
-COPY		conf/my.cnf /etc/my.cnf
-COPY		conf/my.cnf ~/my.cnf
-
 RUN			mkdir -p /run/mysqld
 RUN			mkdir -p /var/lib/mysql
 

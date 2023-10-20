@@ -14,7 +14,7 @@ BLUE			=	"\033[1;36m"
 WHITE			=	"\033[1;37m"
 END				=	"\033[0;0m"
 
-all: fclean build
+all: build
 
 build:
 	@mkdir -p ~/data/wordpress ~/data/mariadb
@@ -33,8 +33,8 @@ status:
 	@docker compose ${FLAGS} ps
 
 clean:
-	@sudo rm -rf /home/guigui/data/wordpress/* > /dev/null
-	@sudo rm -rf /home/guigui/data/mariadb/* > /dev/null
+	@rm -rf /Users/guigui/data/wordpress/* > /dev/null
+	@rm -rf /Users/guigui/data/mariadb/* > /dev/null
 	@echo ${BLUE}"info"${WHITE}" - cleaned docker data"${END}
 
 fclean: clean
