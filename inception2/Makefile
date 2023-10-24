@@ -24,19 +24,11 @@ status:
 	@docker compose ${FLAGS} ps
 
 clean:
-	@rm -rf /home/guigui/data/wordpress/* > /dev/null
-	@rm -rf /home/guigui/data/mariadb/* > /dev/null
+	@rm -rf /home/glamazer/data/wordpress/* > /dev/null
+	@rm -rf /home/glamazer/data/mariadb/* > /dev/null
 
 fclean: clean
-	@docker rmi -f nginx > /dev/null
-	@docker rmi -f mariadb > /dev/null
-	@docker rmi -f wordpress > /dev/null
-	@docker rm -f nginx > /dev/null
-	@docker rm -f mariadb > /dev/null
-	@docker rm -f wordpress > /dev/null
-	@docker volume rm -f inception_mariadb > /dev/null
-	@docker volume rm -f inception_wordpress > /dev/null
-	@docker network rm inception > /dev/null
+	@docker system prune
 
 re: stop fclean all
 
