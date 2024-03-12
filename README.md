@@ -1,6 +1,5 @@
 # Tronc Commun de 42
 
-Bienvenue sur le dépôt GitHub dédié au tronc commun de l'école 42.
 Ce dépôt contient une compilation des projets réalisés dans le cadre du cursus initial de 42, 
 une école de programmation innovante qui propose une formation en développement logiciel,
 basée sur la pratique et l'apprentissage par les pairs.
@@ -16,7 +15,7 @@ Voici un aperçu des projets contenus dans ce dépôt:
 - **Libft**: Recoder une sélection de fonctions de la libc, ainsi que d'autres fonctions utilitaires qui seront utilisées dans les projets suivants.
 - **Get_Next_Line**: Programmer une fonction en C qui lit une ligne terminée par un retour à la ligne depuis un fichier descripteur.
 - **Ft_Printf**: Recoder la fonction printf de la libc pour comprendre les variadic functions en C.
-- **Born2BeRoot**: Projet d'initiation à la virtualisation, vous amènera à configurer un serveur sous certaines spécifications.
+- **Born2BeRoot**: Projet d'initiation à la virtualisation, qui amène à configurer une VM sous certaines spécifications.
 - **Push_Swap**: Tri de données sur une pile avec un set d’instructions limité, mettant en œuvre des algorithmes de tri.
 - **Minitalk**: Programme d'échange de données utilisant les signaux UNIX, introduisant la programmation système.
 - **So_Long**: Jeu 2D simple utilisant la miniLibX, introduisant aux textures, sprites et tuiles.
