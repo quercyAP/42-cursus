@@ -46,6 +46,6 @@ Le dernier projet du tronc commun. Un défi surprise vous attend.
 
 ## Liens vers les dépôts des projets
 
-- [MiniRT](https://github.com/votre_username/miniRT)
-- [Webserv](https://github.com/votre_username/webserv)
-- [Ft_Transcendence](https://github.com/votre_username/ft_transcendence)
+- [MiniRT](https://github.com/quercyAP/MiniRT)
+- [Webserv](https://github.com/quercyAP/WebServ)
+- [Ft_Transcendence](https://github.com/quercyAP/Transcendance)
